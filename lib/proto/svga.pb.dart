@@ -603,7 +603,10 @@ class FrameEntity extends $pb.GeneratedMessage {
   bool hasClipPath() => $_has(3);
   void clearClipPath() => clearField(4);
 
-  List<ShapeEntity> get shapes => $_getList(4);
+  // Patch by PonyCui
+  List<ShapeEntity> get shapes => this._shapes ?? $_getList(4);
+  List<ShapeEntity> _shapes;
+  void set shapes(List<ShapeEntity> value) => this._shapes =value;
 }
 
 class MovieEntity extends $pb.GeneratedMessage {

@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
 
   void loadAnimation() async {
     final videoItem = await SVGAParser.shared.decodeFromURL(
-        "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true");
+        "https://github.com/yyued/SVGA-Samples/blob/master/Walkthrough.svga?raw=true");
     print("start play" + DateTime.now().toString());
     this.animationController.videoItem = videoItem;
     this.animationController.startAnimation();
@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
                 height: 500,
                 child: SVGAPlayer(
                   animationController,
-                  fit: BoxFit.scaleDown,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
