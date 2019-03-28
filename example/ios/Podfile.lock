@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - svgaplayer_flutter (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - svgaplayer_flutter (from `.symlinks/plugins/svgaplayer_flutter/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  svgaplayer_flutter:
+    :path: ".symlinks/plugins/svgaplayer_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  svgaplayer_flutter: 9f610f0c8d74ee8b94ed3482bb759c7a906defc0
+
+PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
+
+COCOAPODS: 1.5.3
