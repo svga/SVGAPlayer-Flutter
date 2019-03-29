@@ -4,12 +4,12 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios-release`)
+  - Flutter (from `.symlinks/flutter/ios`)
   - svgaplayer_flutter (from `.symlinks/plugins/svgaplayer_flutter/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios-release"
+    :path: ".symlinks/flutter/ios"
   svgaplayer_flutter:
     :path: ".symlinks/plugins/svgaplayer_flutter/ios"
 

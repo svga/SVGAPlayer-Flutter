@@ -6,14 +6,39 @@ import 'package:flutter/widgets.dart';
 import 'proto/svga.pbserver.dart';
 import 'dart:typed_data';
 import 'package:path_drawing/path_drawing.dart';
+import 'parser.dart';
 part 'painter.dart';
 
 typedef FrameHandler = void Function(int currentFrame, double progress);
 typedef CompleteHandler = void Function();
 
+enum SVGAFillMode { forward, backward }
+
 class SVGAPlayer extends StatefulWidget {
   final SVGAPlayerController _controller;
   final BoxFit fit;
+
+  static SVGAPlayer url(
+    String url, {
+    SVGAPlayerController controller,
+    fit = BoxFit.contain,
+    bool once,
+    FrameHandler onFrame,
+    CompleteHandler onComplete,
+    SVGAFillMode fillMode = SVGAFillMode.forward,
+  }) {
+    final mController = controller ?? SVGAPlayerController();
+    SVGAParser.shared.decodeFromURL(url).then((videoItem) {
+      mController.videoItem = videoItem;
+      mController.startAnimation(
+        once: once,
+        onFrame: onFrame,
+        onComplete: onComplete,
+        fillMode: fillMode,
+      );
+    });
+    return SVGAPlayer(mController, fit: fit);
+  }
 
   SVGAPlayer(
     this._controller, {
@@ -64,6 +89,7 @@ class SVGAPlayerController {
     bool once,
     FrameHandler onFrame,
     CompleteHandler onComplete,
+    SVGAFillMode fillMode = SVGAFillMode.forward,
   }) async {
     if (this._state == null) return;
     await this.prepare();
@@ -71,6 +97,7 @@ class SVGAPlayerController {
           once != true,
           onFrame: onFrame,
           onComplete: onComplete,
+          fillMode: fillMode,
         );
   }
 
@@ -99,6 +126,7 @@ class _SVGAPlayerState extends State<SVGAPlayer>
     bool isRepeat, {
     FrameHandler onFrame,
     CompleteHandler onComplete,
+    SVGAFillMode fillMode = SVGAFillMode.forward,
   }) {
     if (this.widget._controller.videoItem == null) return;
     _animationController = AnimationController(
@@ -122,6 +150,14 @@ class _SVGAPlayerState extends State<SVGAPlayer>
     final future = isRepeat
         ? _animationController.repeat()
         : _animationController.forward();
+    future.whenComplete(() {
+      if (fillMode == SVGAFillMode.backward &&
+          this.widget._controller.clearsAfterStop == false) {
+        this.setState(() {
+          currentFrame = 0;
+        });
+      }
+    });
     future.whenCompleteOrCancel(() {
       if (this.widget._controller.clearsAfterStop) {
         this.setState(() {

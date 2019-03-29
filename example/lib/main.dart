@@ -19,12 +19,10 @@ class _MyAppState extends State<MyApp> {
 
   void loadAnimation() async {
     final videoItem = await SVGAParser.shared.decodeFromURL(
-        "https://github.com/yyued/SVGA-Samples/blob/master/posche.svga?raw=true");
+        "https://github.com/yyued/SVGA-Samples/blob/master/rose.svga?raw=true");
     print("start play" + DateTime.now().toString());
     this.animationController.videoItem = videoItem;
-    await this.animationController.startAnimation(onFrame: (currentFrame, _){
-      print(currentFrame);
-    });
+    await this.animationController.startAnimation();
   }
 
   @override
@@ -32,7 +30,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('SVGAPlayer Demo'),
         ),
         body: DecoratedBox(
           decoration: BoxDecoration(color: Colors.black),
