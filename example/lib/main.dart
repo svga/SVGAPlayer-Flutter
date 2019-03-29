@@ -14,7 +14,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     this.animationController = SVGAAnimationController(vsync: this);
-    this.loadAnimation();
+    // this.loadAnimation();
     super.initState();
   }
 
@@ -45,9 +45,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         ),
         body: DecoratedBox(
           decoration: BoxDecoration(color: Colors.black),
-          child: SVGAImageView(
-            animationController,
-            fit: BoxFit.contain,
+          child: SVGASimpleImage(
+            resUrl:
+                "https://github.com/yyued/SVGA-Samples/blob/master/rose.svga?raw=true",
           ),
         ),
       ),

@@ -8,8 +8,9 @@ import 'dart:typed_data';
 import 'package:path_drawing/path_drawing.dart';
 import 'parser.dart';
 part 'painter.dart';
+part 'simple_player.dart';
 
-class SVGAImageView extends StatefulWidget {
+class SVGAImage extends StatefulWidget {
   final SVGAAnimationController _controller;
   final BoxFit fit;
   final bool clearsAfterStop;
@@ -27,7 +28,7 @@ class SVGAImageView extends StatefulWidget {
   //   return SVGAImageView(controller, fit: fit);
   // }
 
-  SVGAImageView(
+  SVGAImage(
     this._controller, {
     this.fit = BoxFit.contain,
     this.clearsAfterStop = true,
@@ -35,7 +36,7 @@ class SVGAImageView extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _SVGAImageViewState(this._controller,
+    return _SVGAImageState(this._controller,
         clearsAfterStop: this.clearsAfterStop);
   }
 }
@@ -68,14 +69,13 @@ class SVGAAnimationController extends AnimationController {
     this._canvasNeedsClear = true;
     this.notifyListeners();
   }
-
 }
 
-class _SVGAImageViewState extends State<SVGAImageView> {
+class _SVGAImageState extends State<SVGAImage> {
   final SVGAAnimationController _animationController;
   final bool clearsAfterStop;
 
-  _SVGAImageViewState(this._animationController, {this.clearsAfterStop}) {
+  _SVGAImageState(this._animationController, {this.clearsAfterStop}) {
     this._animationController.addListener(() {
       this.setState(() {});
     });
