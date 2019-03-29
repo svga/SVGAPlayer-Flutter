@@ -9,190 +9,94 @@ import 'package:path_drawing/path_drawing.dart';
 import 'parser.dart';
 part 'painter.dart';
 
-typedef FrameHandler = void Function(int currentFrame, double progress);
-typedef CompleteHandler = void Function();
-
-enum SVGAFillMode { forward, backward }
-
-class SVGAPlayer extends StatefulWidget {
-  final SVGAPlayerController _controller;
+class SVGAImageView extends StatefulWidget {
+  final SVGAAnimationController _controller;
   final BoxFit fit;
+  final bool clearsAfterStop;
 
-  static SVGAPlayer url(
-    String url, {
-    SVGAPlayerController controller,
-    fit = BoxFit.contain,
-    bool once,
-    FrameHandler onFrame,
-    CompleteHandler onComplete,
-    SVGAFillMode fillMode = SVGAFillMode.forward,
-  }) {
-    final mController = controller ?? SVGAPlayerController();
-    SVGAParser.shared.decodeFromURL(url).then((videoItem) {
-      mController.videoItem = videoItem;
-      mController.startAnimation(
-        once: once,
-        onFrame: onFrame,
-        onComplete: onComplete,
-        fillMode: fillMode,
-      );
-    });
-    return SVGAPlayer(mController, fit: fit);
-  }
+  // static SVGAImageView withUrl(
+  //   String url, {
+  //   SVGAAnimationController controller,
+  //   fit = BoxFit.contain,
+  //   bool clearsAfterStop,
+  // }) {
+  //   SVGAParser.shared.decodeFromURL(url).then((videoItem) {
+  //     controller.videoItem = videoItem;
+  //     loops ? controller.repeat() : controller.forward();
+  //   });
+  //   return SVGAImageView(controller, fit: fit);
+  // }
 
-  SVGAPlayer(
+  SVGAImageView(
     this._controller, {
     this.fit = BoxFit.contain,
+    this.clearsAfterStop = true,
   });
 
   @override
   State<StatefulWidget> createState() {
-    final state = _SVGAPlayerState();
-    this._controller._state = state;
-    return state;
+    return _SVGAImageViewState(this._controller,
+        clearsAfterStop: this.clearsAfterStop);
   }
 }
 
-class SVGAPlayerController {
-  bool clearsAfterStop = true;
-  _SVGAPlayerState _state;
+class SVGAAnimationController extends AnimationController {
   MovieEntity _videoItem;
-  bool _prepared = false;
-  Map<String, ui.Image> _bitmapCache = {};
-  Map<String, Path> _pathCache = {};
+  bool _canvasNeedsClear = false;
+
+  SVGAAnimationController({@required TickerProvider vsync})
+      : super(vsync: vsync);
 
   set videoItem(MovieEntity value) {
-    this.stopAnimation(clear: true);
+    this.stop();
+    this.clear();
     this._videoItem = value;
-    this._prepared = false;
+    if (value != null) {
+      this.duration = Duration(
+          milliseconds: (this._videoItem.params.frames /
+                  this._videoItem.params.fps *
+                  1000)
+              .toInt());
+    } else {
+      this.duration = Duration(milliseconds: 0);
+    }
   }
 
   MovieEntity get videoItem => this._videoItem;
 
-  Future<void> _resetCache() async {
-    this._bitmapCache = {};
-    this._pathCache = {};
-    if (this.videoItem != null) {
-      for (var item in this.videoItem.images.entries) {
-        this._bitmapCache[item.key] = await decodeImageFromList(item.value);
-      }
-    }
+  void clear() {
+    this._canvasNeedsClear = true;
+    this.notifyListeners();
   }
 
-  Future<void> prepare() async {
-    if (this._prepared) return;
-    await this._resetCache();
-    this._prepared = true;
-  }
-
-  Future<void> startAnimation({
-    bool once,
-    FrameHandler onFrame,
-    CompleteHandler onComplete,
-    SVGAFillMode fillMode = SVGAFillMode.forward,
-  }) async {
-    if (this._state == null) return;
-    await this.prepare();
-    this._state.createAnimation(
-          once != true,
-          onFrame: onFrame,
-          onComplete: onComplete,
-          fillMode: fillMode,
-        );
-  }
-
-  void pauseAnimation() {
-    this.stopAnimation(clear: false);
-  }
-
-  void stopAnimation({bool clear}) {
-    if (this._state == null) return;
-    this._state.stopAnimation(clear);
-  }
 }
 
-class _SVGAPlayerState extends State<SVGAPlayer>
-    with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  int currentFrame = -1;
-  bool drawingEmpty = true;
+class _SVGAImageViewState extends State<SVGAImageView> {
+  final SVGAAnimationController _animationController;
+  final bool clearsAfterStop;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void createAnimation(
-    bool isRepeat, {
-    FrameHandler onFrame,
-    CompleteHandler onComplete,
-    SVGAFillMode fillMode = SVGAFillMode.forward,
-  }) {
-    if (this.widget._controller.videoItem == null) return;
-    _animationController = AnimationController(
-        vsync: this,
-        duration: Duration(
-            milliseconds: (this.widget._controller.videoItem.params.frames /
-                    this.widget._controller.videoItem.params.fps *
-                    1000)
-                .toInt()))
-      ..addListener(() {
-        final nextFrame = SVGAPainter.calculateCurrentFrame(
-            this.widget._controller.videoItem, _animationController.value);
-        if (nextFrame == this.currentFrame) return;
-        this.setState(() {
-          currentFrame = nextFrame;
-        });
-        if (onFrame != null) {
-          onFrame(currentFrame, _animationController.value);
-        }
-      });
-    final future = isRepeat
-        ? _animationController.repeat()
-        : _animationController.forward();
-    future.whenComplete(() {
-      if (fillMode == SVGAFillMode.backward &&
-          this.widget._controller.clearsAfterStop == false) {
-        this.setState(() {
-          currentFrame = 0;
-        });
-      }
+  _SVGAImageViewState(this._animationController, {this.clearsAfterStop}) {
+    this._animationController.addListener(() {
+      this.setState(() {});
     });
-    future.whenCompleteOrCancel(() {
-      if (this.widget._controller.clearsAfterStop) {
-        this.setState(() {
-          drawingEmpty = true;
-        });
+    this._animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed && this.clearsAfterStop) {
+        this._animationController.clear();
       }
-      if (onComplete != null) {
-        onComplete();
-      }
-    });
-    this.setState(() {
-      drawingEmpty = false;
-    });
-  }
-
-  void stopAnimation(bool clear) {
-    _animationController?.stop();
-    this.setState(() {
-      currentFrame = -1;
-      drawingEmpty = clear ?? this.widget._controller.clearsAfterStop;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (this.widget._controller.videoItem == null ||
-        this.drawingEmpty ||
-        this.currentFrame < 0) {
+    if (this._animationController.videoItem == null) {
       return Container();
     }
     return CustomPaint(
       painter: new SVGAPainter(
-        this.widget._controller.videoItem,
-        this.currentFrame,
-        this.widget._controller,
+        this._animationController.videoItem,
+        SVGAPainter.calculateCurrentFrame(this._animationController.videoItem,
+            this._animationController.value),
+        this._animationController,
         this.widget.fit,
       ),
       size: Size(

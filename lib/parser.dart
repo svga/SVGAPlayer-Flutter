@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/painting.dart';
 import 'package:http/http.dart';
 import 'proto/svga.pbserver.dart';
 
@@ -17,7 +18,8 @@ class SVGAParser {
   }
 
   Future<MovieEntity> decodeFromBuffer(List<int> bytes) async {
-    return processShapeItems(MovieEntity.fromBuffer(bytes));
+    return await prepareResources(
+        processShapeItems(MovieEntity.fromBuffer(bytes)));
   }
 
   MovieEntity processShapeItems(MovieEntity movieItem) {
@@ -28,12 +30,21 @@ class SVGAParser {
           if (frame.shapes[0].type == ShapeEntity_ShapeType.KEEP &&
               lastShape != null) {
             frame.shapes = lastShape;
-          } else if (frame.shapes !=null) {
+          } else if (frame.shapes != null) {
             lastShape = frame.shapes;
           }
         }
       });
     });
+    return movieItem;
+  }
+
+  Future<MovieEntity> prepareResources(MovieEntity movieItem) async {
+    for (var item in movieItem.images.entries) {
+      try {
+        movieItem.bitmapCache[item.key] = await decodeImageFromList(item.value);
+      } catch (e) {}
+    }
     return movieItem;
   }
 }

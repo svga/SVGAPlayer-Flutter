@@ -3,7 +3,7 @@ part of svgaplayer_flutter_player;
 class SVGAPainter extends CustomPainter {
   final MovieEntity videoItem;
   int currentFrame = 0;
-  final SVGAPlayerController controller;
+  final SVGAAnimationController controller;
   final BoxFit fit;
 
   static int calculateCurrentFrame(
@@ -19,6 +19,10 @@ class SVGAPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (this.videoItem == null) return;
+    if (this.controller._canvasNeedsClear) {
+      this.controller._canvasNeedsClear = false;
+      return;
+    }
     canvas.save();
     this.scaleToFit(canvas, size);
     this.drawBitmap(canvas, size);
@@ -114,7 +118,7 @@ class SVGAPainter extends CustomPainter {
     this.videoItem.sprites.forEach((sprite) {
       if (sprite.imageKey == null) return;
       final frameItem = sprite.frames[this.currentFrame];
-      final bitmap = this.controller._bitmapCache[sprite.imageKey];
+      final bitmap = this.videoItem.bitmapCache[sprite.imageKey];
       if (bitmap == null) return;
       canvas.save();
       canvas.transform(Float64List.fromList([
@@ -312,8 +316,8 @@ class SVGAPainter extends CustomPainter {
   }
 
   Path buildDPath(String argD, {Path path}) {
-    if (this.controller._pathCache[argD] != null) {
-      return this.controller._pathCache[argD];
+    if (this.videoItem.pathCache[argD] != null) {
+      return this.videoItem.pathCache[argD];
     }
     if (path == null) {
       path = Path();
@@ -440,14 +444,16 @@ class SVGAPainter extends CustomPainter {
           path.close();
         }
       }
-      this.controller._pathCache[argD] = path;
+      this.videoItem.pathCache[argD] = path;
     });
     return path;
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    if (oldDelegate is SVGAPainter) {
+    if (this.controller._canvasNeedsClear) {
+      return true;
+    } else if (oldDelegate is SVGAPainter) {
       return !(oldDelegate.videoItem == this.videoItem &&
           oldDelegate.currentFrame == this.currentFrame);
     }

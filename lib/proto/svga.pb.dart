@@ -6,7 +6,9 @@
 
 // ignore: UNUSED_SHOWN_NAME
 import 'dart:core' show int, bool, double, String, List, Map, override;
+import 'dart:ui' as ui show Image, Path;
 
+import 'package:path_drawing/path_drawing.dart';
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'svga.pbenum.dart';
@@ -649,5 +651,9 @@ class MovieEntity extends $pb.GeneratedMessage {
   List<SpriteEntity> get sprites => $_getList(3);
 
   List<AudioEntity> get audios => $_getList(4);
+
+  Map<String, ui.Image> bitmapCache = {};
+  Map<String, ui.Path> pathCache = {};
+
 }
 

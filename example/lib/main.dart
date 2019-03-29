@@ -8,13 +8,20 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  final animationController = SVGAPlayerController();
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
+  SVGAAnimationController animationController;
 
   @override
   void initState() {
-    super.initState();
+    this.animationController = SVGAAnimationController(vsync: this);
     this.loadAnimation();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    this.animationController.dispose();
+    super.dispose();
   }
 
   void loadAnimation() async {
@@ -22,7 +29,11 @@ class _MyAppState extends State<MyApp> {
         "https://github.com/yyued/SVGA-Samples/blob/master/rose.svga?raw=true");
     print("start play" + DateTime.now().toString());
     this.animationController.videoItem = videoItem;
-    await this.animationController.startAnimation();
+    this.animationController.repeat();
+    // this.animationController.stepToFrame(40, false);
+    await Future.delayed(Duration(milliseconds: 1000));
+    this.animationController.value = 0.5;
+    this.animationController.repeat();
   }
 
   @override
@@ -30,11 +41,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('SVGAPlayer Demo'),
+          title: const Text('Flutter Demo'),
         ),
         body: DecoratedBox(
           decoration: BoxDecoration(color: Colors.black),
-          child: SVGAPlayer(
+          child: SVGAImageView(
             animationController,
             fit: BoxFit.contain,
           ),
