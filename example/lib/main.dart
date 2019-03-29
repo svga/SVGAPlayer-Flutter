@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:svgaplayer_flutter/svgaplayer_flutter.dart';
 
 void main() => runApp(MyApp());
@@ -22,10 +19,12 @@ class _MyAppState extends State<MyApp> {
 
   void loadAnimation() async {
     final videoItem = await SVGAParser.shared.decodeFromURL(
-        "https://github.com/yyued/SVGA-Samples/blob/master/Walkthrough.svga?raw=true");
+        "https://github.com/yyued/SVGA-Samples/blob/master/posche.svga?raw=true");
     print("start play" + DateTime.now().toString());
     this.animationController.videoItem = videoItem;
-    this.animationController.startAnimation();
+    await this.animationController.startAnimation(onFrame: (currentFrame, _){
+      print(currentFrame);
+    });
   }
 
   @override
@@ -35,19 +34,11 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: DecoratedBox(
-            decoration: BoxDecoration(color: Colors.black),
-            child: ClipRect(
-              child: SizedBox(
-                width: 300,
-                height: 500,
-                child: SVGAPlayer(
-                  animationController,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
+        body: DecoratedBox(
+          decoration: BoxDecoration(color: Colors.black),
+          child: SVGAPlayer(
+            animationController,
+            fit: BoxFit.contain,
           ),
         ),
       ),
