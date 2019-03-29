@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui show Image;
 import 'package:flutter/widgets.dart';
+import 'package:path_drawing/path_drawing.dart';
 import 'proto/svga.pbserver.dart';
 
 class SVGAPlayer extends StatefulWidget {
@@ -21,7 +22,8 @@ class SVGAPlayerController {
   _SVGAPlayerState _state;
   MovieEntity _videoItem;
   bool _prepared = false;
-  Map<String, ui.Image> bitmapCache;
+  Map<String, ui.Image> bitmapCache = {};
+  Map<String, Path> pathCache = {};
 
   set videoItem(MovieEntity value) {
     this._videoItem = value;
@@ -32,6 +34,7 @@ class SVGAPlayerController {
 
   Future<void> _resetCache() async {
     this.bitmapCache = {};
+    this.pathCache = {};
     if (this.videoItem != null) {
       for (var item in this.videoItem.images.entries) {
         this.bitmapCache[item.key] = await decodeImageFromList(item.value);
@@ -61,11 +64,17 @@ class _SVGAPlayerState extends State<SVGAPlayer>
   }
 
   void createAnimation() {
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 4000))
-          ..addListener(() {
-            this.setState(() {});
-          });
+    if (this.widget._controller.videoItem == null) return;
+    _animationController = AnimationController(
+        vsync: this,
+        duration: Duration(
+            milliseconds: (this.widget._controller.videoItem.params.frames /
+                    this.widget._controller.videoItem.params.fps *
+                    1000)
+                .toInt()))
+      ..addListener(() {
+        this.setState(() {});
+      });
     _animationController.repeat();
   }
 
@@ -247,6 +256,27 @@ class _Painter extends CustomPainter {
       ].toList()));
       frameItem.shapes.forEach((shape) {
         final path = this.buildPath(shape);
+        if (shape.hasTransform()) {
+          canvas.save();
+          canvas.transform(Float64List.fromList([
+            shape.transform.a,
+            shape.transform.b,
+            0.0,
+            0.0,
+            shape.transform.c,
+            shape.transform.d,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            shape.transform.tx,
+            shape.transform.ty,
+            0.0,
+            1.0
+          ].toList()));
+        }
         final fill = shape.styles?.fill;
         if (fill != null) {
           final paint = Paint();
@@ -304,8 +334,28 @@ class _Painter extends CustomPainter {
             }
           }
           paint.strokeMiterLimit = shape.styles?.miterLimit ?? 0.0;
-          // List<double> lineDash = [shape.styles?.lineDashI ?? 0.0, shape.styles?.lineDashII ?? 0.0, shape.styles?.lineDashIII ?? 0.0];
-          canvas.drawPath(path, paint);
+          List<double> lineDash = [
+            shape.styles?.lineDashI ?? 0.0,
+            shape.styles?.lineDashII ?? 0.0,
+            shape.styles?.lineDashIII ?? 0.0
+          ];
+          if (lineDash[0] > 0 || lineDash[1] > 0) {
+            canvas.drawPath(
+                dashPath(
+                  path,
+                  dashArray: CircularIntervalList([
+                    lineDash[0] < 1.0 ? 1.0 : lineDash[0],
+                    lineDash[1] < 0.1 ? 0.1 : lineDash[1],
+                  ]),
+                  dashOffset: DashOffset.absolute(lineDash[2]),
+                ),
+                paint);
+          } else {
+            canvas.drawPath(path, paint);
+          }
+          if (shape.hasTransform()) {
+            canvas.restore();
+          }
         }
       });
       canvas.restore();
@@ -319,6 +369,9 @@ class _Painter extends CustomPainter {
     if (shape.type == ShapeEntity_ShapeType.SHAPE) {
       final args = shape.shape;
       final argD = args.d ?? "";
+      if (this.controller.pathCache[argD] != null) {
+        return this.controller.pathCache[argD];
+      }
       final d = argD.replaceAllMapped(RegExp('([a-zA-Z])'), (match) {
         return "|||${match.group(1)} ";
       }).replaceAll(RegExp(","), " ");
@@ -441,6 +494,7 @@ class _Painter extends CustomPainter {
             path.close();
           }
         }
+        this.controller.pathCache[argD] = path;
       });
     } else if (shape.type == ShapeEntity_ShapeType.ELLIPSE) {
       final args = shape.ellipse;

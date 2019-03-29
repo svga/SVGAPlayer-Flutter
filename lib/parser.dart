@@ -28,7 +28,7 @@ class SVGAParser {
           if (frame.shapes[0].type == ShapeEntity_ShapeType.KEEP &&
               lastShape != null) {
             frame.shapes = lastShape;
-          } else {
+          } else if (frame.shapes !=null) {
             lastShape = frame.shapes;
           }
         }
