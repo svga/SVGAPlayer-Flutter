@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:svgaplayer_flutter/svgaplayer_flutter.dart';
 
 void main() => runApp(MyApp());
@@ -25,8 +26,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   }
 
   void loadAnimation() async {
-    final videoItem = await SVGAParser.shared.decodeFromURL(
-        "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true");
+    // final videoItem = await SVGAParser.shared.decodeFromURL(
+    //     "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true");
+    final videoItem = await SVGAParser.shared.decodeFromAssets("assets/pin_jump.svga");
     videoItem.dynamicItem.setImageWithUrl(
         "https://github.com/PonyCui/resources/blob/master/svga_replace_avatar.png?raw=true",
         "99");
@@ -41,7 +43,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
           ),
         )),
         "banner");
-    print("start play" + DateTime.now().toString());
     this.animationController.videoItem = videoItem;
     this
         .animationController
@@ -56,9 +57,11 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         appBar: AppBar(
           title: const Text('Flutter Demo'),
         ),
-        body: DecoratedBox(
-          decoration: BoxDecoration(color: Colors.black),
-          child: SVGAImage(this.animationController),
+        body: Center(
+          child: DecoratedBox(
+            decoration: BoxDecoration(color: Colors.black),
+            child: SVGAImage(this.animationController),
+          ),
         ),
       ),
     );

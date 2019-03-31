@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart';
 import 'proto/svga.pbserver.dart';
 
@@ -9,17 +10,18 @@ class SVGAParser {
   final _zLibCodec = ZLibCodec();
 
   Future<MovieEntity> decodeFromURL(String url) async {
-    print("start get" + DateTime.now().toString());
     final response = await get(url);
-    print("start inflated" + DateTime.now().toString());
-    final inflatedBytes = this._zLibCodec.decode(response.bodyBytes);
-    print("start decode buffer" + DateTime.now().toString());
-    return await this.decodeFromBuffer(inflatedBytes);
+    return await this.decodeFromBuffer(response.bodyBytes);
+  }
+
+  Future<MovieEntity> decodeFromAssets(String path) async {
+    return this.decodeFromBuffer((await rootBundle.load("assets/pin_jump.svga")).buffer.asUint8List());
   }
 
   Future<MovieEntity> decodeFromBuffer(List<int> bytes) async {
+    final inflatedBytes = this._zLibCodec.decode(bytes);
     return await prepareResources(
-        processShapeItems(MovieEntity.fromBuffer(bytes)));
+        processShapeItems(MovieEntity.fromBuffer(inflatedBytes)));
   }
 
   MovieEntity processShapeItems(MovieEntity movieItem) {
