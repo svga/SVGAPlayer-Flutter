@@ -3,8 +3,8 @@ part of svgaplayer_flutter_player;
 class SVGAPainter extends CustomPainter {
   final MovieEntity videoItem;
   int currentFrame = 0;
-  final SVGAAnimationController controller;
   final BoxFit fit;
+  final bool clear;
 
   static int calculateCurrentFrame(
       MovieEntity videoItem, double animationProcess) {
@@ -14,27 +14,23 @@ class SVGAPainter extends CustomPainter {
     );
   }
 
-  SVGAPainter(this.videoItem, this.currentFrame, this.controller, this.fit);
+  SVGAPainter(this.videoItem, this.currentFrame, {this.fit, this.clear});
 
   @override
   void paint(Canvas canvas, Size size) {
     if (this.videoItem == null) return;
-    if (this.controller._canvasNeedsClear) {
-      this.controller._canvasNeedsClear = false;
-      return;
-    }
+    if (this.clear == true) return;
     canvas.save();
     this.scaleToFit(canvas, size);
     this.drawBitmap(canvas, size);
     this.drawShape(canvas, size);
+    this.drawText(canvas, size);
     canvas.restore();
   }
 
   void scaleToFit(Canvas canvas, Size size) {
-    final double imageWidth =
-        this.controller.videoItem.params.viewBoxWidth.toDouble();
-    final double imageHeight =
-        this.controller.videoItem.params.viewBoxHeight.toDouble();
+    final double imageWidth = this.videoItem.params.viewBoxWidth.toDouble();
+    final double imageHeight = this.videoItem.params.viewBoxHeight.toDouble();
     if (imageWidth == 0.0 ||
         imageHeight == 0.0 ||
         size.width == 0.0 ||
@@ -117,8 +113,12 @@ class SVGAPainter extends CustomPainter {
   void drawBitmap(Canvas canvas, Size size) {
     this.videoItem.sprites.forEach((sprite) {
       if (sprite.imageKey == null) return;
+      if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
+        return;
       final frameItem = sprite.frames[this.currentFrame];
-      final bitmap = this.videoItem.bitmapCache[sprite.imageKey];
+      final bitmap =
+          this.videoItem.dynamicItem.dynamicImages[sprite.imageKey] ??
+              this.videoItem.bitmapCache[sprite.imageKey];
       if (bitmap == null) return;
       canvas.save();
       canvas.transform(Float64List.fromList([
@@ -147,12 +147,19 @@ class SVGAPainter extends CustomPainter {
         canvas.clipPath(this.buildDPath(frameItem.clipPath));
       }
       canvas.drawImage(bitmap, Offset.zero, bitmapPaint);
+      if (this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] != null) {
+        this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
+            canvas, this.currentFrame);
+      }
       canvas.restore();
     });
   }
 
   void drawShape(Canvas canvas, Size size) {
     this.videoItem.sprites.forEach((sprite) {
+      if (sprite.imageKey != null &&
+          this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
+        return;
       final frameItem = sprite.frames[this.currentFrame];
       if (frameItem.shapes == null || frameItem.shapes.length == 0) return;
       canvas.save();
@@ -277,6 +284,12 @@ class SVGAPainter extends CustomPainter {
                 paint);
           } else {
             canvas.drawPath(path, paint);
+          }
+          if (sprite.imageKey != null &&
+              this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] !=
+                  null) {
+            this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
+                canvas, this.currentFrame);
           }
           if (shape.hasTransform() || frameItem.hasClipPath()) {
             canvas.restore();
@@ -449,9 +462,51 @@ class SVGAPainter extends CustomPainter {
     return path;
   }
 
+  void drawText(Canvas canvas, Size size) {
+    if (this.videoItem.dynamicItem.dynamicText.length == 0) return;
+    this.videoItem.sprites.forEach((sprite) {
+      if (sprite.imageKey == null) return;
+      if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
+        return;
+      if (this.videoItem.dynamicItem.dynamicText[sprite.imageKey] == null)
+        return;
+      final frameItem = sprite.frames[this.currentFrame];
+      if (sprite.imageKey == "banner") {
+        canvas.save();
+        canvas.transform(Float64List.fromList([
+          frameItem.transform.a,
+          frameItem.transform.b,
+          0.0,
+          0.0,
+          frameItem.transform.c,
+          frameItem.transform.d,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          frameItem.transform.tx,
+          frameItem.transform.ty,
+          0.0,
+          1.0
+        ].toList()));
+        TextPainter textPainter =
+            this.videoItem.dynamicItem.dynamicText[sprite.imageKey];
+        textPainter.paint(
+            canvas,
+            Offset(
+              (frameItem.layout.width - textPainter.width) / 2.0,
+              (frameItem.layout.height - textPainter.height) / 2.0,
+            ));
+        canvas.restore();
+      }
+    });
+  }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    if (this.controller._canvasNeedsClear) {
+    if (this.clear == true) {
       return true;
     } else if (oldDelegate is SVGAPainter) {
       return !(oldDelegate.videoItem == this.videoItem &&

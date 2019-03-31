@@ -14,7 +14,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     this.animationController = SVGAAnimationController(vsync: this);
-    // this.loadAnimation();
+    this.loadAnimation();
     super.initState();
   }
 
@@ -26,14 +26,27 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   void loadAnimation() async {
     final videoItem = await SVGAParser.shared.decodeFromURL(
-        "https://github.com/yyued/SVGA-Samples/blob/master/rose.svga?raw=true");
+        "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true");
+    videoItem.dynamicItem.setImageWithUrl(
+        "https://github.com/PonyCui/resources/blob/master/svga_replace_avatar.png?raw=true",
+        "99");
+    videoItem.dynamicItem.setText(
+        TextPainter(
+            text: TextSpan(
+          text: "Hello, World!",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        )),
+        "banner");
     print("start play" + DateTime.now().toString());
     this.animationController.videoItem = videoItem;
-    this.animationController.repeat();
-    // this.animationController.stepToFrame(40, false);
-    await Future.delayed(Duration(milliseconds: 1000));
-    this.animationController.value = 0.5;
-    this.animationController.repeat();
+    this
+        .animationController
+        .repeat()
+        .whenComplete(() => this.animationController.videoItem = null);
   }
 
   @override
@@ -45,10 +58,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         ),
         body: DecoratedBox(
           decoration: BoxDecoration(color: Colors.black),
-          child: SVGASimpleImage(
-            resUrl:
-                "https://github.com/yyued/SVGA-Samples/blob/master/rose.svga?raw=true",
-          ),
+          child: SVGAImage(this.animationController),
         ),
       ),
     );

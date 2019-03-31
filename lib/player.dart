@@ -15,19 +15,6 @@ class SVGAImage extends StatefulWidget {
   final BoxFit fit;
   final bool clearsAfterStop;
 
-  // static SVGAImageView withUrl(
-  //   String url, {
-  //   SVGAAnimationController controller,
-  //   fit = BoxFit.contain,
-  //   bool clearsAfterStop,
-  // }) {
-  //   SVGAParser.shared.decodeFromURL(url).then((videoItem) {
-  //     controller.videoItem = videoItem;
-  //     loops ? controller.repeat() : controller.forward();
-  //   });
-  //   return SVGAImageView(controller, fit: fit);
-  // }
-
   SVGAImage(
     this._controller, {
     this.fit = BoxFit.contain,
@@ -91,13 +78,15 @@ class _SVGAImageState extends State<SVGAImage> {
     if (this._animationController.videoItem == null) {
       return Container();
     }
+    final needsClear = this._animationController._canvasNeedsClear;
+    this._animationController._canvasNeedsClear = false;
     return CustomPaint(
       painter: new SVGAPainter(
         this._animationController.videoItem,
         SVGAPainter.calculateCurrentFrame(this._animationController.videoItem,
             this._animationController.value),
-        this._animationController,
-        this.widget.fit,
+        fit: this.widget.fit,
+        clear: needsClear,
       ),
       size: Size(
         this.widget._controller.videoItem.params.viewBoxWidth,

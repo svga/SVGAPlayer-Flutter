@@ -12,6 +12,7 @@ import 'package:path_drawing/path_drawing.dart';
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'svga.pbenum.dart';
+import '../dynamic_entity.dart';
 
 export 'svga.pbenum.dart';
 
@@ -652,6 +653,7 @@ class MovieEntity extends $pb.GeneratedMessage {
 
   List<AudioEntity> get audios => $_getList(4);
 
+  SVGADynamicEntity dynamicItem = SVGADynamicEntity();
   Map<String, ui.Image> bitmapCache = {};
   Map<String, ui.Path> pathCache = {};
 
