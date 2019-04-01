@@ -10,6 +10,8 @@ SVGAPlayer is a light-weight animation renderer. You use [tools](http://svga.io/
 
 If wonder more information, go to this [website](http://svga.io/).
 
+* SVGAPlayer-Flutter supports 2.0 format only.
+
 ## Usage
 
 Here introduce `SVGAPlayer-Flutter` usage. Wonder exporting usage? Click [here](http://svga.io/designer.html).
@@ -47,7 +49,7 @@ Animation will run repeatedly. If you wondering a stronger animation controls, u
 
 ### Code to use
 
-To control an animation rendering, you need to create a SVGAAnimationController instance just like Flutter regular animation. Assign to `SVGAImage`, load and decode resource using `SVGAParser`, and then do things as you want with `SVGAAnimationController`.
+To control an animation rendering, you need to create a `SVGAAnimationController` instance just like Flutter regular animation. Assign to `SVGAImage`, load and decode resource using `SVGAParser`, and then do things as you want with `SVGAAnimationController`.
 
 ```dart
 import 'package:flutter/material.dart';
