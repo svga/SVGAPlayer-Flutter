@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:svgaplayer_flutter/svgaplayer_flutter.dart';
 
 void main() => runApp(MyApp());
@@ -26,23 +25,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   }
 
   void loadAnimation() async {
-    // final videoItem = await SVGAParser.shared.decodeFromURL(
-    //     "https://github.com/yyued/SVGA-Samples/blob/master/kingset.svga?raw=true");
-    final videoItem = await SVGAParser.shared.decodeFromAssets("assets/pin_jump.svga");
-    videoItem.dynamicItem.setImageWithUrl(
-        "https://github.com/PonyCui/resources/blob/master/svga_replace_avatar.png?raw=true",
-        "99");
-    videoItem.dynamicItem.setText(
-        TextPainter(
-            text: TextSpan(
-          text: "Hello, World!",
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        )),
-        "banner");
+    final videoItem = await SVGAParser.shared.decodeFromURL(
+        "https://github.com/yyued/SVGA-Samples/blob/master/kingset?raw=true");
     this.animationController.videoItem = videoItem;
     this
         .animationController
@@ -52,18 +36,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter Demo'),
-        ),
-        body: Center(
-          child: DecoratedBox(
-            decoration: BoxDecoration(color: Colors.black),
-            child: SVGAImage(this.animationController),
-          ),
-        ),
-      ),
+    return Container(
+      child: SVGAImage(this.animationController),
     );
   }
 }

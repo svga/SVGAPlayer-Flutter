@@ -15,7 +15,7 @@ class SVGAParser {
   }
 
   Future<MovieEntity> decodeFromAssets(String path) async {
-    return this.decodeFromBuffer((await rootBundle.load("assets/pin_jump.svga")).buffer.asUint8List());
+    return this.decodeFromBuffer((await rootBundle.load(path)).buffer.asUint8List());
   }
 
   Future<MovieEntity> decodeFromBuffer(List<int> bytes) async {
