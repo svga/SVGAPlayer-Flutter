@@ -1,6 +1,6 @@
 # SVGAPlayer-Flutter
 
-[简体中文](./readme.zh.md)
+[简体中文](./README.zh.md)
 
 ## Introduce
 
