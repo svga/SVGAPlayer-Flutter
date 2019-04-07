@@ -121,24 +121,26 @@ class SVGAPainter extends CustomPainter {
               this.videoItem.bitmapCache[sprite.imageKey];
       if (bitmap == null) return;
       canvas.save();
-      canvas.transform(Float64List.fromList([
-        frameItem.transform.a,
-        frameItem.transform.b,
-        0.0,
-        0.0,
-        frameItem.transform.c,
-        frameItem.transform.d,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        frameItem.transform.tx,
-        frameItem.transform.ty,
-        0.0,
-        1.0
-      ].toList()));
+      if (frameItem.hasTransform()) {
+        canvas.transform(Float64List.fromList([
+          frameItem.transform.a,
+          frameItem.transform.b,
+          0.0,
+          0.0,
+          frameItem.transform.c,
+          frameItem.transform.d,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          frameItem.transform.tx,
+          frameItem.transform.ty,
+          0.0,
+          1.0
+        ].toList()));
+      }
       final bitmapPaint = Paint();
       bitmapPaint.isAntiAlias = true;
       bitmapPaint.color =
@@ -163,24 +165,26 @@ class SVGAPainter extends CustomPainter {
       final frameItem = sprite.frames[this.currentFrame];
       if (frameItem.shapes == null || frameItem.shapes.length == 0) return;
       canvas.save();
-      canvas.transform(Float64List.fromList([
-        frameItem.transform.a,
-        frameItem.transform.b,
-        0.0,
-        0.0,
-        frameItem.transform.c,
-        frameItem.transform.d,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        frameItem.transform.tx,
-        frameItem.transform.ty,
-        0.0,
-        1.0
-      ].toList()));
+      if (frameItem.hasTransform()) {
+        canvas.transform(Float64List.fromList([
+          frameItem.transform.a,
+          frameItem.transform.b,
+          0.0,
+          0.0,
+          frameItem.transform.c,
+          frameItem.transform.d,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          frameItem.transform.tx,
+          frameItem.transform.ty,
+          0.0,
+          1.0
+        ].toList()));
+      }
       frameItem.shapes.forEach((shape) {
         final path = this.buildPath(shape);
         if (shape.hasTransform() || frameItem.hasClipPath()) {
@@ -473,24 +477,26 @@ class SVGAPainter extends CustomPainter {
       final frameItem = sprite.frames[this.currentFrame];
       if (sprite.imageKey == "banner") {
         canvas.save();
-        canvas.transform(Float64List.fromList([
-          frameItem.transform.a,
-          frameItem.transform.b,
-          0.0,
-          0.0,
-          frameItem.transform.c,
-          frameItem.transform.d,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          frameItem.transform.tx,
-          frameItem.transform.ty,
-          0.0,
-          1.0
-        ].toList()));
+        if (frameItem.hasTransform()) {
+          canvas.transform(Float64List.fromList([
+            frameItem.transform.a,
+            frameItem.transform.b,
+            0.0,
+            0.0,
+            frameItem.transform.c,
+            frameItem.transform.d,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            frameItem.transform.tx,
+            frameItem.transform.ty,
+            0.0,
+            1.0
+          ].toList()));
+        }
         TextPainter textPainter =
             this.videoItem.dynamicItem.dynamicText[sprite.imageKey];
         textPainter.paint(
