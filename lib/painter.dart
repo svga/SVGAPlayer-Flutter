@@ -295,9 +295,9 @@ class SVGAPainter extends CustomPainter {
             this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
                 canvas, this.currentFrame);
           }
-          if (shape.hasTransform() || frameItem.hasClipPath()) {
+        }
+        if (shape.hasTransform() || frameItem.hasClipPath()) {
             canvas.restore();
-          }
         }
       });
       canvas.restore();
