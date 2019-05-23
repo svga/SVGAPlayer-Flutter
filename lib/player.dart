@@ -63,14 +63,26 @@ class _SVGAImageState extends State<SVGAImage> {
   final bool clearsAfterStop;
 
   _SVGAImageState(this._animationController, {this.clearsAfterStop}) {
-    this._animationController.addListener(() {
+    this._animationController.addListener(_setState);
+    this._animationController.addStatusListener(_clearAnimation);
+  }
+
+  void _setState() {
+    if (mounted) {
       this.setState(() {});
-    });
-    this._animationController.addStatusListener((status) {
-      if (status == AnimationStatus.completed && this.clearsAfterStop) {
-        this._animationController.clear();
-      }
-    });
+    }
+  }
+  void _clearAnimation(AnimationStatus status) {
+    if (status == AnimationStatus.completed && this.clearsAfterStop) {
+      this._animationController.clear();
+    }
+  }
+
+  @override
+  void dispose() {
+    this._animationController.removeListener(_setState);
+    this._animationController.removeStatusListener(_clearAnimation);
+    super.dispose();
   }
 
   @override
