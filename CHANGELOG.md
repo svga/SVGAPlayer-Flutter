@@ -1,3 +1,14 @@
+#### 0.0.3 (2019-07-01)
+
+##### Chores
+
+*  upgrade to 0.0.3 (3c40d8bf)
+*  0.0.2 released. (7a54b493)
+
+##### Bug Fixes
+
+*  https://github.com/yyued/SVGAPlayer-Flutter/issues/2 (3e8db072)
+
 #### 0.0.1 (2019-04-01)
 
 ##### New Features
