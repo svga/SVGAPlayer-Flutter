@@ -36,7 +36,9 @@ class SVGAAnimationController extends AnimationController {
       : super(vsync: vsync);
 
   set videoItem(MovieEntity value) {
-    this.stop();
+    if (this.isAnimating) {
+      this.stop();
+    }
     this.clear();
     this._videoItem = value;
     if (value != null) {

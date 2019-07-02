@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   void loadAnimation() async {
     final videoItem = await SVGAParser.shared.decodeFromURL(
-        "https://github.com/yyued/SVGA-Samples/blob/master/kingset?raw=true");
+        "https://github.com/svga/SVGA-Samples/blob/master/kingset.svga?raw=true");
     this.animationController.videoItem = videoItem;
     this
         .animationController
