@@ -1,3 +1,9 @@
+#### 0.0.4 (2019-07-01)
+
+##### Bug Fixes
+
+* Should not draw as groups for bitmap or shape, should draw as a sprite one by one.
+
 #### 0.0.3 (2019-07-01)
 
 ##### Chores
