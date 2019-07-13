@@ -22,9 +22,7 @@ class SVGAPainter extends CustomPainter {
     if (this.clear == true) return;
     canvas.save();
     this.scaleToFit(canvas, size);
-    this.drawBitmap(canvas, size);
-    this.drawShape(canvas, size);
-    this.drawText(canvas, size);
+    this.drawSprites(canvas, size);
     canvas.restore();
   }
 
@@ -110,198 +108,200 @@ class SVGAPainter extends CustomPainter {
     }
   }
 
-  void drawBitmap(Canvas canvas, Size size) {
+  void drawSprites(Canvas canvas, Size size) {
     this.videoItem.sprites.forEach((sprite) {
-      if (sprite.imageKey == null) return;
-      if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
-        return;
-      final frameItem = sprite.frames[this.currentFrame];
-      final bitmap =
-          this.videoItem.dynamicItem.dynamicImages[sprite.imageKey] ??
-              this.videoItem.bitmapCache[sprite.imageKey];
-      if (bitmap == null) return;
-      canvas.save();
-      if (frameItem.hasTransform()) {
-        canvas.transform(Float64List.fromList([
-          frameItem.transform.a,
-          frameItem.transform.b,
-          0.0,
-          0.0,
-          frameItem.transform.c,
-          frameItem.transform.d,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          frameItem.transform.tx,
-          frameItem.transform.ty,
-          0.0,
-          1.0
-        ].toList()));
-      }
-      final bitmapPaint = Paint();
-      bitmapPaint.isAntiAlias = true;
-      bitmapPaint.color =
-          Color.fromARGB((frameItem.alpha * 255.0).toInt(), 255, 255, 255);
-      if (frameItem.hasClipPath()) {
-        canvas.clipPath(this.buildDPath(frameItem.clipPath));
-      }
-      canvas.drawImage(bitmap, Offset.zero, bitmapPaint);
-      if (this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] != null) {
-        this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
-            canvas, this.currentFrame);
-      }
-      canvas.restore();
+      drawBitmap(sprite, canvas, size);
+      drawShape(sprite, canvas, size);
+      drawText(sprite, canvas, size);
     });
   }
 
-  void drawShape(Canvas canvas, Size size) {
-    this.videoItem.sprites.forEach((sprite) {
-      if (sprite.imageKey != null &&
-          this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
-        return;
-      final frameItem = sprite.frames[this.currentFrame];
-      if (frameItem.shapes == null || frameItem.shapes.length == 0) return;
-      canvas.save();
-      if (frameItem.hasTransform()) {
+  void drawBitmap(SpriteEntity sprite, Canvas canvas, Size size) {
+    if (sprite.imageKey == null) return;
+    if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
+      return;
+    final frameItem = sprite.frames[this.currentFrame];
+    final bitmap = this.videoItem.dynamicItem.dynamicImages[sprite.imageKey] ??
+        this.videoItem.bitmapCache[sprite.imageKey];
+    if (bitmap == null) return;
+    canvas.save();
+    if (frameItem.hasTransform()) {
+      canvas.transform(Float64List.fromList([
+        frameItem.transform.a,
+        frameItem.transform.b,
+        0.0,
+        0.0,
+        frameItem.transform.c,
+        frameItem.transform.d,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        frameItem.transform.tx,
+        frameItem.transform.ty,
+        0.0,
+        1.0
+      ].toList()));
+    }
+    final bitmapPaint = Paint();
+    bitmapPaint.isAntiAlias = true;
+    bitmapPaint.color =
+        Color.fromARGB((frameItem.alpha * 255.0).toInt(), 255, 255, 255);
+    if (frameItem.hasClipPath()) {
+      canvas.clipPath(this.buildDPath(frameItem.clipPath));
+    }
+    canvas.drawImage(bitmap, Offset.zero, bitmapPaint);
+    if (this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] != null) {
+      this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
+          canvas, this.currentFrame);
+    }
+    canvas.restore();
+  }
+
+  void drawShape(SpriteEntity sprite, Canvas canvas, Size size) {
+    if (sprite.imageKey != null &&
+        this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
+      return;
+    final frameItem = sprite.frames[this.currentFrame];
+    if (frameItem.shapes == null || frameItem.shapes.length == 0) return;
+    canvas.save();
+    if (frameItem.hasTransform()) {
+      canvas.transform(Float64List.fromList([
+        frameItem.transform.a,
+        frameItem.transform.b,
+        0.0,
+        0.0,
+        frameItem.transform.c,
+        frameItem.transform.d,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        frameItem.transform.tx,
+        frameItem.transform.ty,
+        0.0,
+        1.0
+      ].toList()));
+    }
+    frameItem.shapes.forEach((shape) {
+      final path = this.buildPath(shape);
+      if (shape.hasTransform() || frameItem.hasClipPath()) {
+        canvas.save();
+      }
+      if (shape.hasTransform()) {
         canvas.transform(Float64List.fromList([
-          frameItem.transform.a,
-          frameItem.transform.b,
+          shape.transform.a,
+          shape.transform.b,
           0.0,
           0.0,
-          frameItem.transform.c,
-          frameItem.transform.d,
+          shape.transform.c,
+          shape.transform.d,
           0.0,
           0.0,
           0.0,
           0.0,
           1.0,
           0.0,
-          frameItem.transform.tx,
-          frameItem.transform.ty,
+          shape.transform.tx,
+          shape.transform.ty,
           0.0,
           1.0
         ].toList()));
       }
-      frameItem.shapes.forEach((shape) {
-        final path = this.buildPath(shape);
-        if (shape.hasTransform() || frameItem.hasClipPath()) {
-          canvas.save();
-        }
-        if (shape.hasTransform()) {
-          canvas.transform(Float64List.fromList([
-            shape.transform.a,
-            shape.transform.b,
-            0.0,
-            0.0,
-            shape.transform.c,
-            shape.transform.d,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0,
-            0.0,
-            shape.transform.tx,
-            shape.transform.ty,
-            0.0,
-            1.0
-          ].toList()));
-        }
-        if (frameItem.hasClipPath()) {
-          canvas.clipPath(this.buildDPath(frameItem.clipPath));
-        }
-        final fill = shape.styles?.fill;
-        if (fill != null) {
-          final paint = Paint();
-          paint.isAntiAlias = true;
-          paint.style = PaintingStyle.fill;
+      if (frameItem.hasClipPath()) {
+        canvas.clipPath(this.buildDPath(frameItem.clipPath));
+      }
+      final fill = shape.styles?.fill;
+      if (fill != null) {
+        final paint = Paint();
+        paint.isAntiAlias = true;
+        paint.style = PaintingStyle.fill;
+        paint.color = Color.fromARGB(
+          (fill.a * frameItem.alpha * 255).toInt(),
+          (fill.r * 255).toInt(),
+          (fill.g * 255).toInt(),
+          (fill.b * 255).toInt(),
+        );
+        canvas.drawPath(path, paint);
+      }
+      final strokeWidth = shape.styles?.strokeWidth;
+      if (strokeWidth != null && strokeWidth > 0) {
+        final paint = Paint();
+        paint.style = PaintingStyle.stroke;
+        if (shape.styles.stroke != null) {
           paint.color = Color.fromARGB(
-            (fill.a * frameItem.alpha * 255).toInt(),
-            (fill.r * 255).toInt(),
-            (fill.g * 255).toInt(),
-            (fill.b * 255).toInt(),
+            (shape.styles.stroke.a * frameItem.alpha * 255).toInt(),
+            (shape.styles.stroke.r * 255).toInt(),
+            (shape.styles.stroke.g * 255).toInt(),
+            (shape.styles.stroke.b * 255).toInt(),
           );
+        }
+        paint.strokeWidth = strokeWidth;
+        final lineCap = shape.styles?.lineCap;
+        if (lineCap != null) {
+          switch (lineCap) {
+            case ShapeEntity_ShapeStyle_LineCap.LineCap_BUTT:
+              paint.strokeCap = StrokeCap.butt;
+              break;
+            case ShapeEntity_ShapeStyle_LineCap.LineCap_ROUND:
+              paint.strokeCap = StrokeCap.round;
+              break;
+            case ShapeEntity_ShapeStyle_LineCap.LineCap_SQUARE:
+              paint.strokeCap = StrokeCap.square;
+              break;
+            default:
+          }
+        }
+        final lineJoin = shape.styles?.lineJoin;
+        if (lineJoin != null) {
+          switch (lineJoin) {
+            case ShapeEntity_ShapeStyle_LineJoin.LineJoin_MITER:
+              paint.strokeJoin = StrokeJoin.miter;
+              break;
+            case ShapeEntity_ShapeStyle_LineJoin.LineJoin_ROUND:
+              paint.strokeJoin = StrokeJoin.round;
+              break;
+            case ShapeEntity_ShapeStyle_LineJoin.LineJoin_BEVEL:
+              paint.strokeJoin = StrokeJoin.bevel;
+              break;
+            default:
+          }
+        }
+        paint.strokeMiterLimit = shape.styles?.miterLimit ?? 0.0;
+        List<double> lineDash = [
+          shape.styles?.lineDashI ?? 0.0,
+          shape.styles?.lineDashII ?? 0.0,
+          shape.styles?.lineDashIII ?? 0.0
+        ];
+        if (lineDash[0] > 0 || lineDash[1] > 0) {
+          canvas.drawPath(
+              dashPath(
+                path,
+                dashArray: CircularIntervalList([
+                  lineDash[0] < 1.0 ? 1.0 : lineDash[0],
+                  lineDash[1] < 0.1 ? 0.1 : lineDash[1],
+                ]),
+                dashOffset: DashOffset.absolute(lineDash[2]),
+              ),
+              paint);
+        } else {
           canvas.drawPath(path, paint);
         }
-        final strokeWidth = shape.styles?.strokeWidth;
-        if (strokeWidth != null && strokeWidth > 0) {
-          final paint = Paint();
-          paint.style = PaintingStyle.stroke;
-          if (shape.styles.stroke != null) {
-            paint.color = Color.fromARGB(
-              (shape.styles.stroke.a * frameItem.alpha * 255).toInt(),
-              (shape.styles.stroke.r * 255).toInt(),
-              (shape.styles.stroke.g * 255).toInt(),
-              (shape.styles.stroke.b * 255).toInt(),
-            );
-          }
-          paint.strokeWidth = strokeWidth;
-          final lineCap = shape.styles?.lineCap;
-          if (lineCap != null) {
-            switch (lineCap) {
-              case ShapeEntity_ShapeStyle_LineCap.LineCap_BUTT:
-                paint.strokeCap = StrokeCap.butt;
-                break;
-              case ShapeEntity_ShapeStyle_LineCap.LineCap_ROUND:
-                paint.strokeCap = StrokeCap.round;
-                break;
-              case ShapeEntity_ShapeStyle_LineCap.LineCap_SQUARE:
-                paint.strokeCap = StrokeCap.square;
-                break;
-              default:
-            }
-          }
-          final lineJoin = shape.styles?.lineJoin;
-          if (lineJoin != null) {
-            switch (lineJoin) {
-              case ShapeEntity_ShapeStyle_LineJoin.LineJoin_MITER:
-                paint.strokeJoin = StrokeJoin.miter;
-                break;
-              case ShapeEntity_ShapeStyle_LineJoin.LineJoin_ROUND:
-                paint.strokeJoin = StrokeJoin.round;
-                break;
-              case ShapeEntity_ShapeStyle_LineJoin.LineJoin_BEVEL:
-                paint.strokeJoin = StrokeJoin.bevel;
-                break;
-              default:
-            }
-          }
-          paint.strokeMiterLimit = shape.styles?.miterLimit ?? 0.0;
-          List<double> lineDash = [
-            shape.styles?.lineDashI ?? 0.0,
-            shape.styles?.lineDashII ?? 0.0,
-            shape.styles?.lineDashIII ?? 0.0
-          ];
-          if (lineDash[0] > 0 || lineDash[1] > 0) {
-            canvas.drawPath(
-                dashPath(
-                  path,
-                  dashArray: CircularIntervalList([
-                    lineDash[0] < 1.0 ? 1.0 : lineDash[0],
-                    lineDash[1] < 0.1 ? 0.1 : lineDash[1],
-                  ]),
-                  dashOffset: DashOffset.absolute(lineDash[2]),
-                ),
-                paint);
-          } else {
-            canvas.drawPath(path, paint);
-          }
-          if (sprite.imageKey != null &&
-              this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] !=
-                  null) {
-            this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
-                canvas, this.currentFrame);
-          }
+        if (sprite.imageKey != null &&
+            this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] != null) {
+          this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
+              canvas, this.currentFrame);
         }
-        if (shape.hasTransform() || frameItem.hasClipPath()) {
-            canvas.restore();
-        }
-      });
-      canvas.restore();
+      }
+      if (shape.hasTransform() || frameItem.hasClipPath()) {
+        canvas.restore();
+      }
     });
+    canvas.restore();
   }
 
   static const _validMethods = 'MLHVCSQRZmlhvcsqrz';
@@ -466,48 +466,45 @@ class SVGAPainter extends CustomPainter {
     return path;
   }
 
-  void drawText(Canvas canvas, Size size) {
+  void drawText(SpriteEntity sprite, Canvas canvas, Size size) {
     if (this.videoItem.dynamicItem.dynamicText.length == 0) return;
-    this.videoItem.sprites.forEach((sprite) {
-      if (sprite.imageKey == null) return;
-      if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
-        return;
-      if (this.videoItem.dynamicItem.dynamicText[sprite.imageKey] == null)
-        return;
-      final frameItem = sprite.frames[this.currentFrame];
-      if (sprite.imageKey == "banner") {
-        canvas.save();
-        if (frameItem.hasTransform()) {
-          canvas.transform(Float64List.fromList([
-            frameItem.transform.a,
-            frameItem.transform.b,
-            0.0,
-            0.0,
-            frameItem.transform.c,
-            frameItem.transform.d,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0,
-            0.0,
-            frameItem.transform.tx,
-            frameItem.transform.ty,
-            0.0,
-            1.0
-          ].toList()));
-        }
-        TextPainter textPainter =
-            this.videoItem.dynamicItem.dynamicText[sprite.imageKey];
-        textPainter.paint(
-            canvas,
-            Offset(
-              (frameItem.layout.width - textPainter.width) / 2.0,
-              (frameItem.layout.height - textPainter.height) / 2.0,
-            ));
-        canvas.restore();
+    if (sprite.imageKey == null) return;
+    if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
+      return;
+    if (this.videoItem.dynamicItem.dynamicText[sprite.imageKey] == null) return;
+    final frameItem = sprite.frames[this.currentFrame];
+    if (sprite.imageKey == "banner") {
+      canvas.save();
+      if (frameItem.hasTransform()) {
+        canvas.transform(Float64List.fromList([
+          frameItem.transform.a,
+          frameItem.transform.b,
+          0.0,
+          0.0,
+          frameItem.transform.c,
+          frameItem.transform.d,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          frameItem.transform.tx,
+          frameItem.transform.ty,
+          0.0,
+          1.0
+        ].toList()));
       }
-    });
+      TextPainter textPainter =
+          this.videoItem.dynamicItem.dynamicText[sprite.imageKey];
+      textPainter.paint(
+          canvas,
+          Offset(
+            (frameItem.layout.width - textPainter.width) / 2.0,
+            (frameItem.layout.height - textPainter.height) / 2.0,
+          ));
+      canvas.restore();
+    }
   }
 
   @override

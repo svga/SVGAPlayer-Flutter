@@ -3,6 +3,7 @@ library svgaplayer_flutter_player;
 import 'dart:ui' as ui show Image;
 import 'dart:math';
 import 'package:flutter/widgets.dart';
+import 'package:svgaplayer_flutter/proto/svga.pb.dart';
 import 'proto/svga.pbserver.dart';
 import 'dart:typed_data';
 import 'package:path_drawing/path_drawing.dart';
