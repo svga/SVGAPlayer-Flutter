@@ -111,3 +111,9 @@ Here are many feature samples.
 * [Add text above an element.](https://github.com/yyued/SVGAPlayer-Flutter/wiki/Dynamic-Text)
 * [Hides an element dynamicaly.](https://github.com/yyued/SVGAPlayer-Flutter/wiki/Dynamic-Hidden)
 * [Use a custom drawer for element.](https://github.com/yyued/SVGAPlayer-Flutter/wiki/Dynamic-Drawer)
+
+## License
+
+[![996.ICU](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) 
+
+[Anti 996](./LICENSE)
