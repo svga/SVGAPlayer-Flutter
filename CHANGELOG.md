@@ -1,3 +1,9 @@
+#### 0.1.0 (2019-07-26)
+
+##### Feat
+
+* Add file option to SVGASimpleImage.
+
 #### 0.0.4 (2019-07-01)
 
 ##### Bug Fixes
