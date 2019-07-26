@@ -14,9 +14,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/svgaplayer_flutter/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  svgaplayer_flutter: 9f610f0c8d74ee8b94ed3482bb759c7a906defc0
+  Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
+  svgaplayer_flutter: 54a6973be40a849244ba02fdffcba9094f10f68f
 
 PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.4

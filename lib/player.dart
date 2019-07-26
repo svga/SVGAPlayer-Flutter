@@ -1,6 +1,6 @@
 library svgaplayer_flutter_player;
 
-import 'dart:ui' as ui show Image;
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/widgets.dart';
 import 'package:svgaplayer_flutter/proto/svga.pb.dart';

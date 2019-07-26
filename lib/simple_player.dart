@@ -1,15 +1,20 @@
 part of svgaplayer_flutter_player;
 
 class SVGASimpleImage extends StatefulWidget {
-  String resUrl;
-  String assetsName;
+  final String resUrl;
+  final String assetsName;
+  final File file;
 
-  SVGASimpleImage({this.resUrl, this.assetsName});
+  SVGASimpleImage({this.resUrl, this.assetsName, this.file})
+      : super(key: Key(resUrl ?? assetsName ?? file.toString()));
 
   @override
   State<StatefulWidget> createState() {
     return _SVGASimpleImageState(
-        resUrl: this.resUrl, assetsName: this.assetsName);
+      resUrl: this.resUrl,
+      assetsName: this.assetsName,
+      file: file,
+    );
   }
 }
 
@@ -17,7 +22,7 @@ class _SVGASimpleImageState extends State<SVGASimpleImage>
     with SingleTickerProviderStateMixin {
   SVGAAnimationController animationController;
 
-  _SVGASimpleImageState({String resUrl, String assetsName}) {
+  _SVGASimpleImageState({String resUrl, String assetsName, File file}) {
     if (resUrl != null) {
       SVGAParser.shared.decodeFromURL(resUrl).then((videoItem) {
         this.animationController
@@ -26,6 +31,14 @@ class _SVGASimpleImageState extends State<SVGASimpleImage>
       });
     } else if (assetsName != null) {
       SVGAParser.shared.decodeFromAssets(assetsName).then((videoItem) {
+        this.animationController
+          ..videoItem = videoItem
+          ..repeat();
+      });
+    } else if (file != null) {
+      SVGAParser.shared
+          .decodeFromBuffer(file.readAsBytesSync())
+          .then((videoItem) {
         this.animationController
           ..videoItem = videoItem
           ..repeat();
