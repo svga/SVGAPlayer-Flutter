@@ -5,16 +5,12 @@ class SVGASimpleImage extends StatefulWidget {
   final String assetsName;
   final File file;
 
-  SVGASimpleImage({this.resUrl, this.assetsName, this.file})
-      : super(key: Key(resUrl ?? assetsName ?? file.toString()));
+  SVGASimpleImage({Key key, this.resUrl, this.assetsName, this.file})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _SVGASimpleImageState(
-      resUrl: this.resUrl,
-      assetsName: this.assetsName,
-      file: file,
-    );
+    return _SVGASimpleImageState();
   }
 }
 
@@ -22,38 +18,38 @@ class _SVGASimpleImageState extends State<SVGASimpleImage>
     with SingleTickerProviderStateMixin {
   SVGAAnimationController animationController;
 
-  _SVGASimpleImageState({String resUrl, String assetsName, File file}) {
-    if (resUrl != null) {
-      SVGAParser.shared.decodeFromURL(resUrl).then((videoItem) {
-        this.animationController
-          ..videoItem = videoItem
-          ..repeat();
-      });
-    } else if (assetsName != null) {
-      SVGAParser.shared.decodeFromAssets(assetsName).then((videoItem) {
-        this.animationController
-          ..videoItem = videoItem
-          ..repeat();
-      });
-    } else if (file != null) {
-      SVGAParser.shared
-          .decodeFromBuffer(file.readAsBytesSync())
-          .then((videoItem) {
-        this.animationController
-          ..videoItem = videoItem
-          ..repeat();
-      });
-    }
-  }
-
   @override
   void initState() {
-    this.animationController = SVGAAnimationController(vsync: this);
     super.initState();
+    this.animationController = SVGAAnimationController(vsync: this);
+    Future decode;
+    if (widget.resUrl != null) {
+      decode = SVGAParser.shared.decodeFromURL(widget.resUrl);
+    } else if (widget.assetsName != null) {
+      decode = SVGAParser.shared.decodeFromAssets(widget.assetsName);
+    } else if (widget.file != null) {
+      decode = widget.file.readAsBytes().then((bytes) {
+        return SVGAParser.shared.decodeFromBuffer(bytes);
+      });
+    }
+    decode.then((videoItem) {
+      if (mounted) {
+        this.animationController
+          ..videoItem = videoItem
+          ..repeat();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return SVGAImage(this.animationController);
+  }
+
+  @override
+  void dispose() {
+    this.animationController.videoItem = null;
+    this.animationController.dispose();
+    super.dispose();
   }
 }
