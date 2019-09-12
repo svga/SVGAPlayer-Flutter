@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  protobuf: ^0.13.4
+  protobuf: ">=0.13.4 <0.13.16"
   http: ^0.12.0+1
   path_drawing: ^0.4.0
 
