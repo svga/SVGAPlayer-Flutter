@@ -1,3 +1,9 @@
+#### 0.1.1 (2019-09-12)
+
+##### Chores
+
+* Lock protobuf version < 0.13.16, because 0.13.16 leads build fail.
+
 #### 0.1.0 (2019-07-26)
 
 ##### Feat
