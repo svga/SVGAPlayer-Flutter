@@ -115,7 +115,7 @@ packages:
       name: protobuf
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.13.15"
+    version: "1.0.1"
   quiver:
     dependency: transitive
     description:
@@ -162,7 +162,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.1.1"
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:
