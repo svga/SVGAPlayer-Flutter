@@ -473,38 +473,36 @@ class SVGAPainter extends CustomPainter {
       return;
     if (this.videoItem.dynamicItem.dynamicText[sprite.imageKey] == null) return;
     final frameItem = sprite.frames[this.currentFrame];
-    if (sprite.imageKey == "banner") {
-      canvas.save();
-      if (frameItem.hasTransform()) {
-        canvas.transform(Float64List.fromList([
-          frameItem.transform.a,
-          frameItem.transform.b,
-          0.0,
-          0.0,
-          frameItem.transform.c,
-          frameItem.transform.d,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          0.0,
-          frameItem.transform.tx,
-          frameItem.transform.ty,
-          0.0,
-          1.0
-        ].toList()));
-      }
-      TextPainter textPainter =
-          this.videoItem.dynamicItem.dynamicText[sprite.imageKey];
-      textPainter.paint(
-          canvas,
-          Offset(
-            (frameItem.layout.width - textPainter.width) / 2.0,
-            (frameItem.layout.height - textPainter.height) / 2.0,
-          ));
-      canvas.restore();
+    canvas.save();
+    if (frameItem.hasTransform()) {
+      canvas.transform(Float64List.fromList([
+        frameItem.transform.a,
+        frameItem.transform.b,
+        0.0,
+        0.0,
+        frameItem.transform.c,
+        frameItem.transform.d,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        frameItem.transform.tx,
+        frameItem.transform.ty,
+        0.0,
+        1.0
+      ].toList()));
     }
+    TextPainter textPainter =
+        this.videoItem.dynamicItem.dynamicText[sprite.imageKey];
+    textPainter.paint(
+        canvas,
+        Offset(
+          (frameItem.layout.width - textPainter.width) / 2.0,
+          (frameItem.layout.height - textPainter.height) / 2.0,
+        ));
+    canvas.restore();
   }
 
   @override

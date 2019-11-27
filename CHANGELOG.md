@@ -1,3 +1,7 @@
+#### 1.0.1 (2019-11-27)
+
+* Fix an issue about setText.
+
 #### 1.0.0 (2019-11-19)
 
 * Use protobuf `^1.0.0`
