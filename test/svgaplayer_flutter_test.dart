@@ -1,17 +1,10 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:svgaplayer_flutter/svgaplayer_flutter.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('svgaplayer_flutter');
-
-  setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
-    });
-  });
-
-  tearDown(() {
-    channel.setMockMethodCallHandler(null);
+  test("decodeFromURL", () async {
+    var decoded = await SVGAParser.shared.decodeFromURL(
+        "https://github.com/svga/SVGA-Samples/raw/master/EmptyState.svga");
+    decoded.check();
   });
 }

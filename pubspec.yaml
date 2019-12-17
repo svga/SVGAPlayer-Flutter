@@ -17,8 +17,3 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-flutter:
-  plugin:
-    androidPackage: com.opensource.svgaplayer_flutter
-    pluginClass: SvgaplayerFlutterPlugin
