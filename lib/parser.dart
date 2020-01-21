@@ -1,4 +1,7 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:io' if (dart.library.html) "pako/pako.dart";
+import 'dart:typed_data';
+
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart';
@@ -44,7 +47,7 @@ class SVGAParser {
   Future<MovieEntity> prepareResources(MovieEntity movieItem) async {
     for (var item in movieItem.images.entries) {
       try {
-        movieItem.bitmapCache[item.key] = await decodeImageFromList(item.value);
+        movieItem.bitmapCache[item.key] = await decodeImageFromList(Uint8List.fromList(item.value));
       } catch (e) {}
     }
     return movieItem;
