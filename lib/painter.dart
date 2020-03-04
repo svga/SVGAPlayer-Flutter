@@ -146,13 +146,17 @@ class SVGAPainter extends CustomPainter {
       ].toList()));
     }
     final bitmapPaint = Paint();
+    bitmapPaint.filterQuality = FilterQuality.low;//解决bitmap锯齿问题
     bitmapPaint.isAntiAlias = true;
     bitmapPaint.color =
         Color.fromARGB((frameItem.alpha * 255.0).toInt(), 255, 255, 255);
     if (frameItem.hasClipPath()) {
       canvas.clipPath(this.buildDPath(frameItem.clipPath));
     }
-    canvas.drawImage(bitmap, Offset.zero, bitmapPaint);
+    // canvas.drawImage(bitmap, Offset.zero, bitmapPaint);
+    Rect srcRect = Rect.fromLTWH(0, 0, bitmap.width.toDouble(), bitmap.height.toDouble());
+    Rect dstRect = Rect.fromLTWH(0, 0, frameItem.layout.width, frameItem.layout.height);
+    canvas.drawImageRect(bitmap, srcRect, dstRect, bitmapPaint);
     if (this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] != null) {
       this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
           canvas, this.currentFrame);
