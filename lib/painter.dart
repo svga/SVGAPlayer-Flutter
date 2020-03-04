@@ -153,7 +153,10 @@ class SVGAPainter extends CustomPainter {
     if (frameItem.hasClipPath()) {
       canvas.clipPath(this.buildDPath(frameItem.clipPath));
     }
-    canvas.drawImage(bitmap, Offset.zero, bitmapPaint);
+    // canvas.drawImage(bitmap, Offset.zero, bitmapPaint);
+    Rect srcRect = Rect.fromLTWH(0, 0, bitmap.width.toDouble(), bitmap.height.toDouble());
+    Rect dstRect = Rect.fromLTWH(0, 0, frameItem.layout.width, frameItem.layout.height);
+    canvas.drawImageRect(bitmap, srcRect, dstRect, bitmapPaint);
     if (this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] != null) {
       this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
           canvas, this.currentFrame);
