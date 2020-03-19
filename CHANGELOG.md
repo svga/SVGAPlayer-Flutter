@@ -1,3 +1,8 @@
+#### 1.1.0 (2020-03-19)
+
+* 修复 bitmap 锯齿问题和 dynamicItem frame 问题
+* fix: Keep type shape error parsed.
+
 #### 1.0.1 (2019-11-27)
 
 * Fix an issue about setText.
