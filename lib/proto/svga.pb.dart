@@ -850,7 +850,7 @@ class FrameEntity extends $pb.GeneratedMessage {
   void clearClipPath() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.List<ShapeEntity> get shapes => $_getList(4);
+  $core.List<ShapeEntity> get shapes => this._shapes ?? $_getList(4);
 
   List<ShapeEntity> _shapes;
   set shapes(List<ShapeEntity> value) => this._shapes =value;
