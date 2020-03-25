@@ -471,12 +471,14 @@ class SVGAPainter extends CustomPainter {
   }
 
   void drawText(SpriteEntity sprite, Canvas canvas, Size size) {
+
     if (this.videoItem.dynamicItem.dynamicText.length == 0) return;
     if (sprite.imageKey == null) return;
     if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
       return;
     if (this.videoItem.dynamicItem.dynamicText[sprite.imageKey] == null) return;
     final frameItem = sprite.frames[this.currentFrame];
+    if (frameItem.layout.width <= 0 || frameItem.layout.height <= 0) return;
     canvas.save();
     if (frameItem.hasTransform()) {
       canvas.transform(Float64List.fromList([
