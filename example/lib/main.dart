@@ -11,7 +11,7 @@ class ExampleApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
-  final samples = [
+  final samples = const <String>[
     "assets/angel.svga",
     "assets/pin_jump.svga",
     "https://github.com/svga/SVGA-Samples/raw/master/EmptyState.svga",
@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
     "https://github.com/svga/SVGA-Samples/raw/master/mutiMatte.svga",
     "https://github.com/svga/SVGA-Samples/raw/master/posche.svga",
     "https://github.com/svga/SVGA-Samples/raw/master/rose.svga",
-  ].map((e)=> [e.split('/').last, e]).toList(growable: false);
+  ].map((e) => [e.split('/').last, e]).toList(growable: false);
 
   @override
   Widget build(BuildContext context) {
@@ -73,13 +73,16 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
   @override
   void initState() {
     super.initState();
-    this.animationController = SVGAAnimationController(vsync: this);
+    this.animationController = SVGAAnimationController(vsync: this)
+      ..addListener(() {
+        // refresh 
+        setState(() {});
+      });
     this._loadAnimation();
   }
 
   @override
   void dispose() {
-    this.animationController.videoItem = null;
     this.animationController.dispose();
     super.dispose();
   }
@@ -96,9 +99,10 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
   }
 
   void _playAnimation() {
-    animationController
-        .repeat()
-        .whenComplete(() => animationController.videoItem = null);
+    if (animationController.isCompleted) {
+      animationController.reset();
+    }
+    animationController.repeat(); // or animationController.forward();
   }
 
   @override
@@ -115,7 +119,20 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
             child: isLoading
                 ? CircularProgressIndicator()
                 : SVGAImage(this.animationController),
-          )
+          ),
+          Positioned(
+            bottom: 0,
+              child: Slider(
+                value: animationController.value,
+                onChanged: (v) {
+                  if (animationController.isAnimating) {
+                    animationController.stop();
+                  }
+                  setState(() {
+                    animationController.value = v;
+                  });
+                },
+              )),
         ],
       ),
       floatingActionButton: isLoading || animationController.videoItem == null
