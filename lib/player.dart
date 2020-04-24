@@ -2,6 +2,7 @@ library svgaplayer_flutter_player;
 
 import 'dart:io';
 import 'dart:math';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:svgaplayer_flutter/proto/svga.pb.dart';
 import 'proto/svga.pbserver.dart';
@@ -20,12 +21,15 @@ class SVGAImage extends StatefulWidget {
     this._controller, {
     this.fit = BoxFit.contain,
     this.clearsAfterStop = true,
-  });
+  }) : assert(_controller != null, 'AnimationController should not be null!');
 
   @override
-  State<StatefulWidget> createState() {
-    return _SVGAImageState(this._controller,
-        clearsAfterStop: this.clearsAfterStop);
+  State<StatefulWidget> createState() => _SVGAImageState();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<Listenable>('controller', _controller));
   }
 }
 
@@ -34,78 +38,106 @@ class SVGAAnimationController extends AnimationController {
   bool _canvasNeedsClear = false;
 
   SVGAAnimationController({@required TickerProvider vsync})
-      : super(vsync: vsync);
+      : super(vsync: vsync, duration: Duration.zero);
 
   set videoItem(MovieEntity value) {
-    if (this.isAnimating) {
-      this.stop();
+    if (isAnimating) {
+      stop();
     }
-    this.clear();
+    clear();
     this._videoItem = value;
     if (value != null) {
+      final movieParams = value.params;
+      assert(movieParams.viewBoxWidth >= 0 || movieParams.viewBoxHeight >= 0,
+          "Invalid SVGA file!");
       this.duration = Duration(
-          milliseconds: (this._videoItem.params.frames /
-                  this._videoItem.params.fps *
-                  1000)
-              .toInt());
+          milliseconds: (movieParams.frames / movieParams.fps * 1000).toInt());
     } else {
-      this.duration = Duration(milliseconds: 0);
+      this.duration = Duration.zero;
     }
   }
 
   MovieEntity get videoItem => this._videoItem;
 
+  /// mark [SVGAPainter] needs clear
   void clear() {
     this._canvasNeedsClear = true;
     this.notifyListeners();
   }
+
+  @override
+  TickerFuture forward({double from}) {
+    assert(_videoItem != null,
+        'SVGAAnimationController.forward() called after dispose()?');
+    return super.forward(from: from);
+  }
+
+  @override
+  void dispose() {
+    videoItem = null;
+    super.dispose();
+  }
 }
 
 class _SVGAImageState extends State<SVGAImage> {
-  final SVGAAnimationController _animationController;
-  final bool clearsAfterStop;
-
-  _SVGAImageState(this._animationController, {this.clearsAfterStop}) {
-    this._animationController.addListener(_setState);
-    this._animationController.addStatusListener(_clearAnimation);
+  @override
+  void initState() {
+    super.initState();
+    widget._controller.addListener(_handleChange);
+    widget._controller.addStatusListener(_handleStatusChange);
   }
 
-  void _setState() {
-    if (mounted) {
-      this.setState(() {});
+  @override
+  void didUpdateWidget(SVGAImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget._controller != widget._controller) {
+      oldWidget._controller.removeListener(_handleChange);
+      oldWidget._controller.removeStatusListener(_handleStatusChange);
+      widget._controller.addListener(_handleChange);
+      widget._controller.addStatusListener(_handleStatusChange);
     }
   }
-  void _clearAnimation(AnimationStatus status) {
-    if (status == AnimationStatus.completed && this.clearsAfterStop) {
-      this._animationController.clear();
+
+  void _handleChange() {
+    if (mounted) {
+      setState(() {
+        // rebuild
+      });
+    }
+  }
+
+  void _handleStatusChange(AnimationStatus status) {
+    if (status == AnimationStatus.completed && widget.clearsAfterStop) {
+      widget._controller.clear();
     }
   }
 
   @override
   void dispose() {
-    this._animationController.removeListener(_setState);
-    this._animationController.removeStatusListener(_clearAnimation);
+    widget._controller.removeListener(_handleChange);
+    widget._controller.removeStatusListener(_handleStatusChange);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (this._animationController.videoItem == null) {
+    final controller = widget._controller;
+    final video = controller.videoItem;
+    if (widget._controller.videoItem == null) {
       return Container();
     }
-    final needsClear = this._animationController._canvasNeedsClear;
-    this._animationController._canvasNeedsClear = false;
+    final needsClear = controller._canvasNeedsClear;
+    controller._canvasNeedsClear = false;
     return CustomPaint(
-      painter: new SVGAPainter(
-        this._animationController.videoItem,
-        SVGAPainter.calculateCurrentFrame(this._animationController.videoItem,
-            this._animationController.value),
-        fit: this.widget.fit,
+      painter: SVGAPainter(
+        video,
+        SVGAPainter.calculateCurrentFrame(video, controller.value),
+        fit: widget.fit,
         clear: needsClear,
       ),
       size: Size(
-        this.widget._controller.videoItem.params.viewBoxWidth,
-        this.widget._controller.videoItem.params.viewBoxHeight,
+        video.params.viewBoxWidth,
+        video.params.viewBoxHeight,
       ),
     );
   }

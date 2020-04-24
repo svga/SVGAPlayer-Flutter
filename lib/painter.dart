@@ -2,7 +2,7 @@ part of svgaplayer_flutter_player;
 
 class SVGAPainter extends CustomPainter {
   final MovieEntity videoItem;
-  int currentFrame = 0;
+  final int currentFrame;
   final BoxFit fit;
   final bool clear;
 
@@ -14,7 +14,10 @@ class SVGAPainter extends CustomPainter {
     );
   }
 
-  SVGAPainter(this.videoItem, this.currentFrame, {this.fit, this.clear});
+  const SVGAPainter(this.videoItem, this.currentFrame, {BoxFit fit, bool clear})
+      : this.fit = fit ?? BoxFit.contain,
+        this.clear = clear ?? false,
+        assert(videoItem != null, 'No videoItem present!');
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -146,7 +149,7 @@ class SVGAPainter extends CustomPainter {
       ].toList()));
     }
     final bitmapPaint = Paint();
-    bitmapPaint.filterQuality = FilterQuality.low;//解决bitmap锯齿问题
+    bitmapPaint.filterQuality = FilterQuality.low; //解决bitmap锯齿问题
     bitmapPaint.isAntiAlias = true;
     bitmapPaint.color =
         Color.fromARGB((frameItem.alpha * 255.0).toInt(), 255, 255, 255);
@@ -154,8 +157,10 @@ class SVGAPainter extends CustomPainter {
       canvas.clipPath(this.buildDPath(frameItem.clipPath));
     }
     // canvas.drawImage(bitmap, Offset.zero, bitmapPaint);
-    Rect srcRect = Rect.fromLTWH(0, 0, bitmap.width.toDouble(), bitmap.height.toDouble());
-    Rect dstRect = Rect.fromLTWH(0, 0, frameItem.layout.width, frameItem.layout.height);
+    Rect srcRect =
+        Rect.fromLTRB(0, 0, bitmap.width.toDouble(), bitmap.height.toDouble());
+    Rect dstRect =
+        Rect.fromLTRB(0, 0, frameItem.layout.width, frameItem.layout.height);
     canvas.drawImageRect(bitmap, srcRect, dstRect, bitmapPaint);
     if (this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] != null) {
       this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey](
@@ -471,7 +476,6 @@ class SVGAPainter extends CustomPainter {
   }
 
   void drawText(SpriteEntity sprite, Canvas canvas, Size size) {
-
     if (this.videoItem.dynamicItem.dynamicText.length == 0) return;
     if (sprite.imageKey == null) return;
     if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
