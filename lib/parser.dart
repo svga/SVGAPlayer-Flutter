@@ -1,26 +1,26 @@
-import 'dart:io';
-import 'package:flutter/painting.dart';
+import 'dart:io' show zlib;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart' show decodeImageFromList;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:http/http.dart';
+import 'package:http/http.dart' show get;
 import 'proto/svga.pbserver.dart';
 
 class SVGAParser {
-  static final shared = SVGAParser();
-
-  final _zLibCodec = ZLibCodec();
+  const SVGAParser();
+  static const shared = SVGAParser();
 
   Future<MovieEntity> decodeFromURL(String url) async {
     final response = await get(url);
-    return await this.decodeFromBuffer(response.bodyBytes);
+    return decodeFromBuffer(response.bodyBytes);
   }
 
   Future<MovieEntity> decodeFromAssets(String path) async {
-    return this.decodeFromBuffer((await rootBundle.load(path)).buffer.asUint8List());
+    return decodeFromBuffer((await rootBundle.load(path)).buffer.asUint8List());
   }
 
-  Future<MovieEntity> decodeFromBuffer(List<int> bytes) async {
-    final inflatedBytes = this._zLibCodec.decode(bytes);
-    return await prepareResources(
+  Future<MovieEntity> decodeFromBuffer(List<int> bytes) {
+    final inflatedBytes = zlib.decode(bytes);
+    return prepareResources(
         processShapeItems(MovieEntity.fromBuffer(inflatedBytes)));
   }
 
@@ -45,7 +45,20 @@ class SVGAParser {
     for (var item in movieItem.images.entries) {
       try {
         movieItem.bitmapCache[item.key] = await decodeImageFromList(item.value);
-      } catch (e) {}
+      } catch (e, stack) {
+        assert(() {
+          FlutterError.reportError(FlutterErrorDetails(
+            exception: e,
+            stack: stack,
+            library: 'svgaplayer',
+            context: ErrorDescription('during prepare resource'),
+            informationCollector: () sync* {
+              yield ErrorSummary('Decoding image failed.');
+            },
+          ));
+          return true;
+        }());
+      }
     }
     return movieItem;
   }
