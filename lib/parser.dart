@@ -65,13 +65,14 @@ class SVGAParser {
   }
 
   Future<MovieEntity> prepareResources(MovieEntity movieItem,
-      {TimelineTask timeline}) async {
-    for (final item in movieItem.images.entries) {
+      {TimelineTask timeline}) {
+    final images = movieItem.images;
+    if (images.isEmpty) return Future.value(movieItem);
+    return Future.wait(images.entries.map((item) async {
       // result null means a decoding error occurred
       movieItem.bitmapCache[item.key] =
           await _decodeImageItem(item.key, item.value, timeline: timeline);
-    }
-    return movieItem;
+    })).then((_) => movieItem);
   }
 
   Future<ui.Image> _decodeImageItem(String key, Uint8List bytes,
