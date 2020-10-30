@@ -327,7 +327,8 @@ class SVGAPainter extends CustomPainter {
       final yv = args.y ?? 0.0;
       final rxv = args.radiusX ?? 0.0;
       final ryv = args.radiusY ?? 0.0;
-      path.addOval(Rect.fromLTWH(xv - rxv, yv - ryv, rxv * 2, ryv * 2));
+      final rect = Rect.fromLTWH(xv - rxv, yv - ryv, rxv * 2, ryv * 2);
+      if (!rect.isEmpty) path.addOval(rect);
     } else if (shape.type == ShapeEntity_ShapeType.RECT) {
       final args = shape.rect;
       final xv = args.x ?? 0.0;
@@ -335,8 +336,9 @@ class SVGAPainter extends CustomPainter {
       final wv = args.width ?? 0.0;
       final hv = args.height ?? 0.0;
       final crv = args.cornerRadius ?? 0.0;
-      path.addRRect(RRect.fromRectAndRadius(
-          Rect.fromLTWH(xv, yv, wv, hv), Radius.circular(crv)));
+      final rrect = RRect.fromRectAndRadius(
+          Rect.fromLTWH(xv, yv, wv, hv), Radius.circular(crv));
+      if (!rrect.isEmpty) path.addRRect(rrect);
     }
     return path;
   }
