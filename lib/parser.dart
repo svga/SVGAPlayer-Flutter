@@ -1,9 +1,14 @@
+import 'dart:developer';
+import 'dart:ui' as ui;
 import 'dart:io' show zlib;
+import 'dart:typed_data' show Uint8List;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart' show decodeImageFromList;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' show get;
 import 'proto/svga.pbserver.dart';
+
+const _filterKey = 'SVGAParser';
 
 class SVGAParser {
   const SVGAParser();
@@ -19,9 +24,27 @@ class SVGAParser {
   }
 
   Future<MovieEntity> decodeFromBuffer(List<int> bytes) {
+    TimelineTask timeline;
+    if (!kReleaseMode) {
+      timeline = TimelineTask(filterKey: _filterKey)
+        ..start('DecodeFromBuffer', arguments: {'length': bytes.length});
+    }
     final inflatedBytes = zlib.decode(bytes);
+    if (timeline != null) {
+      timeline.instant('MovieEntity.fromBuffer()',
+          arguments: {'inflatedLength': inflatedBytes.length});
+    }
+    final movie = MovieEntity.fromBuffer(inflatedBytes);
+    if (timeline != null) {
+      timeline.instant('prepareResources()',
+          arguments: {'images': movie.images.keys.join(',')});
+    }
     return prepareResources(
-        processShapeItems(MovieEntity.fromBuffer(inflatedBytes)));
+      processShapeItems(movie),
+      timeline: timeline,
+    ).whenComplete(() {
+      if (timeline != null) timeline.finish();
+    });
   }
 
   MovieEntity processShapeItems(MovieEntity movieItem) {
@@ -41,25 +64,49 @@ class SVGAParser {
     return movieItem;
   }
 
-  Future<MovieEntity> prepareResources(MovieEntity movieItem) async {
-    for (var item in movieItem.images.entries) {
-      try {
-        movieItem.bitmapCache[item.key] = await decodeImageFromList(item.value);
-      } catch (e, stack) {
-        assert(() {
-          FlutterError.reportError(FlutterErrorDetails(
-            exception: e,
-            stack: stack,
-            library: 'svgaplayer',
-            context: ErrorDescription('during prepare resource'),
-            informationCollector: () sync* {
-              yield ErrorSummary('Decoding image failed.');
-            },
-          ));
-          return true;
-        }());
-      }
+  Future<MovieEntity> prepareResources(MovieEntity movieItem,
+      {TimelineTask timeline}) {
+    final images = movieItem.images;
+    if (images.isEmpty) return Future.value(movieItem);
+    return Future.wait(images.entries.map((item) async {
+      // result null means a decoding error occurred
+      movieItem.bitmapCache[item.key] =
+          await _decodeImageItem(item.key, item.value, timeline: timeline);
+    })).then((_) => movieItem);
+  }
+
+  Future<ui.Image> _decodeImageItem(String key, Uint8List bytes,
+      {TimelineTask timeline}) async {
+    TimelineTask task;
+    if (!kReleaseMode) {
+      task = TimelineTask(filterKey: _filterKey, parent: timeline)
+        ..start('DecodeImage', arguments: {'key': key, 'length': bytes.length});
     }
-    return movieItem;
+    try {
+      final image = await decodeImageFromList(bytes);
+      if (task != null) {
+        task.finish(
+          arguments: {'imageSize': '${image.width}x${image.height}'},
+        );
+      }
+      return image;
+    } catch (e, stack) {
+      if (task != null) {
+        task.finish(arguments: {'error': '$e', 'stack': '$stack'});
+      }
+      assert(() {
+        FlutterError.reportError(FlutterErrorDetails(
+          exception: e,
+          stack: stack,
+          library: 'svgaplayer',
+          context: ErrorDescription('during prepare resource'),
+          informationCollector: () sync* {
+            yield ErrorSummary('Decoding image failed.');
+          },
+        ));
+        return true;
+      }());
+      return null;
+    }
   }
 }
