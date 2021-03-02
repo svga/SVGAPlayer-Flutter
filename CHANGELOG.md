@@ -1,3 +1,8 @@
+#### 1.2.0 (2021-03-02)
+
+* Remove native plugin.
+* Improve decoding images speed.
+
 #### 1.1.0 (2020-03-19)
 
 * 修复 bitmap 锯齿问题和 dynamicItem frame 问题
