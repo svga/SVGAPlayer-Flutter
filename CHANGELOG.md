@@ -1,3 +1,8 @@
+#### 2.0.0-nullsafety.0 (2021-03-31)
+
+* Add null safety support.
+* Upgrade all dependencies.
+
 #### 1.2.0 (2021-03-02)
 
 * Remove native plugin.
