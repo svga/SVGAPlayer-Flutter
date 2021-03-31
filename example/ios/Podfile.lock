@@ -1,16 +1,3 @@
-PODS:
-  - Flutter (1.0.0)
-
-DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios`)
-
-EXTERNAL SOURCES:
-  Flutter:
-    :path: ".symlinks/flutter/ios"
-
-SPEC CHECKSUMS:
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-
 PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
 
 COCOAPODS: 1.9.1

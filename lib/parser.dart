@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart' show decodeImageFromList;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' show get;
+// ignore: import_of_legacy_library_into_null_safe
 import 'proto/svga.pbserver.dart';
 
 const _filterKey = 'SVGAParser';
@@ -15,7 +16,7 @@ class SVGAParser {
   static const shared = SVGAParser();
 
   Future<MovieEntity> decodeFromURL(String url) async {
-    final response = await get(url);
+    final response = await get(Uri.parse(url));
     return decodeFromBuffer(response.bodyBytes);
   }
 
@@ -24,7 +25,7 @@ class SVGAParser {
   }
 
   Future<MovieEntity> decodeFromBuffer(List<int> bytes) {
-    TimelineTask timeline;
+    TimelineTask? timeline;
     if (!kReleaseMode) {
       timeline = TimelineTask(filterKey: _filterKey)
         ..start('DecodeFromBuffer', arguments: {'length': bytes.length});
@@ -49,13 +50,13 @@ class SVGAParser {
 
   MovieEntity processShapeItems(MovieEntity movieItem) {
     movieItem.sprites.forEach((sprite) {
-      List<ShapeEntity> lastShape;
+      List<ShapeEntity>? lastShape;
       sprite.frames.forEach((frame) {
-        if (frame.shapes != null && frame.shapes.length > 0) {
+        if (frame.shapes.isNotEmpty && frame.shapes.length > 0) {
           if (frame.shapes[0].type == ShapeEntity_ShapeType.KEEP &&
               lastShape != null) {
             frame.shapes = lastShape;
-          } else if (frame.shapes != null) {
+          } else if (frame.shapes.isEmpty) {
             lastShape = frame.shapes;
           }
         }
@@ -65,19 +66,23 @@ class SVGAParser {
   }
 
   Future<MovieEntity> prepareResources(MovieEntity movieItem,
-      {TimelineTask timeline}) {
+      {TimelineTask? timeline}) {
     final images = movieItem.images;
     if (images.isEmpty) return Future.value(movieItem);
     return Future.wait(images.entries.map((item) async {
       // result null means a decoding error occurred
-      movieItem.bitmapCache[item.key] =
-          await _decodeImageItem(item.key, item.value, timeline: timeline);
+      final decodeImage = await _decodeImageItem(
+          item.key, Uint8List.fromList(item.value),
+          timeline: timeline);
+      if (decodeImage != null) {
+        movieItem.bitmapCache[item.key] = decodeImage;
+      }
     })).then((_) => movieItem);
   }
 
-  Future<ui.Image> _decodeImageItem(String key, Uint8List bytes,
-      {TimelineTask timeline}) async {
-    TimelineTask task;
+  Future<ui.Image?> _decodeImageItem(String key, Uint8List bytes,
+      {TimelineTask? timeline}) async {
+    TimelineTask? task;
     if (!kReleaseMode) {
       task = TimelineTask(filterKey: _filterKey, parent: timeline)
         ..start('DecodeImage', arguments: {'key': key, 'length': bytes.length});

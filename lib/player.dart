@@ -4,7 +4,9 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:svgaplayer_flutter/proto/svga.pb.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'proto/svga.pbserver.dart';
 import 'dart:typed_data';
 import 'package:path_drawing/path_drawing.dart';
@@ -21,7 +23,7 @@ class SVGAImage extends StatefulWidget {
     this._controller, {
     this.fit = BoxFit.contain,
     this.clearsAfterStop = true,
-  }) : assert(_controller != null, 'AnimationController should not be null!');
+  });
 
   @override
   State<StatefulWidget> createState() => _SVGAImageState();
@@ -34,13 +36,14 @@ class SVGAImage extends StatefulWidget {
 }
 
 class SVGAAnimationController extends AnimationController {
-  MovieEntity _videoItem;
+  MovieEntity? _videoItem;
   bool _canvasNeedsClear = false;
 
-  SVGAAnimationController({@required TickerProvider vsync})
-      : super(vsync: vsync, duration: Duration.zero);
+  SVGAAnimationController({
+    required TickerProvider vsync,
+  }) : super(vsync: vsync, duration: Duration.zero);
 
-  set videoItem(MovieEntity value) {
+  set videoItem(MovieEntity? value) {
     if (isAnimating) {
       stop();
     }
@@ -57,7 +60,7 @@ class SVGAAnimationController extends AnimationController {
     }
   }
 
-  MovieEntity get videoItem => this._videoItem;
+  MovieEntity? get videoItem => this._videoItem;
 
   /// mark [SVGAPainter] needs clear
   void clear() {
@@ -66,7 +69,7 @@ class SVGAAnimationController extends AnimationController {
   }
 
   @override
-  TickerFuture forward({double from}) {
+  TickerFuture forward({double? from}) {
     assert(_videoItem != null,
         'SVGAAnimationController.forward() called after dispose()?');
     return super.forward(from: from);
@@ -123,7 +126,7 @@ class _SVGAImageState extends State<SVGAImage> {
   Widget build(BuildContext context) {
     final controller = widget._controller;
     final video = controller.videoItem;
-    if (widget._controller.videoItem == null) {
+    if (video == null || widget._controller.videoItem == null) {
       return Container();
     }
     final needsClear = controller._canvasNeedsClear;

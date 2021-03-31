@@ -14,20 +14,20 @@ class HomeScreen extends StatelessWidget {
   final samples = const <String>[
     "assets/angel.svga",
     "assets/pin_jump.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/EmptyState.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/HamburgerArrow.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/PinJump.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/TwitterHeart.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/Walkthrough.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/kingset.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/halloween.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/heartbeat.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/matteBitmap.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/matteBitmap_1.x.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/matteRect.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/mutiMatte.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/posche.svga",
-    "https://github.com/svga/SVGA-Samples/raw/master/rose.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/EmptyState.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/HamburgerArrow.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/PinJump.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/TwitterHeart.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/Walkthrough.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/kingset.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/halloween.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/heartbeat.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/matteBitmap.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/matteBitmap_1.x.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/matteRect.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/mutiMatte.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/posche.svga",
+    "https://gitee.com/ponycui/SVGA-Samples/raw/master/rose.svga",
   ].map((e) => [e.split('/').last, e]).toList(growable: false);
 
   @override
@@ -54,12 +54,11 @@ class HomeScreen extends StatelessWidget {
 }
 
 class SVGASampleScreen extends StatefulWidget {
-  final String name;
+  final String? name;
   final String image;
 
-  const SVGASampleScreen({Key key, @required this.image, this.name})
-      : assert(image != null),
-        super(key: key);
+  const SVGASampleScreen({Key? key, required this.image, this.name})
+      : super(key: key);
 
   @override
   _SVGASampleScreenState createState() => _SVGASampleScreenState();
@@ -67,7 +66,7 @@ class SVGASampleScreen extends StatefulWidget {
 
 class _SVGASampleScreenState extends State<SVGASampleScreen>
     with SingleTickerProviderStateMixin {
-  SVGAAnimationController animationController;
+  SVGAAnimationController? animationController;
   bool isLoading = true;
 
   @override
@@ -75,15 +74,18 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
     super.initState();
     this.animationController = SVGAAnimationController(vsync: this)
       ..addListener(() {
-        // refresh 
-        setState(() {});
+        // refresh
+        if (mounted) {
+          setState(() {});
+        }
       });
     this._loadAnimation();
   }
 
   @override
   void dispose() {
-    this.animationController.dispose();
+    this.animationController?.dispose();
+    this.animationController = null;
     super.dispose();
   }
 
@@ -93,58 +95,59 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
     if (mounted)
       setState(() {
         this.isLoading = false;
-        this.animationController.videoItem = videoItem;
+        this.animationController?.videoItem = videoItem;
         _playAnimation();
       });
   }
 
   void _playAnimation() {
-    if (animationController.isCompleted) {
-      animationController.reset();
+    if (animationController?.isCompleted == true) {
+      animationController?.reset();
     }
-    animationController.repeat(); // or animationController.forward();
+    animationController?.repeat(); // or animationController.forward();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (this.animationController == null) return Container();
     return Scaffold(
-      appBar: AppBar(title: Text(widget.name)),
+      appBar: AppBar(title: Text(widget.name ?? "")),
       body: Stack(
         children: <Widget>[
           Container(
               padding: const EdgeInsets.all(8.0),
               child: Text("Url: ${widget.image}",
-                  style: Theme.of(context).textTheme.subtitle)),
+                  style: Theme.of(context).textTheme.subtitle2)),
           Center(
             child: isLoading
                 ? CircularProgressIndicator()
-                : SVGAImage(this.animationController),
+                : SVGAImage(this.animationController!),
           ),
           Positioned(
-            bottom: 0,
+              bottom: 0,
               child: Slider(
-                value: animationController.value,
+                value: animationController!.value,
                 onChanged: (v) {
-                  if (animationController.isAnimating) {
-                    animationController.stop();
+                  if (animationController?.isAnimating == true) {
+                    animationController?.stop();
                   }
                   setState(() {
-                    animationController.value = v;
+                    animationController?.value = v;
                   });
                 },
               )),
         ],
       ),
-      floatingActionButton: isLoading || animationController.videoItem == null
+      floatingActionButton: isLoading || animationController!.videoItem == null
           ? null
           : FloatingActionButton.extended(
-              label: Text(animationController.isAnimating ? "Pause" : "Play"),
-              icon: Icon(animationController.isAnimating
+              label: Text(animationController!.isAnimating ? "Pause" : "Play"),
+              icon: Icon(animationController!.isAnimating
                   ? Icons.pause
                   : Icons.play_arrow),
               onPressed: () {
-                if (animationController.isAnimating) {
-                  animationController.stop();
+                if (animationController?.isAnimating == true) {
+                  animationController?.stop();
                 } else {
                   _playAnimation();
                 }

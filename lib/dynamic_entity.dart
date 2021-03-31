@@ -20,7 +20,7 @@ class SVGADynamicEntity {
 
   Future<void> setImageWithUrl(String url, String forKey) async {
     this.dynamicImages[forKey] =
-        await decodeImageFromList((await get(url)).bodyBytes);
+        await decodeImageFromList((await get(Uri.parse(url))).bodyBytes);
   }
 
   void setText(TextPainter textPainter, String forKey) {
