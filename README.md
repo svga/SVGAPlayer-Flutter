@@ -2,6 +2,14 @@
 
 [简体中文](./README.zh.md)
 
+## 支持本项目
+
+如果 SVGA-Flutter 为您提供了便利与帮助，诚恳建议您通过以下方式支持作者、贡献者持续为该项目发电。
+
+1. 轻点 GitHub Star，让更多人看到该项目。
+2. 通过 [爱发电](https://afdian.net/@ponycui/plan) 月度捐赠的方式支持作者持续维护该仓库。
+3. 如果您需要更深度的技术支持服务，也可以通过上述爱发电平台，成为银牌、金牌会员，作者将为您提供单独的顾问服务。
+
 ## Introduce
 
 SVGAPlayer is a light-weight animation renderer. You use [tools](http://svga.io/designer.html) to export `svga` file from `Adobe Animate CC` or `Adobe After Effects`, and then use SVGAPlayer to render animation on mobile application.
