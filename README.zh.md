@@ -18,7 +18,7 @@
 
 ```
 dependencies:
-  svgaplayer_flutter: ^1.0.0  #latest version
+  svgaplayer_flutter: ^2.0.0  #latest version
 ```
 
 ### 放置 svga 文件

@@ -28,7 +28,7 @@ Here introduce `SVGAPlayer-Flutter` usage. Wonder exporting usage? Click [here](
 
 ```
 dependencies:
-  svgaplayer_flutter: ^0.0.1  #latest version
+  svgaplayer_flutter: ^2.0.0  #latest version
 ```
 
 ### Locate files
