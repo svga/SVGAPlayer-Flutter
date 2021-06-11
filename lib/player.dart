@@ -131,16 +131,18 @@ class _SVGAImageState extends State<SVGAImage> {
     }
     final needsClear = controller._canvasNeedsClear;
     controller._canvasNeedsClear = false;
-    return CustomPaint(
-      painter: SVGAPainter(
-        video,
-        SVGAPainter.calculateCurrentFrame(video, controller.value),
-        fit: widget.fit,
-        clear: needsClear,
-      ),
-      size: Size(
-        video.params.viewBoxWidth,
-        video.params.viewBoxHeight,
+    return IgnorePointer(
+      child: CustomPaint(
+        painter: SVGAPainter(
+          video,
+          SVGAPainter.calculateCurrentFrame(video, controller.value),
+          fit: widget.fit,
+          clear: needsClear,
+        ),
+        size: Size(
+          video.params.viewBoxWidth,
+          video.params.viewBoxHeight,
+        ),
       ),
     );
   }
