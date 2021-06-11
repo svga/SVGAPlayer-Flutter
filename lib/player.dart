@@ -79,8 +79,29 @@ class SVGAAnimationController extends AnimationController {
 
   @override
   void dispose() {
+    for (var item in _listeners) {
+      removeListener(item);
+    }
+    for (var item in _statusListeners) {
+      removeStatusListener(item);
+    }
     videoItem = null;
     super.dispose();
+  }
+
+  List<Function()> _listeners = [];
+  List<AnimationStatusListener> _statusListeners = [];
+
+  @override
+  void addListener(listener) {
+    super.addListener(listener);
+    _listeners.add(listener);
+  }
+
+  @override
+  void addStatusListener(listener) {
+    super.addStatusListener(listener);
+    _statusListeners.add(listener);
   }
 }
 
