@@ -50,6 +50,9 @@ class SVGAAnimationController extends AnimationController {
     if (value == null) {
       clear();
     }
+    if (this._videoItem != null && this._videoItem!.autorelease) {
+      this._videoItem!.dispose();
+    }
     this._videoItem = value;
     if (value != null) {
       final movieParams = value.params;
@@ -84,6 +87,9 @@ class SVGAAnimationController extends AnimationController {
     }
     for (var item in _statusListeners) {
       removeStatusListener(item);
+    }
+    if (videoItem != null && videoItem!.autorelease) {
+      videoItem!.dispose();
     }
     videoItem = null;
     super.dispose();

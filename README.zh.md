@@ -95,6 +95,22 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 }
 ```
 
+### 复用 MovieEntity
+
+`MovieEntity` 对象会在 `AnimationController` dispose 调用后，或 `AnimationController::videoItem` 赋值后，执行 `dispose` 操作。
+
+在 dispose 以后 `MovieEntity` 不可复用。
+
+如果你需要复用 `MovieEntity` 对象，赋值 `MovieEntity::autorelease` 为 `false` 即可。
+
+```dart
+final videoItem = await SVGAParser.shared.decodeFromURL(
+        "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true");
+videoItem.autorelease = false;
+```
+
+当不再需要使用资源时，你需要自行调用 `MovieEntity::dispose()` 方法。
+
 ### 缓存
 
 动画库不会管理任何缓存，你需要使用 `dio` 等网络库自行处理。

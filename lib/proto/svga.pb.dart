@@ -1765,7 +1765,16 @@ class MovieEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.List<AudioEntity> get audios => $_getList(4);
 
+  bool autorelease = true;
   SVGADynamicEntity dynamicItem = SVGADynamicEntity();
   Map<String, ui.Image> bitmapCache = {};
   Map<String, ui.Path> pathCache = {};
+  
+  void dispose() {
+    bitmapCache.values.forEach((element) { 
+      element.dispose();
+    });
+    bitmapCache.clear();
+    pathCache.clear();
+  }
 }

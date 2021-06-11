@@ -105,6 +105,22 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 }
 ```
 
+### Reuse MovieEntity
+
+The `MovieEntity` will `dispose` after `AnimationController` dispose or `AnimationController::videoItem` reset.
+
+After dispose, the `MovieEntity` can not reused.
+
+If you eager to reuse the `MovieEntity`, assign `MovieEntity::autorelease` to false.
+
+```dart
+final videoItem = await SVGAParser.shared.decodeFromURL(
+        "https://github.com/yyued/SVGA-Samples/blob/master/angel.svga?raw=true");
+videoItem.autorelease = false;
+```
+
+You need to call `MovieEntity::dispose()` method when no need to use.
+
 ### Cache
 
 We will not manage any caches, you need to use `dio` or other libraries to handle resource caches.

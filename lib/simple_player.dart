@@ -51,7 +51,6 @@ class _SVGASimpleImageState extends State<SVGASimpleImage>
 
   @override
   void dispose() {
-    this.animationController?.videoItem = null;
     this.animationController?.dispose();
     super.dispose();
   }
