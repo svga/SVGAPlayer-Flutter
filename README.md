@@ -12,17 +12,17 @@
 
 ## Introduce
 
-SVGAPlayer is a light-weight animation renderer. You use [tools](http://svga.io/designer.html) to export `svga` file from `Adobe Animate CC` or `Adobe After Effects`, and then use SVGAPlayer to render animation on mobile application.
+SVGAPlayer is a light-weight animation renderer. You use [tools](https://svga.io/designer.html) to export `svga` file from `Adobe Animate CC` or `Adobe After Effects`, and then use SVGAPlayer to render animation on mobile application.
 
 `SVGAPlayer-Flutter` render animation natively via Flutter CustomPainter, brings you a high-performance, low-cost animation experience.
 
-If wonder more information, go to this [website](http://svga.io/).
+If wonder more information, go to this [website](https://svga.io/).
 
 * SVGAPlayer-Flutter supports 2.0 format only.
 
 ## Usage
 
-Here introduce `SVGAPlayer-Flutter` usage. Wonder exporting usage? Click [here](http://svga.io/designer.html).
+Here introduce `SVGAPlayer-Flutter` usage. Wonder exporting usage? Click [here](https://svga.io/designer.html).
 
 ### Add dependency
 

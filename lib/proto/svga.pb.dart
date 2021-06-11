@@ -14,14 +14,28 @@ import 'svga.pbenum.dart';
 
 export 'svga.pbenum.dart';
 import '../dynamic_entity.dart';
+
 class MovieParams extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MovieParams', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'viewBoxWidth', $pb.PbFieldType.OF, protoName: 'viewBoxWidth')
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'viewBoxHeight', $pb.PbFieldType.OF, protoName: 'viewBoxHeight')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'MovieParams',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..a<$core.double>(
+        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'viewBoxWidth', $pb.PbFieldType.OF,
+        protoName: 'viewBoxWidth')
+    ..a<$core.double>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'viewBoxHeight',
+        $pb.PbFieldType.OF,
+        protoName: 'viewBoxHeight')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fps', $pb.PbFieldType.O3)
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frames', $pb.PbFieldType.O3)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   MovieParams._() : super();
   factory MovieParams({
@@ -45,31 +59,39 @@ class MovieParams extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory MovieParams.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MovieParams.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory MovieParams.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MovieParams.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   MovieParams clone() => MovieParams()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  MovieParams copyWith(void Function(MovieParams) updates) => super.copyWith((message) => updates(message as MovieParams)) as MovieParams; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  MovieParams copyWith(void Function(MovieParams) updates) =>
+      super.copyWith((message) => updates(message as MovieParams))
+          as MovieParams; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MovieParams create() => MovieParams._();
   MovieParams createEmptyInstance() => create();
   static $pb.PbList<MovieParams> createRepeated() => $pb.PbList<MovieParams>();
   @$core.pragma('dart2js:noInline')
-  static MovieParams getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MovieParams>(create);
+  static MovieParams getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MovieParams>(create);
   static MovieParams? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get viewBoxWidth => $_getN(0);
   @$pb.TagNumber(1)
-  set viewBoxWidth($core.double v) { $_setFloat(0, v); }
+  set viewBoxWidth($core.double v) {
+    $_setFloat(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasViewBoxWidth() => $_has(0);
   @$pb.TagNumber(1)
@@ -78,7 +100,10 @@ class MovieParams extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.double get viewBoxHeight => $_getN(1);
   @$pb.TagNumber(2)
-  set viewBoxHeight($core.double v) { $_setFloat(1, v); }
+  set viewBoxHeight($core.double v) {
+    $_setFloat(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasViewBoxHeight() => $_has(1);
   @$pb.TagNumber(2)
@@ -87,7 +112,10 @@ class MovieParams extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.int get fps => $_getIZ(2);
   @$pb.TagNumber(3)
-  set fps($core.int v) { $_setSignedInt32(2, v); }
+  set fps($core.int v) {
+    $_setSignedInt32(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasFps() => $_has(2);
   @$pb.TagNumber(3)
@@ -96,7 +124,10 @@ class MovieParams extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.int get frames => $_getIZ(3);
   @$pb.TagNumber(4)
-  set frames($core.int v) { $_setSignedInt32(3, v); }
+  set frames($core.int v) {
+    $_setSignedInt32(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasFrames() => $_has(3);
   @$pb.TagNumber(4)
@@ -104,12 +135,26 @@ class MovieParams extends $pb.GeneratedMessage {
 }
 
 class SpriteEntity extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SpriteEntity', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageKey', protoName: 'imageKey')
-    ..pc<FrameEntity>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frames', $pb.PbFieldType.PM, subBuilder: FrameEntity.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'SpriteEntity',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'imageKey',
+        protoName: 'imageKey')
+    ..pc<FrameEntity>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'frames',
+        $pb.PbFieldType.PM,
+        subBuilder: FrameEntity.create)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'matteKey', protoName: 'matteKey')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   SpriteEntity._() : super();
   factory SpriteEntity({
@@ -129,31 +174,40 @@ class SpriteEntity extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory SpriteEntity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SpriteEntity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory SpriteEntity.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory SpriteEntity.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   SpriteEntity clone() => SpriteEntity()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  SpriteEntity copyWith(void Function(SpriteEntity) updates) => super.copyWith((message) => updates(message as SpriteEntity)) as SpriteEntity; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  SpriteEntity copyWith(void Function(SpriteEntity) updates) =>
+      super.copyWith((message) => updates(message as SpriteEntity))
+          as SpriteEntity; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SpriteEntity create() => SpriteEntity._();
   SpriteEntity createEmptyInstance() => create();
-  static $pb.PbList<SpriteEntity> createRepeated() => $pb.PbList<SpriteEntity>();
+  static $pb.PbList<SpriteEntity> createRepeated() =>
+      $pb.PbList<SpriteEntity>();
   @$core.pragma('dart2js:noInline')
-  static SpriteEntity getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SpriteEntity>(create);
+  static SpriteEntity getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SpriteEntity>(create);
   static SpriteEntity? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get imageKey => $_getSZ(0);
   @$pb.TagNumber(1)
-  set imageKey($core.String v) { $_setString(0, v); }
+  set imageKey($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasImageKey() => $_has(0);
   @$pb.TagNumber(1)
@@ -165,7 +219,10 @@ class SpriteEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get matteKey => $_getSZ(2);
   @$pb.TagNumber(3)
-  set matteKey($core.String v) { $_setString(2, v); }
+  set matteKey($core.String v) {
+    $_setString(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasMatteKey() => $_has(2);
   @$pb.TagNumber(3)
@@ -173,14 +230,26 @@ class SpriteEntity extends $pb.GeneratedMessage {
 }
 
 class AudioEntity extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AudioEntity', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioKey', protoName: 'audioKey')
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startFrame', $pb.PbFieldType.O3, protoName: 'startFrame')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'endFrame', $pb.PbFieldType.O3, protoName: 'endFrame')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'AudioEntity',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioKey',
+        protoName: 'audioKey')
+    ..a<$core.int>(
+        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startFrame', $pb.PbFieldType.O3,
+        protoName: 'startFrame')
+    ..a<$core.int>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'endFrame', $pb.PbFieldType.O3,
+        protoName: 'endFrame')
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startTime', $pb.PbFieldType.O3, protoName: 'startTime')
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalTime', $pb.PbFieldType.O3, protoName: 'totalTime')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   AudioEntity._() : super();
   factory AudioEntity({
@@ -208,31 +277,39 @@ class AudioEntity extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory AudioEntity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AudioEntity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory AudioEntity.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AudioEntity.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   AudioEntity clone() => AudioEntity()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  AudioEntity copyWith(void Function(AudioEntity) updates) => super.copyWith((message) => updates(message as AudioEntity)) as AudioEntity; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  AudioEntity copyWith(void Function(AudioEntity) updates) =>
+      super.copyWith((message) => updates(message as AudioEntity))
+          as AudioEntity; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AudioEntity create() => AudioEntity._();
   AudioEntity createEmptyInstance() => create();
   static $pb.PbList<AudioEntity> createRepeated() => $pb.PbList<AudioEntity>();
   @$core.pragma('dart2js:noInline')
-  static AudioEntity getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AudioEntity>(create);
+  static AudioEntity getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<AudioEntity>(create);
   static AudioEntity? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get audioKey => $_getSZ(0);
   @$pb.TagNumber(1)
-  set audioKey($core.String v) { $_setString(0, v); }
+  set audioKey($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasAudioKey() => $_has(0);
   @$pb.TagNumber(1)
@@ -241,7 +318,10 @@ class AudioEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.int get startFrame => $_getIZ(1);
   @$pb.TagNumber(2)
-  set startFrame($core.int v) { $_setSignedInt32(1, v); }
+  set startFrame($core.int v) {
+    $_setSignedInt32(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasStartFrame() => $_has(1);
   @$pb.TagNumber(2)
@@ -250,7 +330,10 @@ class AudioEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.int get endFrame => $_getIZ(2);
   @$pb.TagNumber(3)
-  set endFrame($core.int v) { $_setSignedInt32(2, v); }
+  set endFrame($core.int v) {
+    $_setSignedInt32(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasEndFrame() => $_has(2);
   @$pb.TagNumber(3)
@@ -259,7 +342,10 @@ class AudioEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.int get startTime => $_getIZ(3);
   @$pb.TagNumber(4)
-  set startTime($core.int v) { $_setSignedInt32(3, v); }
+  set startTime($core.int v) {
+    $_setSignedInt32(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasStartTime() => $_has(3);
   @$pb.TagNumber(4)
@@ -268,7 +354,10 @@ class AudioEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.int get totalTime => $_getIZ(4);
   @$pb.TagNumber(5)
-  set totalTime($core.int v) { $_setSignedInt32(4, v); }
+  set totalTime($core.int v) {
+    $_setSignedInt32(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasTotalTime() => $_has(4);
   @$pb.TagNumber(5)
@@ -276,13 +365,33 @@ class AudioEntity extends $pb.GeneratedMessage {
 }
 
 class Layout extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Layout', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OF)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OF)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OF)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'Layout',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..a<$core.double>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'x',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'y',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width',
+        $pb.PbFieldType.OF)
     ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OF)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   Layout._() : super();
   factory Layout({
@@ -306,31 +415,39 @@ class Layout extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory Layout.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Layout.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory Layout.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory Layout.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   Layout clone() => Layout()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  Layout copyWith(void Function(Layout) updates) => super.copyWith((message) => updates(message as Layout)) as Layout; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  Layout copyWith(void Function(Layout) updates) =>
+      super.copyWith((message) => updates(message as Layout))
+          as Layout; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Layout create() => Layout._();
   Layout createEmptyInstance() => create();
   static $pb.PbList<Layout> createRepeated() => $pb.PbList<Layout>();
   @$core.pragma('dart2js:noInline')
-  static Layout getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Layout>(create);
+  static Layout getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Layout>(create);
   static Layout? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get x => $_getN(0);
   @$pb.TagNumber(1)
-  set x($core.double v) { $_setFloat(0, v); }
+  set x($core.double v) {
+    $_setFloat(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasX() => $_has(0);
   @$pb.TagNumber(1)
@@ -339,7 +456,10 @@ class Layout extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.double get y => $_getN(1);
   @$pb.TagNumber(2)
-  set y($core.double v) { $_setFloat(1, v); }
+  set y($core.double v) {
+    $_setFloat(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasY() => $_has(1);
   @$pb.TagNumber(2)
@@ -348,7 +468,10 @@ class Layout extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.double get width => $_getN(2);
   @$pb.TagNumber(3)
-  set width($core.double v) { $_setFloat(2, v); }
+  set width($core.double v) {
+    $_setFloat(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasWidth() => $_has(2);
   @$pb.TagNumber(3)
@@ -357,7 +480,10 @@ class Layout extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.double get height => $_getN(3);
   @$pb.TagNumber(4)
-  set height($core.double v) { $_setFloat(3, v); }
+  set height($core.double v) {
+    $_setFloat(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasHeight() => $_has(3);
   @$pb.TagNumber(4)
@@ -365,15 +491,35 @@ class Layout extends $pb.GeneratedMessage {
 }
 
 class Transform extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Transform', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'a', $pb.PbFieldType.OF)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'b', $pb.PbFieldType.OF)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c', $pb.PbFieldType.OF)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'Transform',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..a<$core.double>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'a',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'b',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c',
+        $pb.PbFieldType.OF)
     ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'd', $pb.PbFieldType.OF)
     ..a<$core.double>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tx', $pb.PbFieldType.OF)
     ..a<$core.double>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ty', $pb.PbFieldType.OF)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   Transform._() : super();
   factory Transform({
@@ -405,31 +551,39 @@ class Transform extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory Transform.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Transform.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory Transform.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory Transform.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   Transform clone() => Transform()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  Transform copyWith(void Function(Transform) updates) => super.copyWith((message) => updates(message as Transform)) as Transform; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  Transform copyWith(void Function(Transform) updates) =>
+      super.copyWith((message) => updates(message as Transform))
+          as Transform; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Transform create() => Transform._();
   Transform createEmptyInstance() => create();
   static $pb.PbList<Transform> createRepeated() => $pb.PbList<Transform>();
   @$core.pragma('dart2js:noInline')
-  static Transform getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Transform>(create);
+  static Transform getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Transform>(create);
   static Transform? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get a => $_getN(0);
   @$pb.TagNumber(1)
-  set a($core.double v) { $_setFloat(0, v); }
+  set a($core.double v) {
+    $_setFloat(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasA() => $_has(0);
   @$pb.TagNumber(1)
@@ -438,7 +592,10 @@ class Transform extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.double get b => $_getN(1);
   @$pb.TagNumber(2)
-  set b($core.double v) { $_setFloat(1, v); }
+  set b($core.double v) {
+    $_setFloat(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasB() => $_has(1);
   @$pb.TagNumber(2)
@@ -447,7 +604,10 @@ class Transform extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.double get c => $_getN(2);
   @$pb.TagNumber(3)
-  set c($core.double v) { $_setFloat(2, v); }
+  set c($core.double v) {
+    $_setFloat(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasC() => $_has(2);
   @$pb.TagNumber(3)
@@ -456,7 +616,10 @@ class Transform extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.double get d => $_getN(3);
   @$pb.TagNumber(4)
-  set d($core.double v) { $_setFloat(3, v); }
+  set d($core.double v) {
+    $_setFloat(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasD() => $_has(3);
   @$pb.TagNumber(4)
@@ -465,7 +628,10 @@ class Transform extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.double get tx => $_getN(4);
   @$pb.TagNumber(5)
-  set tx($core.double v) { $_setFloat(4, v); }
+  set tx($core.double v) {
+    $_setFloat(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasTx() => $_has(4);
   @$pb.TagNumber(5)
@@ -474,7 +640,10 @@ class Transform extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.double get ty => $_getN(5);
   @$pb.TagNumber(6)
-  set ty($core.double v) { $_setFloat(5, v); }
+  set ty($core.double v) {
+    $_setFloat(5, v);
+  }
+
   @$pb.TagNumber(6)
   $core.bool hasTy() => $_has(5);
   @$pb.TagNumber(6)
@@ -482,10 +651,21 @@ class Transform extends $pb.GeneratedMessage {
 }
 
 class ShapeEntity_ShapeArgs extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShapeEntity.ShapeArgs', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'd')
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'ShapeEntity.ShapeArgs',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'd')
+    ..hasRequiredFields = false;
 
   ShapeEntity_ShapeArgs._() : super();
   factory ShapeEntity_ShapeArgs({
@@ -497,31 +677,42 @@ class ShapeEntity_ShapeArgs extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ShapeEntity_ShapeArgs.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShapeEntity_ShapeArgs.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_ShapeArgs clone() => ShapeEntity_ShapeArgs()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_ShapeArgs copyWith(void Function(ShapeEntity_ShapeArgs) updates) => super.copyWith((message) => updates(message as ShapeEntity_ShapeArgs)) as ShapeEntity_ShapeArgs; // ignore: deprecated_member_use
+  factory ShapeEntity_ShapeArgs.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ShapeEntity_ShapeArgs.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_ShapeArgs clone() =>
+      ShapeEntity_ShapeArgs()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_ShapeArgs copyWith(
+          void Function(ShapeEntity_ShapeArgs) updates) =>
+      super.copyWith((message) => updates(message as ShapeEntity_ShapeArgs))
+          as ShapeEntity_ShapeArgs; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ShapeEntity_ShapeArgs create() => ShapeEntity_ShapeArgs._();
   ShapeEntity_ShapeArgs createEmptyInstance() => create();
-  static $pb.PbList<ShapeEntity_ShapeArgs> createRepeated() => $pb.PbList<ShapeEntity_ShapeArgs>();
+  static $pb.PbList<ShapeEntity_ShapeArgs> createRepeated() =>
+      $pb.PbList<ShapeEntity_ShapeArgs>();
   @$core.pragma('dart2js:noInline')
-  static ShapeEntity_ShapeArgs getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShapeEntity_ShapeArgs>(create);
+  static ShapeEntity_ShapeArgs getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ShapeEntity_ShapeArgs>(create);
   static ShapeEntity_ShapeArgs? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get d => $_getSZ(0);
   @$pb.TagNumber(1)
-  set d($core.String v) { $_setString(0, v); }
+  set d($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasD() => $_has(0);
   @$pb.TagNumber(1)
@@ -529,14 +720,34 @@ class ShapeEntity_ShapeArgs extends $pb.GeneratedMessage {
 }
 
 class ShapeEntity_RectArgs extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShapeEntity.RectArgs', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OF)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OF)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OF)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'ShapeEntity.RectArgs',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..a<$core.double>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'x',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'y',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width',
+        $pb.PbFieldType.OF)
     ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OF)
     ..a<$core.double>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cornerRadius', $pb.PbFieldType.OF, protoName: 'cornerRadius')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   ShapeEntity_RectArgs._() : super();
   factory ShapeEntity_RectArgs({
@@ -564,31 +775,41 @@ class ShapeEntity_RectArgs extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ShapeEntity_RectArgs.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShapeEntity_RectArgs.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_RectArgs clone() => ShapeEntity_RectArgs()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_RectArgs copyWith(void Function(ShapeEntity_RectArgs) updates) => super.copyWith((message) => updates(message as ShapeEntity_RectArgs)) as ShapeEntity_RectArgs; // ignore: deprecated_member_use
+  factory ShapeEntity_RectArgs.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ShapeEntity_RectArgs.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_RectArgs clone() =>
+      ShapeEntity_RectArgs()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_RectArgs copyWith(void Function(ShapeEntity_RectArgs) updates) =>
+      super.copyWith((message) => updates(message as ShapeEntity_RectArgs))
+          as ShapeEntity_RectArgs; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ShapeEntity_RectArgs create() => ShapeEntity_RectArgs._();
   ShapeEntity_RectArgs createEmptyInstance() => create();
-  static $pb.PbList<ShapeEntity_RectArgs> createRepeated() => $pb.PbList<ShapeEntity_RectArgs>();
+  static $pb.PbList<ShapeEntity_RectArgs> createRepeated() =>
+      $pb.PbList<ShapeEntity_RectArgs>();
   @$core.pragma('dart2js:noInline')
-  static ShapeEntity_RectArgs getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShapeEntity_RectArgs>(create);
+  static ShapeEntity_RectArgs getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ShapeEntity_RectArgs>(create);
   static ShapeEntity_RectArgs? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get x => $_getN(0);
   @$pb.TagNumber(1)
-  set x($core.double v) { $_setFloat(0, v); }
+  set x($core.double v) {
+    $_setFloat(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasX() => $_has(0);
   @$pb.TagNumber(1)
@@ -597,7 +818,10 @@ class ShapeEntity_RectArgs extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.double get y => $_getN(1);
   @$pb.TagNumber(2)
-  set y($core.double v) { $_setFloat(1, v); }
+  set y($core.double v) {
+    $_setFloat(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasY() => $_has(1);
   @$pb.TagNumber(2)
@@ -606,7 +830,10 @@ class ShapeEntity_RectArgs extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.double get width => $_getN(2);
   @$pb.TagNumber(3)
-  set width($core.double v) { $_setFloat(2, v); }
+  set width($core.double v) {
+    $_setFloat(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasWidth() => $_has(2);
   @$pb.TagNumber(3)
@@ -615,7 +842,10 @@ class ShapeEntity_RectArgs extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.double get height => $_getN(3);
   @$pb.TagNumber(4)
-  set height($core.double v) { $_setFloat(3, v); }
+  set height($core.double v) {
+    $_setFloat(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasHeight() => $_has(3);
   @$pb.TagNumber(4)
@@ -624,7 +854,10 @@ class ShapeEntity_RectArgs extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.double get cornerRadius => $_getN(4);
   @$pb.TagNumber(5)
-  set cornerRadius($core.double v) { $_setFloat(4, v); }
+  set cornerRadius($core.double v) {
+    $_setFloat(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasCornerRadius() => $_has(4);
   @$pb.TagNumber(5)
@@ -632,13 +865,32 @@ class ShapeEntity_RectArgs extends $pb.GeneratedMessage {
 }
 
 class ShapeEntity_EllipseArgs extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShapeEntity.EllipseArgs', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OF)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OF)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'radiusX', $pb.PbFieldType.OF, protoName: 'radiusX')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'ShapeEntity.EllipseArgs',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..a<$core.double>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'x',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'y',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'radiusX', $pb.PbFieldType.OF,
+        protoName: 'radiusX')
     ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'radiusY', $pb.PbFieldType.OF, protoName: 'radiusY')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   ShapeEntity_EllipseArgs._() : super();
   factory ShapeEntity_EllipseArgs({
@@ -662,31 +914,42 @@ class ShapeEntity_EllipseArgs extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ShapeEntity_EllipseArgs.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShapeEntity_EllipseArgs.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_EllipseArgs clone() => ShapeEntity_EllipseArgs()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_EllipseArgs copyWith(void Function(ShapeEntity_EllipseArgs) updates) => super.copyWith((message) => updates(message as ShapeEntity_EllipseArgs)) as ShapeEntity_EllipseArgs; // ignore: deprecated_member_use
+  factory ShapeEntity_EllipseArgs.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ShapeEntity_EllipseArgs.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_EllipseArgs clone() =>
+      ShapeEntity_EllipseArgs()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_EllipseArgs copyWith(
+          void Function(ShapeEntity_EllipseArgs) updates) =>
+      super.copyWith((message) => updates(message as ShapeEntity_EllipseArgs))
+          as ShapeEntity_EllipseArgs; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ShapeEntity_EllipseArgs create() => ShapeEntity_EllipseArgs._();
   ShapeEntity_EllipseArgs createEmptyInstance() => create();
-  static $pb.PbList<ShapeEntity_EllipseArgs> createRepeated() => $pb.PbList<ShapeEntity_EllipseArgs>();
+  static $pb.PbList<ShapeEntity_EllipseArgs> createRepeated() =>
+      $pb.PbList<ShapeEntity_EllipseArgs>();
   @$core.pragma('dart2js:noInline')
-  static ShapeEntity_EllipseArgs getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShapeEntity_EllipseArgs>(create);
+  static ShapeEntity_EllipseArgs getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ShapeEntity_EllipseArgs>(create);
   static ShapeEntity_EllipseArgs? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get x => $_getN(0);
   @$pb.TagNumber(1)
-  set x($core.double v) { $_setFloat(0, v); }
+  set x($core.double v) {
+    $_setFloat(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasX() => $_has(0);
   @$pb.TagNumber(1)
@@ -695,7 +958,10 @@ class ShapeEntity_EllipseArgs extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.double get y => $_getN(1);
   @$pb.TagNumber(2)
-  set y($core.double v) { $_setFloat(1, v); }
+  set y($core.double v) {
+    $_setFloat(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasY() => $_has(1);
   @$pb.TagNumber(2)
@@ -704,7 +970,10 @@ class ShapeEntity_EllipseArgs extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.double get radiusX => $_getN(2);
   @$pb.TagNumber(3)
-  set radiusX($core.double v) { $_setFloat(2, v); }
+  set radiusX($core.double v) {
+    $_setFloat(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasRadiusX() => $_has(2);
   @$pb.TagNumber(3)
@@ -713,7 +982,10 @@ class ShapeEntity_EllipseArgs extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.double get radiusY => $_getN(3);
   @$pb.TagNumber(4)
-  set radiusY($core.double v) { $_setFloat(3, v); }
+  set radiusY($core.double v) {
+    $_setFloat(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasRadiusY() => $_has(3);
   @$pb.TagNumber(4)
@@ -721,13 +993,33 @@ class ShapeEntity_EllipseArgs extends $pb.GeneratedMessage {
 }
 
 class ShapeEntity_ShapeStyle_RGBAColor extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShapeEntity.ShapeStyle.RGBAColor', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r', $pb.PbFieldType.OF)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g', $pb.PbFieldType.OF)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'b', $pb.PbFieldType.OF)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'ShapeEntity.ShapeStyle.RGBAColor',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..a<$core.double>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'r',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'g',
+        $pb.PbFieldType.OF)
+    ..a<$core.double>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'b',
+        $pb.PbFieldType.OF)
     ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'a', $pb.PbFieldType.OF)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   ShapeEntity_ShapeStyle_RGBAColor._() : super();
   factory ShapeEntity_ShapeStyle_RGBAColor({
@@ -751,31 +1043,45 @@ class ShapeEntity_ShapeStyle_RGBAColor extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ShapeEntity_ShapeStyle_RGBAColor.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShapeEntity_ShapeStyle_RGBAColor.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_ShapeStyle_RGBAColor clone() => ShapeEntity_ShapeStyle_RGBAColor()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_ShapeStyle_RGBAColor copyWith(void Function(ShapeEntity_ShapeStyle_RGBAColor) updates) => super.copyWith((message) => updates(message as ShapeEntity_ShapeStyle_RGBAColor)) as ShapeEntity_ShapeStyle_RGBAColor; // ignore: deprecated_member_use
+  factory ShapeEntity_ShapeStyle_RGBAColor.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ShapeEntity_ShapeStyle_RGBAColor.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_ShapeStyle_RGBAColor clone() =>
+      ShapeEntity_ShapeStyle_RGBAColor()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_ShapeStyle_RGBAColor copyWith(
+          void Function(ShapeEntity_ShapeStyle_RGBAColor) updates) =>
+      super.copyWith(
+              (message) => updates(message as ShapeEntity_ShapeStyle_RGBAColor))
+          as ShapeEntity_ShapeStyle_RGBAColor; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ShapeEntity_ShapeStyle_RGBAColor create() => ShapeEntity_ShapeStyle_RGBAColor._();
+  static ShapeEntity_ShapeStyle_RGBAColor create() =>
+      ShapeEntity_ShapeStyle_RGBAColor._();
   ShapeEntity_ShapeStyle_RGBAColor createEmptyInstance() => create();
-  static $pb.PbList<ShapeEntity_ShapeStyle_RGBAColor> createRepeated() => $pb.PbList<ShapeEntity_ShapeStyle_RGBAColor>();
+  static $pb.PbList<ShapeEntity_ShapeStyle_RGBAColor> createRepeated() =>
+      $pb.PbList<ShapeEntity_ShapeStyle_RGBAColor>();
   @$core.pragma('dart2js:noInline')
-  static ShapeEntity_ShapeStyle_RGBAColor getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShapeEntity_ShapeStyle_RGBAColor>(create);
+  static ShapeEntity_ShapeStyle_RGBAColor getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ShapeEntity_ShapeStyle_RGBAColor>(
+          create);
   static ShapeEntity_ShapeStyle_RGBAColor? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get r => $_getN(0);
   @$pb.TagNumber(1)
-  set r($core.double v) { $_setFloat(0, v); }
+  set r($core.double v) {
+    $_setFloat(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasR() => $_has(0);
   @$pb.TagNumber(1)
@@ -784,7 +1090,10 @@ class ShapeEntity_ShapeStyle_RGBAColor extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.double get g => $_getN(1);
   @$pb.TagNumber(2)
-  set g($core.double v) { $_setFloat(1, v); }
+  set g($core.double v) {
+    $_setFloat(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasG() => $_has(1);
   @$pb.TagNumber(2)
@@ -793,7 +1102,10 @@ class ShapeEntity_ShapeStyle_RGBAColor extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.double get b => $_getN(2);
   @$pb.TagNumber(3)
-  set b($core.double v) { $_setFloat(2, v); }
+  set b($core.double v) {
+    $_setFloat(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasB() => $_has(2);
   @$pb.TagNumber(3)
@@ -802,7 +1114,10 @@ class ShapeEntity_ShapeStyle_RGBAColor extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.double get a => $_getN(3);
   @$pb.TagNumber(4)
-  set a($core.double v) { $_setFloat(3, v); }
+  set a($core.double v) {
+    $_setFloat(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasA() => $_has(3);
   @$pb.TagNumber(4)
@@ -810,18 +1125,34 @@ class ShapeEntity_ShapeStyle_RGBAColor extends $pb.GeneratedMessage {
 }
 
 class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShapeEntity.ShapeStyle', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..aOM<ShapeEntity_ShapeStyle_RGBAColor>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fill', subBuilder: ShapeEntity_ShapeStyle_RGBAColor.create)
-    ..aOM<ShapeEntity_ShapeStyle_RGBAColor>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stroke', subBuilder: ShapeEntity_ShapeStyle_RGBAColor.create)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'strokeWidth', $pb.PbFieldType.OF, protoName: 'strokeWidth')
-    ..e<ShapeEntity_ShapeStyle_LineCap>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lineCap', $pb.PbFieldType.OE, protoName: 'lineCap', defaultOrMaker: ShapeEntity_ShapeStyle_LineCap.LineCap_BUTT, valueOf: ShapeEntity_ShapeStyle_LineCap.valueOf, enumValues: ShapeEntity_ShapeStyle_LineCap.values)
-    ..e<ShapeEntity_ShapeStyle_LineJoin>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lineJoin', $pb.PbFieldType.OE, protoName: 'lineJoin', defaultOrMaker: ShapeEntity_ShapeStyle_LineJoin.LineJoin_MITER, valueOf: ShapeEntity_ShapeStyle_LineJoin.valueOf, enumValues: ShapeEntity_ShapeStyle_LineJoin.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShapeEntity.ShapeStyle',
+      package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..aOM<ShapeEntity_ShapeStyle_RGBAColor>(
+        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fill',
+        subBuilder: ShapeEntity_ShapeStyle_RGBAColor.create)
+    ..aOM<ShapeEntity_ShapeStyle_RGBAColor>(
+        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stroke',
+        subBuilder: ShapeEntity_ShapeStyle_RGBAColor.create)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'strokeWidth', $pb.PbFieldType.OF,
+        protoName: 'strokeWidth')
+    ..e<ShapeEntity_ShapeStyle_LineCap>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lineCap', $pb.PbFieldType.OE,
+        protoName: 'lineCap',
+        defaultOrMaker: ShapeEntity_ShapeStyle_LineCap.LineCap_BUTT,
+        valueOf: ShapeEntity_ShapeStyle_LineCap.valueOf,
+        enumValues: ShapeEntity_ShapeStyle_LineCap.values)
+    ..e<ShapeEntity_ShapeStyle_LineJoin>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lineJoin', $pb.PbFieldType.OE,
+        protoName: 'lineJoin',
+        defaultOrMaker: ShapeEntity_ShapeStyle_LineJoin.LineJoin_MITER,
+        valueOf: ShapeEntity_ShapeStyle_LineJoin.valueOf,
+        enumValues: ShapeEntity_ShapeStyle_LineJoin.values)
     ..a<$core.double>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'miterLimit', $pb.PbFieldType.OF, protoName: 'miterLimit')
     ..a<$core.double>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lineDashI', $pb.PbFieldType.OF, protoName: 'lineDashI')
     ..a<$core.double>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lineDashII', $pb.PbFieldType.OF, protoName: 'lineDashII')
     ..a<$core.double>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lineDashIII', $pb.PbFieldType.OF, protoName: 'lineDashIII')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   ShapeEntity_ShapeStyle._() : super();
   factory ShapeEntity_ShapeStyle({
@@ -865,31 +1196,42 @@ class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ShapeEntity_ShapeStyle.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShapeEntity_ShapeStyle.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_ShapeStyle clone() => ShapeEntity_ShapeStyle()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ShapeEntity_ShapeStyle copyWith(void Function(ShapeEntity_ShapeStyle) updates) => super.copyWith((message) => updates(message as ShapeEntity_ShapeStyle)) as ShapeEntity_ShapeStyle; // ignore: deprecated_member_use
+  factory ShapeEntity_ShapeStyle.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ShapeEntity_ShapeStyle.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_ShapeStyle clone() =>
+      ShapeEntity_ShapeStyle()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ShapeEntity_ShapeStyle copyWith(
+          void Function(ShapeEntity_ShapeStyle) updates) =>
+      super.copyWith((message) => updates(message as ShapeEntity_ShapeStyle))
+          as ShapeEntity_ShapeStyle; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ShapeEntity_ShapeStyle create() => ShapeEntity_ShapeStyle._();
   ShapeEntity_ShapeStyle createEmptyInstance() => create();
-  static $pb.PbList<ShapeEntity_ShapeStyle> createRepeated() => $pb.PbList<ShapeEntity_ShapeStyle>();
+  static $pb.PbList<ShapeEntity_ShapeStyle> createRepeated() =>
+      $pb.PbList<ShapeEntity_ShapeStyle>();
   @$core.pragma('dart2js:noInline')
-  static ShapeEntity_ShapeStyle getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShapeEntity_ShapeStyle>(create);
+  static ShapeEntity_ShapeStyle getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ShapeEntity_ShapeStyle>(create);
   static ShapeEntity_ShapeStyle? _defaultInstance;
 
   @$pb.TagNumber(1)
   ShapeEntity_ShapeStyle_RGBAColor get fill => $_getN(0);
   @$pb.TagNumber(1)
-  set fill(ShapeEntity_ShapeStyle_RGBAColor v) { setField(1, v); }
+  set fill(ShapeEntity_ShapeStyle_RGBAColor v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasFill() => $_has(0);
   @$pb.TagNumber(1)
@@ -900,7 +1242,10 @@ class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   ShapeEntity_ShapeStyle_RGBAColor get stroke => $_getN(1);
   @$pb.TagNumber(2)
-  set stroke(ShapeEntity_ShapeStyle_RGBAColor v) { setField(2, v); }
+  set stroke(ShapeEntity_ShapeStyle_RGBAColor v) {
+    setField(2, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasStroke() => $_has(1);
   @$pb.TagNumber(2)
@@ -911,7 +1256,10 @@ class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.double get strokeWidth => $_getN(2);
   @$pb.TagNumber(3)
-  set strokeWidth($core.double v) { $_setFloat(2, v); }
+  set strokeWidth($core.double v) {
+    $_setFloat(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasStrokeWidth() => $_has(2);
   @$pb.TagNumber(3)
@@ -920,7 +1268,10 @@ class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   ShapeEntity_ShapeStyle_LineCap get lineCap => $_getN(3);
   @$pb.TagNumber(4)
-  set lineCap(ShapeEntity_ShapeStyle_LineCap v) { setField(4, v); }
+  set lineCap(ShapeEntity_ShapeStyle_LineCap v) {
+    setField(4, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasLineCap() => $_has(3);
   @$pb.TagNumber(4)
@@ -929,7 +1280,10 @@ class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   ShapeEntity_ShapeStyle_LineJoin get lineJoin => $_getN(4);
   @$pb.TagNumber(5)
-  set lineJoin(ShapeEntity_ShapeStyle_LineJoin v) { setField(5, v); }
+  set lineJoin(ShapeEntity_ShapeStyle_LineJoin v) {
+    setField(5, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasLineJoin() => $_has(4);
   @$pb.TagNumber(5)
@@ -938,7 +1292,10 @@ class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.double get miterLimit => $_getN(5);
   @$pb.TagNumber(6)
-  set miterLimit($core.double v) { $_setFloat(5, v); }
+  set miterLimit($core.double v) {
+    $_setFloat(5, v);
+  }
+
   @$pb.TagNumber(6)
   $core.bool hasMiterLimit() => $_has(5);
   @$pb.TagNumber(6)
@@ -947,7 +1304,10 @@ class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.double get lineDashI => $_getN(6);
   @$pb.TagNumber(7)
-  set lineDashI($core.double v) { $_setFloat(6, v); }
+  set lineDashI($core.double v) {
+    $_setFloat(6, v);
+  }
+
   @$pb.TagNumber(7)
   $core.bool hasLineDashI() => $_has(6);
   @$pb.TagNumber(7)
@@ -956,7 +1316,10 @@ class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.double get lineDashII => $_getN(7);
   @$pb.TagNumber(8)
-  set lineDashII($core.double v) { $_setFloat(7, v); }
+  set lineDashII($core.double v) {
+    $_setFloat(7, v);
+  }
+
   @$pb.TagNumber(8)
   $core.bool hasLineDashII() => $_has(7);
   @$pb.TagNumber(8)
@@ -965,37 +1328,48 @@ class ShapeEntity_ShapeStyle extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.double get lineDashIII => $_getN(8);
   @$pb.TagNumber(9)
-  set lineDashIII($core.double v) { $_setFloat(8, v); }
+  set lineDashIII($core.double v) {
+    $_setFloat(8, v);
+  }
+
   @$pb.TagNumber(9)
   $core.bool hasLineDashIII() => $_has(8);
   @$pb.TagNumber(9)
   void clearLineDashIII() => clearField(9);
 }
 
-enum ShapeEntity_Args {
-  shape, 
-  rect, 
-  ellipse, 
-  notSet
-}
+enum ShapeEntity_Args { shape, rect, ellipse, notSet }
 
 class ShapeEntity extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, ShapeEntity_Args> _ShapeEntity_ArgsByTag = {
-    2 : ShapeEntity_Args.shape,
-    3 : ShapeEntity_Args.rect,
-    4 : ShapeEntity_Args.ellipse,
-    0 : ShapeEntity_Args.notSet
+    2: ShapeEntity_Args.shape,
+    3: ShapeEntity_Args.rect,
+    4: ShapeEntity_Args.ellipse,
+    0: ShapeEntity_Args.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShapeEntity', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShapeEntity',
+      package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'com.opensource.svga'),
+      createEmptyInstance: create)
     ..oo(0, [2, 3, 4])
-    ..e<ShapeEntity_ShapeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ShapeEntity_ShapeType.SHAPE, valueOf: ShapeEntity_ShapeType.valueOf, enumValues: ShapeEntity_ShapeType.values)
-    ..aOM<ShapeEntity_ShapeArgs>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'shape', subBuilder: ShapeEntity_ShapeArgs.create)
-    ..aOM<ShapeEntity_RectArgs>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rect', subBuilder: ShapeEntity_RectArgs.create)
-    ..aOM<ShapeEntity_EllipseArgs>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ellipse', subBuilder: ShapeEntity_EllipseArgs.create)
+    ..e<ShapeEntity_ShapeType>(
+        1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE,
+        defaultOrMaker: ShapeEntity_ShapeType.SHAPE,
+        valueOf: ShapeEntity_ShapeType.valueOf,
+        enumValues: ShapeEntity_ShapeType.values)
+    ..aOM<ShapeEntity_ShapeArgs>(
+        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'shape',
+        subBuilder: ShapeEntity_ShapeArgs.create)
+    ..aOM<ShapeEntity_RectArgs>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rect',
+        subBuilder: ShapeEntity_RectArgs.create)
+    ..aOM<ShapeEntity_EllipseArgs>(
+        4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ellipse',
+        subBuilder: ShapeEntity_EllipseArgs.create)
     ..aOM<ShapeEntity_ShapeStyle>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'styles', subBuilder: ShapeEntity_ShapeStyle.create)
     ..aOM<Transform>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transform', subBuilder: Transform.create)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   ShapeEntity._() : super();
   factory ShapeEntity({
@@ -1027,25 +1401,30 @@ class ShapeEntity extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ShapeEntity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShapeEntity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory ShapeEntity.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ShapeEntity.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   ShapeEntity clone() => ShapeEntity()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ShapeEntity copyWith(void Function(ShapeEntity) updates) => super.copyWith((message) => updates(message as ShapeEntity)) as ShapeEntity; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ShapeEntity copyWith(void Function(ShapeEntity) updates) =>
+      super.copyWith((message) => updates(message as ShapeEntity))
+          as ShapeEntity; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ShapeEntity create() => ShapeEntity._();
   ShapeEntity createEmptyInstance() => create();
   static $pb.PbList<ShapeEntity> createRepeated() => $pb.PbList<ShapeEntity>();
   @$core.pragma('dart2js:noInline')
-  static ShapeEntity getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShapeEntity>(create);
+  static ShapeEntity getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ShapeEntity>(create);
   static ShapeEntity? _defaultInstance;
 
   ShapeEntity_Args whichArgs() => _ShapeEntity_ArgsByTag[$_whichOneof(0)]!;
@@ -1054,7 +1433,10 @@ class ShapeEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   ShapeEntity_ShapeType get type => $_getN(0);
   @$pb.TagNumber(1)
-  set type(ShapeEntity_ShapeType v) { setField(1, v); }
+  set type(ShapeEntity_ShapeType v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -1063,7 +1445,10 @@ class ShapeEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   ShapeEntity_ShapeArgs get shape => $_getN(1);
   @$pb.TagNumber(2)
-  set shape(ShapeEntity_ShapeArgs v) { setField(2, v); }
+  set shape(ShapeEntity_ShapeArgs v) {
+    setField(2, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasShape() => $_has(1);
   @$pb.TagNumber(2)
@@ -1074,7 +1459,10 @@ class ShapeEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   ShapeEntity_RectArgs get rect => $_getN(2);
   @$pb.TagNumber(3)
-  set rect(ShapeEntity_RectArgs v) { setField(3, v); }
+  set rect(ShapeEntity_RectArgs v) {
+    setField(3, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasRect() => $_has(2);
   @$pb.TagNumber(3)
@@ -1085,7 +1473,10 @@ class ShapeEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   ShapeEntity_EllipseArgs get ellipse => $_getN(3);
   @$pb.TagNumber(4)
-  set ellipse(ShapeEntity_EllipseArgs v) { setField(4, v); }
+  set ellipse(ShapeEntity_EllipseArgs v) {
+    setField(4, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasEllipse() => $_has(3);
   @$pb.TagNumber(4)
@@ -1096,7 +1487,10 @@ class ShapeEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   ShapeEntity_ShapeStyle get styles => $_getN(4);
   @$pb.TagNumber(10)
-  set styles(ShapeEntity_ShapeStyle v) { setField(10, v); }
+  set styles(ShapeEntity_ShapeStyle v) {
+    setField(10, v);
+  }
+
   @$pb.TagNumber(10)
   $core.bool hasStyles() => $_has(4);
   @$pb.TagNumber(10)
@@ -1107,7 +1501,10 @@ class ShapeEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   Transform get transform => $_getN(5);
   @$pb.TagNumber(11)
-  set transform(Transform v) { setField(11, v); }
+  set transform(Transform v) {
+    setField(11, v);
+  }
+
   @$pb.TagNumber(11)
   $core.bool hasTransform() => $_has(5);
   @$pb.TagNumber(11)
@@ -1117,14 +1514,29 @@ class ShapeEntity extends $pb.GeneratedMessage {
 }
 
 class FrameEntity extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FrameEntity', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'alpha', $pb.PbFieldType.OF)
-    ..aOM<Layout>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layout', subBuilder: Layout.create)
-    ..aOM<Transform>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transform', subBuilder: Transform.create)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clipPath', protoName: 'clipPath')
-    ..pc<ShapeEntity>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'shapes', $pb.PbFieldType.PM, subBuilder: ShapeEntity.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FrameEntity',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..a<$core.double>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'alpha',
+        $pb.PbFieldType.OF)
+    ..aOM<Layout>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layout',
+        subBuilder: Layout.create)
+    ..aOM<Transform>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transform',
+        subBuilder: Transform.create)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clipPath',
+        protoName: 'clipPath')
+    ..pc<ShapeEntity>(
+        5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'shapes', $pb.PbFieldType.PM,
+        subBuilder: ShapeEntity.create)
+    ..hasRequiredFields = false;
 
   FrameEntity._() : super();
   factory FrameEntity({
@@ -1152,31 +1564,39 @@ class FrameEntity extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory FrameEntity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory FrameEntity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory FrameEntity.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory FrameEntity.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   FrameEntity clone() => FrameEntity()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  FrameEntity copyWith(void Function(FrameEntity) updates) => super.copyWith((message) => updates(message as FrameEntity)) as FrameEntity; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  FrameEntity copyWith(void Function(FrameEntity) updates) =>
+      super.copyWith((message) => updates(message as FrameEntity))
+          as FrameEntity; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FrameEntity create() => FrameEntity._();
   FrameEntity createEmptyInstance() => create();
   static $pb.PbList<FrameEntity> createRepeated() => $pb.PbList<FrameEntity>();
   @$core.pragma('dart2js:noInline')
-  static FrameEntity getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FrameEntity>(create);
+  static FrameEntity getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<FrameEntity>(create);
   static FrameEntity? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get alpha => $_getN(0);
   @$pb.TagNumber(1)
-  set alpha($core.double v) { $_setFloat(0, v); }
+  set alpha($core.double v) {
+    $_setFloat(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasAlpha() => $_has(0);
   @$pb.TagNumber(1)
@@ -1185,7 +1605,10 @@ class FrameEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Layout get layout => $_getN(1);
   @$pb.TagNumber(2)
-  set layout(Layout v) { setField(2, v); }
+  set layout(Layout v) {
+    setField(2, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasLayout() => $_has(1);
   @$pb.TagNumber(2)
@@ -1196,7 +1619,10 @@ class FrameEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   Transform get transform => $_getN(2);
   @$pb.TagNumber(3)
-  set transform(Transform v) { setField(3, v); }
+  set transform(Transform v) {
+    setField(3, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasTransform() => $_has(2);
   @$pb.TagNumber(3)
@@ -1207,7 +1633,10 @@ class FrameEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get clipPath => $_getSZ(3);
   @$pb.TagNumber(4)
-  set clipPath($core.String v) { $_setString(3, v); }
+  set clipPath($core.String v) {
+    $_setString(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasClipPath() => $_has(3);
   @$pb.TagNumber(4)
@@ -1221,14 +1650,33 @@ class FrameEntity extends $pb.GeneratedMessage {
 }
 
 class MovieEntity extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MovieEntity', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.opensource.svga'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..aOM<MovieParams>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'params', subBuilder: MovieParams.create)
-    ..m<$core.String, $core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'images', entryClassName: 'MovieEntity.ImagesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OY, packageName: const $pb.PackageName('com.opensource.svga'))
-    ..pc<SpriteEntity>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sprites', $pb.PbFieldType.PM, subBuilder: SpriteEntity.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MovieEntity',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'com.opensource.svga'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'version')
+    ..aOM<MovieParams>(
+        2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'params',
+        subBuilder: MovieParams.create)
+    ..m<$core.String, $core.List<$core.int>>(
+        3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'images',
+        entryClassName: 'MovieEntity.ImagesEntry',
+        keyFieldType: $pb.PbFieldType.OS,
+        valueFieldType: $pb.PbFieldType.OY,
+        packageName: const $pb.PackageName('com.opensource.svga'))
+    ..pc<SpriteEntity>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sprites',
+        $pb.PbFieldType.PM,
+        subBuilder: SpriteEntity.create)
     ..pc<AudioEntity>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audios', $pb.PbFieldType.PM, subBuilder: AudioEntity.create)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   MovieEntity._() : super();
   factory MovieEntity({
@@ -1256,31 +1704,39 @@ class MovieEntity extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory MovieEntity.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MovieEntity.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory MovieEntity.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MovieEntity.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   MovieEntity clone() => MovieEntity()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  MovieEntity copyWith(void Function(MovieEntity) updates) => super.copyWith((message) => updates(message as MovieEntity)) as MovieEntity; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  MovieEntity copyWith(void Function(MovieEntity) updates) =>
+      super.copyWith((message) => updates(message as MovieEntity))
+          as MovieEntity; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MovieEntity create() => MovieEntity._();
   MovieEntity createEmptyInstance() => create();
   static $pb.PbList<MovieEntity> createRepeated() => $pb.PbList<MovieEntity>();
   @$core.pragma('dart2js:noInline')
-  static MovieEntity getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MovieEntity>(create);
+  static MovieEntity getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MovieEntity>(create);
   static MovieEntity? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get version => $_getSZ(0);
   @$pb.TagNumber(1)
-  set version($core.String v) { $_setString(0, v); }
+  set version($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasVersion() => $_has(0);
   @$pb.TagNumber(1)
@@ -1289,7 +1745,10 @@ class MovieEntity extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   MovieParams get params => $_getN(1);
   @$pb.TagNumber(2)
-  set params(MovieParams v) { setField(2, v); }
+  set params(MovieParams v) {
+    setField(2, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasParams() => $_has(1);
   @$pb.TagNumber(2)
@@ -1310,4 +1769,3 @@ class MovieEntity extends $pb.GeneratedMessage {
   Map<String, ui.Image> bitmapCache = {};
   Map<String, ui.Path> pathCache = {};
 }
-

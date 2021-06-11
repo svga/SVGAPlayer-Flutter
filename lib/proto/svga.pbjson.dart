@@ -8,6 +8,7 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+
 @$core.Deprecated('Use movieParamsDescriptor instead')
 const MovieParams$json = const {
   '1': 'MovieParams',
@@ -20,19 +21,28 @@ const MovieParams$json = const {
 };
 
 /// Descriptor for `MovieParams`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List movieParamsDescriptor = $convert.base64Decode('CgtNb3ZpZVBhcmFtcxIiCgx2aWV3Qm94V2lkdGgYASABKAJSDHZpZXdCb3hXaWR0aBIkCg12aWV3Qm94SGVpZ2h0GAIgASgCUg12aWV3Qm94SGVpZ2h0EhAKA2ZwcxgDIAEoBVIDZnBzEhYKBmZyYW1lcxgEIAEoBVIGZnJhbWVz');
+final $typed_data.Uint8List movieParamsDescriptor = $convert.base64Decode(
+    'CgtNb3ZpZVBhcmFtcxIiCgx2aWV3Qm94V2lkdGgYASABKAJSDHZpZXdCb3hXaWR0aBIkCg12aWV3Qm94SGVpZ2h0GAIgASgCUg12aWV3Qm94SGVpZ2h0EhAKA2ZwcxgDIAEoBVIDZnBzEhYKBmZyYW1lcxgEIAEoBVIGZnJhbWVz');
 @$core.Deprecated('Use spriteEntityDescriptor instead')
 const SpriteEntity$json = const {
   '1': 'SpriteEntity',
   '2': const [
     const {'1': 'imageKey', '3': 1, '4': 1, '5': 9, '10': 'imageKey'},
-    const {'1': 'frames', '3': 2, '4': 3, '5': 11, '6': '.com.opensource.svga.FrameEntity', '10': 'frames'},
+    const {
+      '1': 'frames',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.com.opensource.svga.FrameEntity',
+      '10': 'frames'
+    },
     const {'1': 'matteKey', '3': 3, '4': 1, '5': 9, '10': 'matteKey'},
   ],
 };
 
 /// Descriptor for `SpriteEntity`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List spriteEntityDescriptor = $convert.base64Decode('CgxTcHJpdGVFbnRpdHkSGgoIaW1hZ2VLZXkYASABKAlSCGltYWdlS2V5EjgKBmZyYW1lcxgCIAMoCzIgLmNvbS5vcGVuc291cmNlLnN2Z2EuRnJhbWVFbnRpdHlSBmZyYW1lcxIaCghtYXR0ZUtleRgDIAEoCVIIbWF0dGVLZXk=');
+final $typed_data.Uint8List spriteEntityDescriptor = $convert.base64Decode(
+    'CgxTcHJpdGVFbnRpdHkSGgoIaW1hZ2VLZXkYASABKAlSCGltYWdlS2V5EjgKBmZyYW1lcxgCIAMoCzIgLmNvbS5vcGVuc291cmNlLnN2Z2EuRnJhbWVFbnRpdHlSBmZyYW1lcxIaCghtYXR0ZUtleRgDIAEoCVIIbWF0dGVLZXk=');
 @$core.Deprecated('Use audioEntityDescriptor instead')
 const AudioEntity$json = const {
   '1': 'AudioEntity',
@@ -46,7 +56,8 @@ const AudioEntity$json = const {
 };
 
 /// Descriptor for `AudioEntity`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List audioEntityDescriptor = $convert.base64Decode('CgtBdWRpb0VudGl0eRIaCghhdWRpb0tleRgBIAEoCVIIYXVkaW9LZXkSHgoKc3RhcnRGcmFtZRgCIAEoBVIKc3RhcnRGcmFtZRIaCghlbmRGcmFtZRgDIAEoBVIIZW5kRnJhbWUSHAoJc3RhcnRUaW1lGAQgASgFUglzdGFydFRpbWUSHAoJdG90YWxUaW1lGAUgASgFUgl0b3RhbFRpbWU=');
+final $typed_data.Uint8List audioEntityDescriptor = $convert.base64Decode(
+    'CgtBdWRpb0VudGl0eRIaCghhdWRpb0tleRgBIAEoCVIIYXVkaW9LZXkSHgoKc3RhcnRGcmFtZRgCIAEoBVIKc3RhcnRGcmFtZRIaCghlbmRGcmFtZRgDIAEoBVIIZW5kRnJhbWUSHAoJc3RhcnRUaW1lGAQgASgFUglzdGFydFRpbWUSHAoJdG90YWxUaW1lGAUgASgFUgl0b3RhbFRpbWU=');
 @$core.Deprecated('Use layoutDescriptor instead')
 const Layout$json = const {
   '1': 'Layout',
@@ -59,7 +70,8 @@ const Layout$json = const {
 };
 
 /// Descriptor for `Layout`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List layoutDescriptor = $convert.base64Decode('CgZMYXlvdXQSDAoBeBgBIAEoAlIBeBIMCgF5GAIgASgCUgF5EhQKBXdpZHRoGAMgASgCUgV3aWR0aBIWCgZoZWlnaHQYBCABKAJSBmhlaWdodA==');
+final $typed_data.Uint8List layoutDescriptor = $convert.base64Decode(
+    'CgZMYXlvdXQSDAoBeBgBIAEoAlIBeBIMCgF5GAIgASgCUgF5EhQKBXdpZHRoGAMgASgCUgV3aWR0aBIWCgZoZWlnaHQYBCABKAJSBmhlaWdodA==');
 @$core.Deprecated('Use transformDescriptor instead')
 const Transform$json = const {
   '1': 'Transform',
@@ -74,19 +86,70 @@ const Transform$json = const {
 };
 
 /// Descriptor for `Transform`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List transformDescriptor = $convert.base64Decode('CglUcmFuc2Zvcm0SDAoBYRgBIAEoAlIBYRIMCgFiGAIgASgCUgFiEgwKAWMYAyABKAJSAWMSDAoBZBgEIAEoAlIBZBIOCgJ0eBgFIAEoAlICdHgSDgoCdHkYBiABKAJSAnR5');
+final $typed_data.Uint8List transformDescriptor = $convert.base64Decode(
+    'CglUcmFuc2Zvcm0SDAoBYRgBIAEoAlIBYRIMCgFiGAIgASgCUgFiEgwKAWMYAyABKAJSAWMSDAoBZBgEIAEoAlIBZBIOCgJ0eBgFIAEoAlICdHgSDgoCdHkYBiABKAJSAnR5');
 @$core.Deprecated('Use shapeEntityDescriptor instead')
 const ShapeEntity$json = const {
   '1': 'ShapeEntity',
   '2': const [
-    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.com.opensource.svga.ShapeEntity.ShapeType', '10': 'type'},
-    const {'1': 'shape', '3': 2, '4': 1, '5': 11, '6': '.com.opensource.svga.ShapeEntity.ShapeArgs', '9': 0, '10': 'shape'},
-    const {'1': 'rect', '3': 3, '4': 1, '5': 11, '6': '.com.opensource.svga.ShapeEntity.RectArgs', '9': 0, '10': 'rect'},
-    const {'1': 'ellipse', '3': 4, '4': 1, '5': 11, '6': '.com.opensource.svga.ShapeEntity.EllipseArgs', '9': 0, '10': 'ellipse'},
-    const {'1': 'styles', '3': 10, '4': 1, '5': 11, '6': '.com.opensource.svga.ShapeEntity.ShapeStyle', '10': 'styles'},
-    const {'1': 'transform', '3': 11, '4': 1, '5': 11, '6': '.com.opensource.svga.Transform', '10': 'transform'},
+    const {
+      '1': 'type',
+      '3': 1,
+      '4': 1,
+      '5': 14,
+      '6': '.com.opensource.svga.ShapeEntity.ShapeType',
+      '10': 'type'
+    },
+    const {
+      '1': 'shape',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.ShapeEntity.ShapeArgs',
+      '9': 0,
+      '10': 'shape'
+    },
+    const {
+      '1': 'rect',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.ShapeEntity.RectArgs',
+      '9': 0,
+      '10': 'rect'
+    },
+    const {
+      '1': 'ellipse',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.ShapeEntity.EllipseArgs',
+      '9': 0,
+      '10': 'ellipse'
+    },
+    const {
+      '1': 'styles',
+      '3': 10,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.ShapeEntity.ShapeStyle',
+      '10': 'styles'
+    },
+    const {
+      '1': 'transform',
+      '3': 11,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.Transform',
+      '10': 'transform'
+    },
   ],
-  '3': const [ShapeEntity_ShapeArgs$json, ShapeEntity_RectArgs$json, ShapeEntity_EllipseArgs$json, ShapeEntity_ShapeStyle$json],
+  '3': const [
+    ShapeEntity_ShapeArgs$json,
+    ShapeEntity_RectArgs$json,
+    ShapeEntity_EllipseArgs$json,
+    ShapeEntity_ShapeStyle$json
+  ],
   '4': const [ShapeEntity_ShapeType$json],
   '8': const [
     const {'1': 'args'},
@@ -128,18 +191,49 @@ const ShapeEntity_EllipseArgs$json = const {
 const ShapeEntity_ShapeStyle$json = const {
   '1': 'ShapeStyle',
   '2': const [
-    const {'1': 'fill', '3': 1, '4': 1, '5': 11, '6': '.com.opensource.svga.ShapeEntity.ShapeStyle.RGBAColor', '10': 'fill'},
-    const {'1': 'stroke', '3': 2, '4': 1, '5': 11, '6': '.com.opensource.svga.ShapeEntity.ShapeStyle.RGBAColor', '10': 'stroke'},
+    const {
+      '1': 'fill',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.ShapeEntity.ShapeStyle.RGBAColor',
+      '10': 'fill'
+    },
+    const {
+      '1': 'stroke',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.ShapeEntity.ShapeStyle.RGBAColor',
+      '10': 'stroke'
+    },
     const {'1': 'strokeWidth', '3': 3, '4': 1, '5': 2, '10': 'strokeWidth'},
-    const {'1': 'lineCap', '3': 4, '4': 1, '5': 14, '6': '.com.opensource.svga.ShapeEntity.ShapeStyle.LineCap', '10': 'lineCap'},
-    const {'1': 'lineJoin', '3': 5, '4': 1, '5': 14, '6': '.com.opensource.svga.ShapeEntity.ShapeStyle.LineJoin', '10': 'lineJoin'},
+    const {
+      '1': 'lineCap',
+      '3': 4,
+      '4': 1,
+      '5': 14,
+      '6': '.com.opensource.svga.ShapeEntity.ShapeStyle.LineCap',
+      '10': 'lineCap'
+    },
+    const {
+      '1': 'lineJoin',
+      '3': 5,
+      '4': 1,
+      '5': 14,
+      '6': '.com.opensource.svga.ShapeEntity.ShapeStyle.LineJoin',
+      '10': 'lineJoin'
+    },
     const {'1': 'miterLimit', '3': 6, '4': 1, '5': 2, '10': 'miterLimit'},
     const {'1': 'lineDashI', '3': 7, '4': 1, '5': 2, '10': 'lineDashI'},
     const {'1': 'lineDashII', '3': 8, '4': 1, '5': 2, '10': 'lineDashII'},
     const {'1': 'lineDashIII', '3': 9, '4': 1, '5': 2, '10': 'lineDashIII'},
   ],
   '3': const [ShapeEntity_ShapeStyle_RGBAColor$json],
-  '4': const [ShapeEntity_ShapeStyle_LineCap$json, ShapeEntity_ShapeStyle_LineJoin$json],
+  '4': const [
+    ShapeEntity_ShapeStyle_LineCap$json,
+    ShapeEntity_ShapeStyle_LineJoin$json
+  ],
 };
 
 @$core.Deprecated('Use shapeEntityDescriptor instead')
@@ -185,30 +279,81 @@ const ShapeEntity_ShapeType$json = const {
 };
 
 /// Descriptor for `ShapeEntity`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List shapeEntityDescriptor = $convert.base64Decode('CgtTaGFwZUVudGl0eRI+CgR0eXBlGAEgASgOMiouY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5TaGFwZVR5cGVSBHR5cGUSQgoFc2hhcGUYAiABKAsyKi5jb20ub3BlbnNvdXJjZS5zdmdhLlNoYXBlRW50aXR5LlNoYXBlQXJnc0gAUgVzaGFwZRI/CgRyZWN0GAMgASgLMikuY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5SZWN0QXJnc0gAUgRyZWN0EkgKB2VsbGlwc2UYBCABKAsyLC5jb20ub3BlbnNvdXJjZS5zdmdhLlNoYXBlRW50aXR5LkVsbGlwc2VBcmdzSABSB2VsbGlwc2USQwoGc3R5bGVzGAogASgLMisuY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5TaGFwZVN0eWxlUgZzdHlsZXMSPAoJdHJhbnNmb3JtGAsgASgLMh4uY29tLm9wZW5zb3VyY2Uuc3ZnYS5UcmFuc2Zvcm1SCXRyYW5zZm9ybRoZCglTaGFwZUFyZ3MSDAoBZBgBIAEoCVIBZBp4CghSZWN0QXJncxIMCgF4GAEgASgCUgF4EgwKAXkYAiABKAJSAXkSFAoFd2lkdGgYAyABKAJSBXdpZHRoEhYKBmhlaWdodBgEIAEoAlIGaGVpZ2h0EiIKDGNvcm5lclJhZGl1cxgFIAEoAlIMY29ybmVyUmFkaXVzGl0KC0VsbGlwc2VBcmdzEgwKAXgYASABKAJSAXgSDAoBeRgCIAEoAlIBeRIYCgdyYWRpdXNYGAMgASgCUgdyYWRpdXNYEhgKB3JhZGl1c1kYBCABKAJSB3JhZGl1c1kaugUKClNoYXBlU3R5bGUSSQoEZmlsbBgBIAEoCzI1LmNvbS5vcGVuc291cmNlLnN2Z2EuU2hhcGVFbnRpdHkuU2hhcGVTdHlsZS5SR0JBQ29sb3JSBGZpbGwSTQoGc3Ryb2tlGAIgASgLMjUuY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5TaGFwZVN0eWxlLlJHQkFDb2xvclIGc3Ryb2tlEiAKC3N0cm9rZVdpZHRoGAMgASgCUgtzdHJva2VXaWR0aBJNCgdsaW5lQ2FwGAQgASgOMjMuY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5TaGFwZVN0eWxlLkxpbmVDYXBSB2xpbmVDYXASUAoIbGluZUpvaW4YBSABKA4yNC5jb20ub3BlbnNvdXJjZS5zdmdhLlNoYXBlRW50aXR5LlNoYXBlU3R5bGUuTGluZUpvaW5SCGxpbmVKb2luEh4KCm1pdGVyTGltaXQYBiABKAJSCm1pdGVyTGltaXQSHAoJbGluZURhc2hJGAcgASgCUglsaW5lRGFzaEkSHgoKbGluZURhc2hJSRgIIAEoAlIKbGluZURhc2hJSRIgCgtsaW5lRGFzaElJSRgJIAEoAlILbGluZURhc2hJSUkaQwoJUkdCQUNvbG9yEgwKAXIYASABKAJSAXISDAoBZxgCIAEoAlIBZxIMCgFiGAMgASgCUgFiEgwKAWEYBCABKAJSAWEiQgoHTGluZUNhcBIQCgxMaW5lQ2FwX0JVVFQQABIRCg1MaW5lQ2FwX1JPVU5EEAESEgoOTGluZUNhcF9TUVVBUkUQAiJGCghMaW5lSm9pbhISCg5MaW5lSm9pbl9NSVRFUhAAEhIKDkxpbmVKb2luX1JPVU5EEAESEgoOTGluZUpvaW5fQkVWRUwQAiI3CglTaGFwZVR5cGUSCQoFU0hBUEUQABIICgRSRUNUEAESCwoHRUxMSVBTRRACEggKBEtFRVAQA0IGCgRhcmdz');
+final $typed_data.Uint8List shapeEntityDescriptor = $convert.base64Decode(
+    'CgtTaGFwZUVudGl0eRI+CgR0eXBlGAEgASgOMiouY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5TaGFwZVR5cGVSBHR5cGUSQgoFc2hhcGUYAiABKAsyKi5jb20ub3BlbnNvdXJjZS5zdmdhLlNoYXBlRW50aXR5LlNoYXBlQXJnc0gAUgVzaGFwZRI/CgRyZWN0GAMgASgLMikuY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5SZWN0QXJnc0gAUgRyZWN0EkgKB2VsbGlwc2UYBCABKAsyLC5jb20ub3BlbnNvdXJjZS5zdmdhLlNoYXBlRW50aXR5LkVsbGlwc2VBcmdzSABSB2VsbGlwc2USQwoGc3R5bGVzGAogASgLMisuY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5TaGFwZVN0eWxlUgZzdHlsZXMSPAoJdHJhbnNmb3JtGAsgASgLMh4uY29tLm9wZW5zb3VyY2Uuc3ZnYS5UcmFuc2Zvcm1SCXRyYW5zZm9ybRoZCglTaGFwZUFyZ3MSDAoBZBgBIAEoCVIBZBp4CghSZWN0QXJncxIMCgF4GAEgASgCUgF4EgwKAXkYAiABKAJSAXkSFAoFd2lkdGgYAyABKAJSBXdpZHRoEhYKBmhlaWdodBgEIAEoAlIGaGVpZ2h0EiIKDGNvcm5lclJhZGl1cxgFIAEoAlIMY29ybmVyUmFkaXVzGl0KC0VsbGlwc2VBcmdzEgwKAXgYASABKAJSAXgSDAoBeRgCIAEoAlIBeRIYCgdyYWRpdXNYGAMgASgCUgdyYWRpdXNYEhgKB3JhZGl1c1kYBCABKAJSB3JhZGl1c1kaugUKClNoYXBlU3R5bGUSSQoEZmlsbBgBIAEoCzI1LmNvbS5vcGVuc291cmNlLnN2Z2EuU2hhcGVFbnRpdHkuU2hhcGVTdHlsZS5SR0JBQ29sb3JSBGZpbGwSTQoGc3Ryb2tlGAIgASgLMjUuY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5TaGFwZVN0eWxlLlJHQkFDb2xvclIGc3Ryb2tlEiAKC3N0cm9rZVdpZHRoGAMgASgCUgtzdHJva2VXaWR0aBJNCgdsaW5lQ2FwGAQgASgOMjMuY29tLm9wZW5zb3VyY2Uuc3ZnYS5TaGFwZUVudGl0eS5TaGFwZVN0eWxlLkxpbmVDYXBSB2xpbmVDYXASUAoIbGluZUpvaW4YBSABKA4yNC5jb20ub3BlbnNvdXJjZS5zdmdhLlNoYXBlRW50aXR5LlNoYXBlU3R5bGUuTGluZUpvaW5SCGxpbmVKb2luEh4KCm1pdGVyTGltaXQYBiABKAJSCm1pdGVyTGltaXQSHAoJbGluZURhc2hJGAcgASgCUglsaW5lRGFzaEkSHgoKbGluZURhc2hJSRgIIAEoAlIKbGluZURhc2hJSRIgCgtsaW5lRGFzaElJSRgJIAEoAlILbGluZURhc2hJSUkaQwoJUkdCQUNvbG9yEgwKAXIYASABKAJSAXISDAoBZxgCIAEoAlIBZxIMCgFiGAMgASgCUgFiEgwKAWEYBCABKAJSAWEiQgoHTGluZUNhcBIQCgxMaW5lQ2FwX0JVVFQQABIRCg1MaW5lQ2FwX1JPVU5EEAESEgoOTGluZUNhcF9TUVVBUkUQAiJGCghMaW5lSm9pbhISCg5MaW5lSm9pbl9NSVRFUhAAEhIKDkxpbmVKb2luX1JPVU5EEAESEgoOTGluZUpvaW5fQkVWRUwQAiI3CglTaGFwZVR5cGUSCQoFU0hBUEUQABIICgRSRUNUEAESCwoHRUxMSVBTRRACEggKBEtFRVAQA0IGCgRhcmdz');
 @$core.Deprecated('Use frameEntityDescriptor instead')
 const FrameEntity$json = const {
   '1': 'FrameEntity',
   '2': const [
     const {'1': 'alpha', '3': 1, '4': 1, '5': 2, '10': 'alpha'},
-    const {'1': 'layout', '3': 2, '4': 1, '5': 11, '6': '.com.opensource.svga.Layout', '10': 'layout'},
-    const {'1': 'transform', '3': 3, '4': 1, '5': 11, '6': '.com.opensource.svga.Transform', '10': 'transform'},
+    const {
+      '1': 'layout',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.Layout',
+      '10': 'layout'
+    },
+    const {
+      '1': 'transform',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.Transform',
+      '10': 'transform'
+    },
     const {'1': 'clipPath', '3': 4, '4': 1, '5': 9, '10': 'clipPath'},
-    const {'1': 'shapes', '3': 5, '4': 3, '5': 11, '6': '.com.opensource.svga.ShapeEntity', '10': 'shapes'},
+    const {
+      '1': 'shapes',
+      '3': 5,
+      '4': 3,
+      '5': 11,
+      '6': '.com.opensource.svga.ShapeEntity',
+      '10': 'shapes'
+    },
   ],
 };
 
 /// Descriptor for `FrameEntity`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List frameEntityDescriptor = $convert.base64Decode('CgtGcmFtZUVudGl0eRIUCgVhbHBoYRgBIAEoAlIFYWxwaGESMwoGbGF5b3V0GAIgASgLMhsuY29tLm9wZW5zb3VyY2Uuc3ZnYS5MYXlvdXRSBmxheW91dBI8Cgl0cmFuc2Zvcm0YAyABKAsyHi5jb20ub3BlbnNvdXJjZS5zdmdhLlRyYW5zZm9ybVIJdHJhbnNmb3JtEhoKCGNsaXBQYXRoGAQgASgJUghjbGlwUGF0aBI4CgZzaGFwZXMYBSADKAsyIC5jb20ub3BlbnNvdXJjZS5zdmdhLlNoYXBlRW50aXR5UgZzaGFwZXM=');
+final $typed_data.Uint8List frameEntityDescriptor = $convert.base64Decode(
+    'CgtGcmFtZUVudGl0eRIUCgVhbHBoYRgBIAEoAlIFYWxwaGESMwoGbGF5b3V0GAIgASgLMhsuY29tLm9wZW5zb3VyY2Uuc3ZnYS5MYXlvdXRSBmxheW91dBI8Cgl0cmFuc2Zvcm0YAyABKAsyHi5jb20ub3BlbnNvdXJjZS5zdmdhLlRyYW5zZm9ybVIJdHJhbnNmb3JtEhoKCGNsaXBQYXRoGAQgASgJUghjbGlwUGF0aBI4CgZzaGFwZXMYBSADKAsyIC5jb20ub3BlbnNvdXJjZS5zdmdhLlNoYXBlRW50aXR5UgZzaGFwZXM=');
 @$core.Deprecated('Use movieEntityDescriptor instead')
 const MovieEntity$json = const {
   '1': 'MovieEntity',
   '2': const [
     const {'1': 'version', '3': 1, '4': 1, '5': 9, '10': 'version'},
-    const {'1': 'params', '3': 2, '4': 1, '5': 11, '6': '.com.opensource.svga.MovieParams', '10': 'params'},
-    const {'1': 'images', '3': 3, '4': 3, '5': 11, '6': '.com.opensource.svga.MovieEntity.ImagesEntry', '10': 'images'},
-    const {'1': 'sprites', '3': 4, '4': 3, '5': 11, '6': '.com.opensource.svga.SpriteEntity', '10': 'sprites'},
-    const {'1': 'audios', '3': 5, '4': 3, '5': 11, '6': '.com.opensource.svga.AudioEntity', '10': 'audios'},
+    const {
+      '1': 'params',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.com.opensource.svga.MovieParams',
+      '10': 'params'
+    },
+    const {
+      '1': 'images',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.com.opensource.svga.MovieEntity.ImagesEntry',
+      '10': 'images'
+    },
+    const {
+      '1': 'sprites',
+      '3': 4,
+      '4': 3,
+      '5': 11,
+      '6': '.com.opensource.svga.SpriteEntity',
+      '10': 'sprites'
+    },
+    const {
+      '1': 'audios',
+      '3': 5,
+      '4': 3,
+      '5': 11,
+      '6': '.com.opensource.svga.AudioEntity',
+      '10': 'audios'
+    },
   ],
   '3': const [MovieEntity_ImagesEntry$json],
 };
@@ -224,4 +369,5 @@ const MovieEntity_ImagesEntry$json = const {
 };
 
 /// Descriptor for `MovieEntity`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List movieEntityDescriptor = $convert.base64Decode('CgtNb3ZpZUVudGl0eRIYCgd2ZXJzaW9uGAEgASgJUgd2ZXJzaW9uEjgKBnBhcmFtcxgCIAEoCzIgLmNvbS5vcGVuc291cmNlLnN2Z2EuTW92aWVQYXJhbXNSBnBhcmFtcxJECgZpbWFnZXMYAyADKAsyLC5jb20ub3BlbnNvdXJjZS5zdmdhLk1vdmllRW50aXR5LkltYWdlc0VudHJ5UgZpbWFnZXMSOwoHc3ByaXRlcxgEIAMoCzIhLmNvbS5vcGVuc291cmNlLnN2Z2EuU3ByaXRlRW50aXR5UgdzcHJpdGVzEjgKBmF1ZGlvcxgFIAMoCzIgLmNvbS5vcGVuc291cmNlLnN2Z2EuQXVkaW9FbnRpdHlSBmF1ZGlvcxo5CgtJbWFnZXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoDFIFdmFsdWU6AjgB');
+final $typed_data.Uint8List movieEntityDescriptor = $convert.base64Decode(
+    'CgtNb3ZpZUVudGl0eRIYCgd2ZXJzaW9uGAEgASgJUgd2ZXJzaW9uEjgKBnBhcmFtcxgCIAEoCzIgLmNvbS5vcGVuc291cmNlLnN2Z2EuTW92aWVQYXJhbXNSBnBhcmFtcxJECgZpbWFnZXMYAyADKAsyLC5jb20ub3BlbnNvdXJjZS5zdmdhLk1vdmllRW50aXR5LkltYWdlc0VudHJ5UgZpbWFnZXMSOwoHc3ByaXRlcxgEIAMoCzIhLmNvbS5vcGVuc291cmNlLnN2Z2EuU3ByaXRlRW50aXR5UgdzcHJpdGVzEjgKBmF1ZGlvcxgFIAMoCzIgLmNvbS5vcGVuc291cmNlLnN2Z2EuQXVkaW9FbnRpdHlSBmF1ZGlvcxo5CgtJbWFnZXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoDFIFdmFsdWU6AjgB');
