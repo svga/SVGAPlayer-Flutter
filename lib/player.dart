@@ -47,7 +47,9 @@ class SVGAAnimationController extends AnimationController {
     if (isAnimating) {
       stop();
     }
-    clear();
+    if (value == null) {
+      clear();
+    }
     this._videoItem = value;
     if (value != null) {
       final movieParams = value.params;
