@@ -1,3 +1,10 @@
+#### 2.1.0 (2021-06-11)
+
+* Add Flutter Web support.
+* Add dispose method to MovieEntity.
+* Add IgnorePointer to CustomPaint.
+* Fix path parse error.
+
 #### 2.0.0 (2021-05-29)
 
 * Release 2.0.0.
