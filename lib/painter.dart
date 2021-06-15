@@ -343,7 +343,7 @@ class SVGAPainter extends CustomPainter {
     if (path == null) {
       path = Path();
     }
-    final d = argD.replaceAllMapped(RegExp('([a-zA-Z^e])'), (match) {
+    final d = argD.replaceAllMapped(RegExp('([a-df-zA-Z])'), (match) {
       return "|||${match.group(1)} ";
     }).replaceAll(RegExp(","), " ");
     var currentPointX = 0.0;
