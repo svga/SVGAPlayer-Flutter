@@ -11,19 +11,23 @@ import 'proto/svga.pbserver.dart';
 
 const _filterKey = 'SVGAParser';
 
+/// You use SVGAParser to load and decode animation files.
 class SVGAParser {
   const SVGAParser();
   static const shared = SVGAParser();
 
+  /// Download animation file from remote server, and decode it.
   Future<MovieEntity> decodeFromURL(String url) async {
     final response = await get(Uri.parse(url));
     return decodeFromBuffer(response.bodyBytes);
   }
 
+  /// Download animation file from bundle assets, and decode it.
   Future<MovieEntity> decodeFromAssets(String path) async {
     return decodeFromBuffer((await rootBundle.load(path)).buffer.asUint8List());
   }
 
+  /// Download animation file from buffer, and decode it.
   Future<MovieEntity> decodeFromBuffer(List<int> bytes) {
     TimelineTask? timeline;
     if (!kReleaseMode) {
@@ -40,15 +44,15 @@ class SVGAParser {
       timeline.instant('prepareResources()',
           arguments: {'images': movie.images.keys.join(',')});
     }
-    return prepareResources(
-      processShapeItems(movie),
+    return _prepareResources(
+      _processShapeItems(movie),
       timeline: timeline,
     ).whenComplete(() {
       if (timeline != null) timeline.finish();
     });
   }
 
-  MovieEntity processShapeItems(MovieEntity movieItem) {
+  MovieEntity _processShapeItems(MovieEntity movieItem) {
     movieItem.sprites.forEach((sprite) {
       List<ShapeEntity>? lastShape;
       sprite.frames.forEach((frame) {
@@ -65,7 +69,7 @@ class SVGAParser {
     return movieItem;
   }
 
-  Future<MovieEntity> prepareResources(MovieEntity movieItem,
+  Future<MovieEntity> _prepareResources(MovieEntity movieItem,
       {TimelineTask? timeline}) {
     final images = movieItem.images;
     if (images.isEmpty) return Future.value(movieItem);

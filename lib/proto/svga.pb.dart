@@ -1769,9 +1769,9 @@ class MovieEntity extends $pb.GeneratedMessage {
   SVGADynamicEntity dynamicItem = SVGADynamicEntity();
   Map<String, ui.Image> bitmapCache = {};
   Map<String, ui.Path> pathCache = {};
-  
+
   void dispose() {
-    bitmapCache.values.forEach((element) { 
+    bitmapCache.values.forEach((element) {
       element.dispose();
     });
     bitmapCache.clear();

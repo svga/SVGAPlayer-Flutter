@@ -1,3 +1,7 @@
+#### 2.1.1 (2021-06-15)
+
+* Fix path parse error.
+
 #### 2.1.0 (2021-06-11)
 
 * Add Flutter Web support.

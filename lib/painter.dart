@@ -1,6 +1,6 @@
 part of svgaplayer_flutter_player;
 
-class SVGAPainter extends CustomPainter {
+class _SVGAPainter extends CustomPainter {
   final MovieEntity videoItem;
   final int currentFrame;
   final BoxFit fit;
@@ -14,7 +14,7 @@ class SVGAPainter extends CustomPainter {
     );
   }
 
-  const SVGAPainter(this.videoItem, this.currentFrame,
+  const _SVGAPainter(this.videoItem, this.currentFrame,
       {this.fit = BoxFit.contain, this.clear = false});
 
   @override
@@ -547,7 +547,7 @@ class SVGAPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) {
     if (this.clear == true) {
       return true;
-    } else if (oldDelegate is SVGAPainter) {
+    } else if (oldDelegate is _SVGAPainter) {
       return !(oldDelegate.videoItem == this.videoItem &&
           oldDelegate.currentFrame == this.currentFrame);
     }

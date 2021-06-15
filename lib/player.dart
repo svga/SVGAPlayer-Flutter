@@ -1,6 +1,5 @@
 library svgaplayer_flutter_player;
 
-import 'dart:io';
 import 'dart:math';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -67,7 +66,7 @@ class SVGAAnimationController extends AnimationController {
 
   MovieEntity? get videoItem => this._videoItem;
 
-  /// mark [SVGAPainter] needs clear
+  /// mark [_SVGAPainter] needs clear
   void clear() {
     this._canvasNeedsClear = true;
     this.notifyListeners();
@@ -162,9 +161,9 @@ class _SVGAImageState extends State<SVGAImage> {
     controller._canvasNeedsClear = false;
     return IgnorePointer(
       child: CustomPaint(
-        painter: SVGAPainter(
+        painter: _SVGAPainter(
           video,
-          SVGAPainter.calculateCurrentFrame(video, controller.value),
+          _SVGAPainter.calculateCurrentFrame(video, controller.value),
           fit: widget.fit,
           clear: needsClear,
         ),

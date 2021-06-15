@@ -3,10 +3,8 @@ part of svgaplayer_flutter_player;
 class SVGASimpleImage extends StatefulWidget {
   final String? resUrl;
   final String? assetsName;
-  final File? file;
 
-  SVGASimpleImage({Key? key, this.resUrl, this.assetsName, this.file})
-      : super(key: key);
+  SVGASimpleImage({Key? key, this.resUrl, this.assetsName}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,10 +25,6 @@ class _SVGASimpleImageState extends State<SVGASimpleImage>
       decode = SVGAParser.shared.decodeFromURL(widget.resUrl!);
     } else if (widget.assetsName != null) {
       decode = SVGAParser.shared.decodeFromAssets(widget.assetsName!);
-    } else if (widget.file != null) {
-      decode = widget.file!.readAsBytes().then((bytes) {
-        return SVGAParser.shared.decodeFromBuffer(bytes);
-      });
     }
     decode?.then((videoItem) {
       if (mounted && this.animationController != null) {
