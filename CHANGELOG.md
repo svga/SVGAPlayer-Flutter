@@ -1,3 +1,7 @@
+#### 2.1.2 (2021-06-26)
+
+* Fix KEEP path parser issue.
+
 #### 2.1.1 (2021-06-15)
 
 * Fix path parse error.

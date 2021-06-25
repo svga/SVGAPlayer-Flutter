@@ -60,7 +60,7 @@ class SVGAParser {
           if (frame.shapes[0].type == ShapeEntity_ShapeType.KEEP &&
               lastShape != null) {
             frame.shapes = lastShape;
-          } else if (frame.shapes.isEmpty) {
+          } else if (frame.shapes.isNotEmpty == true) {
             lastShape = frame.shapes;
           }
         }
