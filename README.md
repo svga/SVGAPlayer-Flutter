@@ -7,8 +7,7 @@
 如果 SVGA-Flutter 为您提供了便利与帮助，诚恳建议您通过以下方式支持作者、贡献者持续为该项目发电。
 
 1. 轻点 GitHub Star，让更多人看到该项目。
-2. 通过 [爱发电](https://afdian.net/@ponycui/plan) 月度捐赠的方式支持作者持续维护该仓库。
-3. 如果您需要更深度的技术支持服务，也可以通过上述爱发电平台，成为银牌、金牌会员，作者将为您提供单独的顾问服务。
+2. 通过赞赏码(页面底部可见)的方式鼓励作者继续维护代码。
 
 ## Introduce
 
@@ -141,3 +140,8 @@ Here are many feature samples.
 [![996.ICU](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) 
 
 [Anti 996](./LICENSE)
+
+
+## 感谢或联系作者
+
+![](https://cdn.jsdelivr.net/gh/PonyCui/ponycui.github.io@master/contact.png)
