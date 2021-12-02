@@ -9,6 +9,8 @@
 1. 轻点 GitHub Star，让更多人看到该项目。
 2. 通过赞赏码(页面底部可见)的方式鼓励作者继续维护代码。
 
+关注作者另外一个开源项目，[MPFlutter](https://mpflutter.com/)，使用 Flutter 开发微信小程序。
+
 ## Introduce
 
 SVGAPlayer is a light-weight animation renderer. You use [tools](https://svga.io/designer.html) to export `svga` file from `Adobe Animate CC` or `Adobe After Effects`, and then use SVGAPlayer to render animation on mobile application.
