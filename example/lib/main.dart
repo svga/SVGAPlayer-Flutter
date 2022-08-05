@@ -193,164 +193,187 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
     );
   }
 
-  Container _buildOptions() {
+  Widget _buildOptions() {
     return Container(
-      width: 255,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IconButton(
-              iconSize: 40,
-              onPressed: () {
-                setState(() {
-                  hideOptions = !hideOptions;
-                });
-              },
-              icon: hideOptions
-                  ? Icon(Icons.arrow_drop_up)
-                  : Icon(Icons.arrow_drop_down)),
-          if (!hideOptions) ...[
+      width: 240,
+      color: Colors.black12,
+      padding: EdgeInsets.all(8.0),
+      child: SliderTheme(
+        data: SliderTheme.of(context).copyWith(
+          showValueIndicator: ShowValueIndicator.always,
+          trackHeight: 2,
+          overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
+          thumbShape:
+              RoundSliderThumbShape(enabledThumbRadius: 6, pressedElevation: 4),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextButton.icon(
+                onPressed: () {
+                  setState(() {
+                    hideOptions = !hideOptions;
+                  });
+                },
+                icon: hideOptions
+                    ? Icon(Icons.arrow_drop_up)
+                    : Icon(Icons.arrow_drop_down),
+                label: Text(hideOptions ? 'Show options' : 'Hide options')),
             AnimatedBuilder(
                 animation: animationController!,
                 builder: (context, child) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                          'Current frame: ${animationController!.currentFrame + 1}/${animationController!.frames}'),
-                      Slider(
-                        min: 0,
-                        max: animationController!.frames.toDouble(),
-                        value: animationController!.currentFrame.toDouble(),
-                        onChanged: (v) {
-                          if (animationController?.isAnimating == true) {
-                            animationController?.stop();
-                          }
-                          animationController?.value =
-                              v / animationController!.frames;
-                        },
-                      ),
-                    ],
-                  );
+                  return Text(
+                      'Current frame: ${animationController!.currentFrame + 1}/${animationController!.frames}');
                 }),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('Image filter quality'),
-                const SizedBox(width: 8),
-                DropdownButton<FilterQuality>(
-                  value: filterQuality,
-                  onChanged: (FilterQuality? newValue) {
-                    setState(() {
-                      filterQuality = newValue!;
-                    });
-                  },
-                  items: FilterQuality.values.map((FilterQuality value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(value.name),
-                    );
-                  }).toList(),
-                )
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('Box fit'),
-                const SizedBox(width: 8),
-                DropdownButton<BoxFit>(
-                  value: fit,
-                  onChanged: (BoxFit? newValue) {
-                    setState(() {
-                      fit = newValue!;
-                    });
-                  },
-                  items: BoxFit.values.map((BoxFit value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(value.name),
-                    );
-                  }).toList(),
-                )
-              ],
-            ),
-            Text('Container width: $containerWidth'),
-            Slider(
-              min: 100,
-              max: MediaQuery.of(context).size.width,
-              value: containerWidth,
-              onChanged: (v) {
-                setState(() {
-                  containerWidth = v.roundToDouble();
-                });
-              },
-            ),
-            Text('Container height: $containerHeight'),
-            Slider(
-              min: 100,
-              max: MediaQuery.of(context).size.height,
-              value: containerHeight,
-              onChanged: (v) {
-                setState(() {
-                  containerHeight = v.roundToDouble();
-                });
-              },
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('Allow drawing overflow'),
-                const SizedBox(width: 8),
-                Switch(
-                  value: allowOverflow,
-                  onChanged: (v) {
-                    setState(() {
-                      allowOverflow = v;
-                    });
-                  },
-                )
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                Colors.transparent,
-                Colors.black,
-                Colors.yellow,
-                Colors.red,
-                Colors.blue,
-                Colors.green,
-              ]
-                  .map(
-                    (e) => GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          backgroundColor = e;
-                        });
+            if (!hideOptions) ...[
+              AnimatedBuilder(
+                  animation: animationController!,
+                  builder: (context, child) {
+                    return Slider(
+                      min: 0,
+                      max: animationController!.frames.toDouble(),
+                      value: animationController!.currentFrame.toDouble(),
+                      label: '${animationController!.currentFrame}',
+                      onChanged: (v) {
+                        if (animationController?.isAnimating == true) {
+                          animationController?.stop();
+                        }
+                        animationController?.value =
+                            v / animationController!.frames;
                       },
-                      child: Container(
-                        width: 20,
-                        height: 20,
-                        decoration: ShapeDecoration(
-                          color: e,
-                          shape: CircleBorder(
-                            side: backgroundColor == e
-                                ? const BorderSide(
-                                    color: Colors.white,
-                                    width: 3,
-                                  )
-                                : const BorderSide(color: Colors.grey),
+                    );
+                  }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Image filter quality'),
+                  DropdownButton<FilterQuality>(
+                    value: filterQuality,
+                    onChanged: (FilterQuality? newValue) {
+                      setState(() {
+                        filterQuality = newValue!;
+                      });
+                    },
+                    items: FilterQuality.values.map((FilterQuality value) {
+                      return DropdownMenuItem(
+                        value: value,
+                        child: Text(value.toString().split('.').last),
+                      );
+                    }).toList(),
+                  )
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Allow drawing overflow'),
+                  const SizedBox(width: 8),
+                  Switch(
+                    value: allowOverflow,
+                    onChanged: (v) {
+                      setState(() {
+                        allowOverflow = v;
+                      });
+                    },
+                  )
+                ],
+              ),
+              Text('Container options:'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(' width:'),
+                  Slider(
+                    min: 100,
+                    max: MediaQuery.of(context).size.width,
+                    value: containerWidth,
+                    label: '$containerWidth',
+                    onChanged: (v) {
+                      setState(() {
+                        containerWidth = v.roundToDouble();
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(' height:'),
+                  Slider(
+                    min: 100,
+                    max: MediaQuery.of(context).size.height,
+                    label: '$containerHeight',
+                    value: containerHeight,
+                    onChanged: (v) {
+                      setState(() {
+                        containerHeight = v.roundToDouble();
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(' box fit: '),
+                  const SizedBox(width: 8),
+                  DropdownButton<BoxFit>(
+                    value: fit,
+                    onChanged: (BoxFit? newValue) {
+                      setState(() {
+                        fit = newValue!;
+                      });
+                    },
+                    items: BoxFit.values.map((BoxFit value) {
+                      return DropdownMenuItem(
+                        value: value,
+                        child: Text(value.toString().split('.').last),
+                      );
+                    }).toList(),
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: const [
+                  Colors.transparent,
+                  Colors.black,
+                  Colors.yellow,
+                  Colors.red,
+                  Colors.blue,
+                  Colors.green,
+                ]
+                    .map(
+                      (e) => GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            backgroundColor = e;
+                          });
+                        },
+                        child: Container(
+                          width: 20,
+                          height: 20,
+                          decoration: ShapeDecoration(
+                            color: e,
+                            shape: CircleBorder(
+                              side: backgroundColor == e
+                                  ? const BorderSide(
+                                      color: Colors.white,
+                                      width: 3,
+                                    )
+                                  : const BorderSide(color: Colors.grey),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                  .toList(),
-            ),
+                    )
+                    .toList(),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
