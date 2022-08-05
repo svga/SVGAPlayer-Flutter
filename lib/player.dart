@@ -126,15 +126,18 @@ class SVGAAnimationController extends AnimationController {
   void dispose() {
     // auto dispose _videoItem when set null
     videoItem = null;
-     _isDisposed = true;
+    _isDisposed = true;
     super.dispose();
   }
 }
 
 class _SVGAImageState extends State<SVGAImage> {
+  MovieEntity? video;
   @override
   void initState() {
     super.initState();
+    video = widget._controller.videoItem;
+    widget._controller.addListener(_handleChange);
     widget._controller.addStatusListener(_handleStatusChange);
   }
 
@@ -142,8 +145,22 @@ class _SVGAImageState extends State<SVGAImage> {
   void didUpdateWidget(SVGAImage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget._controller != widget._controller) {
+      oldWidget._controller.removeListener(_handleChange);
       oldWidget._controller.removeStatusListener(_handleStatusChange);
+      video = widget._controller.videoItem;
+      widget._controller.addListener(_handleChange);
       widget._controller.addStatusListener(_handleStatusChange);
+    }
+  }
+
+  void _handleChange() {
+    if (mounted &&
+        !widget._controller._isDisposed &&
+        video != widget._controller.videoItem) {
+      setState(() {
+        // rebuild
+        video = widget._controller.videoItem;
+      });
     }
   }
 
@@ -155,14 +172,15 @@ class _SVGAImageState extends State<SVGAImage> {
 
   @override
   void dispose() {
+    video = null;
+    widget._controller.removeListener(_handleChange);
     widget._controller.removeStatusListener(_handleStatusChange);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = widget._controller;
-    final video = controller.videoItem;
+    final video = this.video;
     final Size viewBoxSize;
     if (video == null || !video.isInitialized()) {
       viewBoxSize = Size.zero;
@@ -175,7 +193,7 @@ class _SVGAImageState extends State<SVGAImage> {
     return IgnorePointer(
       child: CustomPaint(
         painter: _SVGAPainter(
-          controller,
+          widget._controller,
           fit: widget.fit,
           filterQuality: widget.filterQuality,
           // default is allowing overflow for backward compatibility

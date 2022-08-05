@@ -25,7 +25,7 @@ class _SVGAPainter extends CustomPainter {
       controller._canvasNeedsClear = false;
       return;
     }
-    if (size.isEmpty) return;
+    if (size.isEmpty || controller.videoItem == null) return;
     final params = videoItem.params;
     final Size viewBoxSize = Size(params.viewBoxWidth, params.viewBoxHeight);
     canvas.save();
@@ -45,7 +45,8 @@ class _SVGAPainter extends CustomPainter {
     // scale viewbox size (source) to canvas size (destination)
     var sx = fittedSizes.destination.width / fittedSizes.source.width;
     var sy = fittedSizes.destination.height / fittedSizes.source.height;
-    final Size scaledHalfViewBoxSize = Size(viewBoxRect.size.width * sx, viewBoxRect.size.height * sy) / 2.0;
+    final Size scaledHalfViewBoxSize =
+        Size(viewBoxRect.size.width * sx, viewBoxRect.size.height * sy) / 2.0;
     final Size halfCanvasSize = canvasRect.size / 2.0;
     // center align
     final Offset shift = Offset(
@@ -450,11 +451,12 @@ class _SVGAPainter extends CustomPainter {
   bool shouldRepaint(_SVGAPainter oldDelegate) {
     if (controller._canvasNeedsClear == true) {
       return true;
-    } else {
-      return !(oldDelegate.videoItem == videoItem &&
-          oldDelegate.controller == controller &&
-          oldDelegate.fit == fit &&
-          oldDelegate.filterQuality == filterQuality);
     }
+
+    return !(oldDelegate.controller == controller &&
+        oldDelegate.controller.videoItem == controller.videoItem &&
+        oldDelegate.fit == fit &&
+        oldDelegate.filterQuality == filterQuality &&
+        oldDelegate.clipRect == clipRect);
   }
 }

@@ -156,23 +156,22 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
               padding: const EdgeInsets.all(8.0),
               child: Text("Url: ${widget.image}",
                   style: Theme.of(context).textTheme.subtitle2)),
+          if (isLoading) LinearProgressIndicator(),
           Center(
-            child: isLoading
-                ? CircularProgressIndicator()
-                : Container(
-                    width: containerWidth,
-                    height: containerHeight,
-                    color: backgroundColor,
-                    child: SVGAImage(
-                      this.animationController!,
-                      fit: fit,
-                      clearsAfterStop: false,
-                      allowDrawingOverflow: allowOverflow,
-                      filterQuality: filterQuality,
-                    ),
-                  ),
+            child: Container(
+              width: containerWidth,
+              height: containerHeight,
+              color: backgroundColor,
+              child: SVGAImage(
+                this.animationController!,
+                fit: fit,
+                clearsAfterStop: false,
+                allowDrawingOverflow: allowOverflow,
+                filterQuality: filterQuality,
+              ),
+            ),
           ),
-          Positioned(bottom: 10, child: _buildOptions()),
+          Positioned(bottom: 10, child: _buildOptions(context)),
         ],
       ),
       floatingActionButton: isLoading || animationController!.videoItem == null
@@ -193,7 +192,7 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
     );
   }
 
-  Widget _buildOptions() {
+  Widget _buildOptions(BuildContext context) {
     return Container(
       width: 240,
       color: Colors.black12,
@@ -202,9 +201,9 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
         data: SliderTheme.of(context).copyWith(
           showValueIndicator: ShowValueIndicator.always,
           trackHeight: 2,
-          overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
-          thumbShape:
-              RoundSliderThumbShape(enabledThumbRadius: 6, pressedElevation: 4),
+          overlayShape: const RoundSliderOverlayShape(overlayRadius: 10),
+          thumbShape: const RoundSliderThumbShape(
+              enabledThumbRadius: 6, pressedElevation: 4),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,12 +285,12 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
                   Text(' width:'),
                   Slider(
                     min: 100,
-                    max: MediaQuery.of(context).size.width,
+                    max: MediaQuery.of(context).size.width.roundToDouble(),
                     value: containerWidth,
                     label: '$containerWidth',
                     onChanged: (v) {
                       setState(() {
-                        containerWidth = v.roundToDouble();
+                        containerWidth = v.truncateToDouble();
                       });
                     },
                   ),
@@ -303,12 +302,12 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
                   Text(' height:'),
                   Slider(
                     min: 100,
-                    max: MediaQuery.of(context).size.height,
+                    max: MediaQuery.of(context).size.height.roundToDouble(),
                     label: '$containerHeight',
                     value: containerHeight,
                     onChanged: (v) {
                       setState(() {
-                        containerHeight = v.roundToDouble();
+                        containerHeight = v.truncateToDouble();
                       });
                     },
                   ),
@@ -339,11 +338,11 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: const [
                   Colors.transparent,
-                  Colors.black,
-                  Colors.yellow,
                   Colors.red,
-                  Colors.blue,
                   Colors.green,
+                  Colors.blue,
+                  Colors.yellow,
+                  Colors.black,
                 ]
                     .map(
                       (e) => GestureDetector(
