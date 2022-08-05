@@ -1,205 +1,144 @@
 part of svgaplayer_flutter_player;
 
 class _SVGAPainter extends CustomPainter {
-  final MovieEntity videoItem;
-  final int currentFrame;
   final BoxFit fit;
-  final bool clear;
+  final SVGAAnimationController controller;
+  int get currentFrame => controller.currentFrame;
+  MovieEntity get videoItem => controller.videoItem!;
+  final FilterQuality filterQuality;
 
-  static int calculateCurrentFrame(
-      MovieEntity videoItem, double animationProcess) {
-    return min(
-      videoItem.params.frames - 1,
-      max(0, (videoItem.params.frames.toDouble() * animationProcess).toInt()),
-    );
-  }
-
-  const _SVGAPainter(this.videoItem, this.currentFrame,
-      {this.fit = BoxFit.contain, this.clear = false});
+  /// Guaranteed to draw within the canvas bounds
+  final bool clipRect;
+  _SVGAPainter(
+    this.controller, {
+    this.fit = BoxFit.contain,
+    this.filterQuality = FilterQuality.low,
+    this.clipRect = true,
+  })  : assert(
+            controller.videoItem != null, 'Invalid SVGAAnimationController!'),
+        super(repaint: controller);
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (this.clear) return;
+    if (controller._canvasNeedsClear) {
+      // mark cleared
+      controller._canvasNeedsClear = false;
+      return;
+    }
+    if (size.isEmpty || controller.videoItem == null) return;
+    final params = videoItem.params;
+    final Size viewBoxSize = Size(params.viewBoxWidth, params.viewBoxHeight);
+    if (viewBoxSize.isEmpty) return;
     canvas.save();
-    this.scaleToFit(canvas, size);
-    this.drawSprites(canvas, size);
-    canvas.restore();
+    try {
+      final canvasRect = Offset.zero & size;
+      if (clipRect) canvas.clipRect(canvasRect);
+      scaleCanvasToViewBox(canvas, canvasRect, Offset.zero & viewBoxSize);
+      drawSprites(canvas, size);
+    } finally {
+      canvas.restore();
+    }
   }
 
-  void scaleToFit(Canvas canvas, Size size) {
-    final double imageWidth = this.videoItem.params.viewBoxWidth.toDouble();
-    final double imageHeight = this.videoItem.params.viewBoxHeight.toDouble();
-    if (imageWidth == 0.0 ||
-        imageHeight == 0.0 ||
-        size.width == 0.0 ||
-        size.height == 0.0) return;
-    switch (this.fit) {
-      case BoxFit.contain:
-        if (imageWidth / imageHeight >= size.width / size.height) {
-          canvas.translate(
-            0.0,
-            (size.height - (imageHeight * (size.width / imageWidth))) / 2.0,
-          );
-          canvas.scale(size.width / imageWidth, size.width / imageWidth);
-        } else {
-          canvas.translate(
-            (size.width - (imageWidth * (size.height / imageHeight))) / 2.0,
-            0.0,
-          );
-          canvas.scale(size.height / imageHeight, size.height / imageHeight);
-        }
-        break;
-      case BoxFit.cover:
-        if (imageWidth / imageHeight <= size.width / size.height) {
-          canvas.translate(
-            0.0,
-            (size.height - (imageHeight * (size.width / imageWidth))) / 2.0,
-          );
-          canvas.scale(size.width / imageWidth, size.width / imageWidth);
-        } else {
-          canvas.translate(
-            (size.width - (imageWidth * (size.height / imageHeight))) / 2.0,
-            0.0,
-          );
-          canvas.scale(size.height / imageHeight, size.height / imageHeight);
-        }
-        break;
-      case BoxFit.fill:
-        canvas.scale(size.width / imageWidth, size.height / imageHeight);
-        break;
-      case BoxFit.fitWidth:
-        canvas.translate(
-          0.0,
-          (size.height - (imageHeight * (size.width / imageWidth))) / 2.0,
-        );
-        canvas.scale(size.width / imageWidth, size.width / imageWidth);
-        break;
-      case BoxFit.fitHeight:
-        canvas.translate(
-          (size.width - (imageWidth * (size.height / imageHeight))) / 2.0,
-          0.0,
-        );
-        canvas.scale(size.height / imageHeight, size.height / imageHeight);
-        break;
-      case BoxFit.none:
-        canvas.translate(
-          (size.width - imageWidth) / 2.0,
-          (size.height - imageHeight) / 2.0,
-        );
-        break;
-      case BoxFit.scaleDown:
-        if (imageWidth > size.width || imageHeight > size.height) {
-          if (imageWidth / imageHeight >= size.width / size.height) {
-            canvas.translate(
-              0.0,
-              (size.height - (imageHeight * (size.width / imageWidth))) / 2.0,
-            );
-            canvas.scale(size.width / imageWidth, size.width / imageWidth);
-          } else {
-            canvas.translate(
-              (size.width - (imageWidth * (size.height / imageHeight))) / 2.0,
-              0.0,
-            );
-            canvas.scale(size.height / imageHeight, size.height / imageHeight);
-          }
-        }
-        break;
-      default:
-    }
+  void scaleCanvasToViewBox(Canvas canvas, Rect canvasRect, Rect viewBoxRect) {
+    final fittedSizes = applyBoxFit(fit, viewBoxRect.size, canvasRect.size);
+
+    // scale viewbox size (source) to canvas size (destination)
+    var sx = fittedSizes.destination.width / fittedSizes.source.width;
+    var sy = fittedSizes.destination.height / fittedSizes.source.height;
+    final Size scaledHalfViewBoxSize =
+        Size(viewBoxRect.size.width * sx, viewBoxRect.size.height * sy) / 2.0;
+    final Size halfCanvasSize = canvasRect.size / 2.0;
+    // center align
+    final Offset shift = Offset(
+      halfCanvasSize.width - scaledHalfViewBoxSize.width,
+      halfCanvasSize.height - scaledHalfViewBoxSize.height,
+    );
+    if (shift != Offset.zero) canvas.translate(shift.dx, shift.dy);
+    if (sx != 1.0 && sy != 1.0) canvas.scale(sx, sy);
   }
 
   void drawSprites(Canvas canvas, Size size) {
-    this.videoItem.sprites.forEach((sprite) {
-      drawBitmap(sprite, canvas, size);
-      drawShape(sprite, canvas, size);
-      drawText(sprite, canvas, size);
-    });
+    for (final sprite in videoItem.sprites) {
+      final imageKey = sprite.imageKey;
+      // var matteKey = sprite.matteKey;
+      if (imageKey.isEmpty ||
+          videoItem.dynamicItem.dynamicHidden[imageKey] == true) {
+        continue;
+      }
+      final frameItem = sprite.frames[currentFrame];
+      final needTransform = frameItem.hasTransform();
+      final needClip = frameItem.hasClipPath();
+      if (needTransform) {
+        canvas.save();
+        canvas.transform(Float64List.fromList(<double>[
+          frameItem.transform.a,
+          frameItem.transform.b,
+          0.0,
+          0.0,
+          frameItem.transform.c,
+          frameItem.transform.d,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          frameItem.transform.tx,
+          frameItem.transform.ty,
+          0.0,
+          1.0
+        ]));
+      }
+      if (needClip) {
+        canvas.save();
+        canvas.clipPath(buildDPath(frameItem.clipPath));
+      }
+      final frameRect =
+          Rect.fromLTRB(0, 0, frameItem.layout.width, frameItem.layout.height);
+      final frameAlpha =
+          frameItem.hasAlpha() ? (frameItem.alpha * 255).toInt() : 255;
+      drawBitmap(canvas, imageKey, frameRect, frameAlpha);
+      drawShape(canvas, frameItem.shapes, frameAlpha);
+      // draw dynamic
+      final dynamicDrawer = videoItem.dynamicItem.dynamicDrawer[imageKey];
+      if (dynamicDrawer != null) {
+        dynamicDrawer(canvas, currentFrame);
+      }
+      if (needClip) {
+        canvas.restore();
+      }
+      if (needTransform) {
+        canvas.restore();
+      }
+    }
   }
 
-  void drawBitmap(SpriteEntity sprite, Canvas canvas, Size size) {
-    if (sprite.imageKey.isEmpty) return;
-    if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
-      return;
-    final frameItem = sprite.frames[this.currentFrame];
-    final bitmap = this.videoItem.dynamicItem.dynamicImages[sprite.imageKey] ??
-        this.videoItem.bitmapCache[sprite.imageKey];
+  void drawBitmap(Canvas canvas, String imageKey, Rect frameRect, int alpha) {
+    final bitmap = videoItem.dynamicItem.dynamicImages[imageKey] ??
+        videoItem.bitmapCache[imageKey];
     if (bitmap == null) return;
-    canvas.save();
-    if (frameItem.hasTransform()) {
-      canvas.transform(Float64List.fromList([
-        frameItem.transform.a,
-        frameItem.transform.b,
-        0.0,
-        0.0,
-        frameItem.transform.c,
-        frameItem.transform.d,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        frameItem.transform.tx,
-        frameItem.transform.ty,
-        0.0,
-        1.0
-      ].toList()));
-    }
+
     final bitmapPaint = Paint();
-    bitmapPaint.filterQuality = FilterQuality.low; //解决bitmap锯齿问题
+    bitmapPaint.filterQuality = filterQuality;
+    //解决bitmap锯齿问题
     bitmapPaint.isAntiAlias = true;
-    bitmapPaint.color =
-        Color.fromARGB((frameItem.alpha * 255.0).toInt(), 255, 255, 255);
-    if (frameItem.hasClipPath()) {
-      canvas.clipPath(this.buildDPath(frameItem.clipPath));
-    }
-    // canvas.drawImage(bitmap, Offset.zero, bitmapPaint);
+    bitmapPaint.color = Color.fromARGB(alpha, 0, 0, 0);
+
     Rect srcRect =
         Rect.fromLTRB(0, 0, bitmap.width.toDouble(), bitmap.height.toDouble());
-    Rect dstRect =
-        Rect.fromLTRB(0, 0, frameItem.layout.width, frameItem.layout.height);
+    Rect dstRect = frameRect;
     canvas.drawImageRect(bitmap, srcRect, dstRect, bitmapPaint);
-    if (this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] != null) {
-      this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey]!(
-          canvas, this.currentFrame);
-    }
-    canvas.restore();
+    drawTextOnBitmap(canvas, imageKey, frameRect, alpha);
   }
 
-  void drawShape(SpriteEntity sprite, Canvas canvas, Size size) {
-    if (sprite.imageKey.isNotEmpty &&
-        this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
-      return;
-    final frameItem = sprite.frames[this.currentFrame];
-    if (frameItem.shapes.isEmpty || frameItem.shapes.length == 0) return;
-    canvas.save();
-    if (frameItem.hasTransform()) {
-      canvas.transform(Float64List.fromList([
-        frameItem.transform.a,
-        frameItem.transform.b,
-        0.0,
-        0.0,
-        frameItem.transform.c,
-        frameItem.transform.d,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        frameItem.transform.tx,
-        frameItem.transform.ty,
-        0.0,
-        1.0
-      ].toList()));
-    }
-    frameItem.shapes.forEach((shape) {
-      final path = this.buildPath(shape);
-      if (shape.hasTransform() || frameItem.hasClipPath()) {
-        canvas.save();
-      }
+  void drawShape(Canvas canvas, List<ShapeEntity> shapes, int frameAlpha) {
+    if (shapes.isEmpty) return;
+    for (var shape in shapes) {
+      final path = buildPath(shape);
       if (shape.hasTransform()) {
-        canvas.transform(Float64List.fromList([
+        canvas.save();
+        canvas.transform(Float64List.fromList(<double>[
           shape.transform.a,
           shape.transform.b,
           0.0,
@@ -216,18 +155,16 @@ class _SVGAPainter extends CustomPainter {
           shape.transform.ty,
           0.0,
           1.0
-        ].toList()));
+        ]));
       }
-      if (frameItem.hasClipPath()) {
-        canvas.clipPath(this.buildDPath(frameItem.clipPath));
-      }
+
       final fill = shape.styles.fill;
       if (fill.isInitialized()) {
         final paint = Paint();
         paint.isAntiAlias = true;
         paint.style = PaintingStyle.fill;
         paint.color = Color.fromARGB(
-          (fill.a * frameItem.alpha * 255).toInt(),
+          (fill.a * frameAlpha).toInt(),
           (fill.r * 255).toInt(),
           (fill.g * 255).toInt(),
           (fill.b * 255).toInt(),
@@ -240,7 +177,7 @@ class _SVGAPainter extends CustomPainter {
         paint.style = PaintingStyle.stroke;
         if (shape.styles.stroke.isInitialized()) {
           paint.color = Color.fromARGB(
-            (shape.styles.stroke.a * frameItem.alpha * 255).toInt(),
+            (shape.styles.stroke.a * frameAlpha).toInt(),
             (shape.styles.stroke.r * 255).toInt(),
             (shape.styles.stroke.g * 255).toInt(),
             (shape.styles.stroke.b * 255).toInt(),
@@ -293,17 +230,11 @@ class _SVGAPainter extends CustomPainter {
         } else {
           canvas.drawPath(path, paint);
         }
-        if (sprite.imageKey.isNotEmpty &&
-            this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey] != null) {
-          this.videoItem.dynamicItem.dynamicDrawer[sprite.imageKey]!(
-              canvas, this.currentFrame);
-        }
       }
-      if (shape.hasTransform() || frameItem.hasClipPath()) {
+      if (shape.hasTransform()) {
         canvas.restore();
       }
-    });
-    canvas.restore();
+    }
   }
 
   static const _validMethods = 'MLHVCSQRZmlhvcsqrz';
@@ -313,7 +244,7 @@ class _SVGAPainter extends CustomPainter {
     if (shape.type == ShapeEntity_ShapeType.SHAPE) {
       final args = shape.shape;
       final argD = args.d;
-      return this.buildDPath(argD, path: path);
+      return buildDPath(argD, path: path);
     } else if (shape.type == ShapeEntity_ShapeType.ELLIPSE) {
       final args = shape.ellipse;
       final xv = args.x;
@@ -337,12 +268,10 @@ class _SVGAPainter extends CustomPainter {
   }
 
   Path buildDPath(String argD, {Path? path}) {
-    if (this.videoItem.pathCache[argD] != null) {
-      return this.videoItem.pathCache[argD]!;
+    if (videoItem.pathCache[argD] != null) {
+      return videoItem.pathCache[argD]!;
     }
-    if (path == null) {
-      path = Path();
-    }
+    path ??= Path();
     final d = argD.replaceAllMapped(RegExp('([a-df-zA-Z])'), (match) {
       return "|||${match.group(1)} ";
     }).replaceAll(RegExp(","), " ");
@@ -353,11 +282,11 @@ class _SVGAPainter extends CustomPainter {
     double? currentPointX2;
     double? currentPointY2;
     d.split("|||").forEach((segment) {
-      if (segment.length == 0) {
+      if (segment.isEmpty) {
         return;
       }
       final firstLetter = segment.substring(0, 1);
-      if (_validMethods.indexOf(firstLetter) >= 0) {
+      if (_validMethods.contains(firstLetter)) {
         final args = segment.substring(1).trim().split(" ");
         if (firstLetter == "M") {
           currentPointX = double.parse(args[0]);
@@ -497,60 +426,38 @@ class _SVGAPainter extends CustomPainter {
           path!.close();
         }
       }
-      this.videoItem.pathCache[argD] = path!;
+      videoItem.pathCache[argD] = path!;
     });
     return path;
   }
 
-  void drawText(SpriteEntity sprite, Canvas canvas, Size size) {
-    if (this.videoItem.dynamicItem.dynamicText.length == 0) return;
-    if (sprite.imageKey.isEmpty) return;
-    if (this.videoItem.dynamicItem.dynamicHidden[sprite.imageKey] == true)
-      return;
-    if (this.videoItem.dynamicItem.dynamicText[sprite.imageKey] == null) return;
-    final frameItem = sprite.frames[this.currentFrame];
-    if (frameItem.layout.width <= 0 || frameItem.layout.height <= 0) return;
-    canvas.save();
-    if (frameItem.hasTransform()) {
-      canvas.transform(Float64List.fromList([
-        frameItem.transform.a,
-        frameItem.transform.b,
-        0.0,
-        0.0,
-        frameItem.transform.c,
-        frameItem.transform.d,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        1.0,
-        0.0,
-        frameItem.transform.tx,
-        frameItem.transform.ty,
-        0.0,
-        1.0
-      ].toList()));
-    }
-    TextPainter? textPainter =
-        this.videoItem.dynamicItem.dynamicText[sprite.imageKey];
+  void drawTextOnBitmap(
+      Canvas canvas, String imageKey, Rect frameRect, int frameAlpha) {
+    var dynamicText = videoItem.dynamicItem.dynamicText;
+    if (dynamicText.isEmpty) return;
+    if (dynamicText[imageKey] == null) return;
+
+    TextPainter? textPainter = dynamicText[imageKey];
+
     textPainter?.paint(
       canvas,
       Offset(
-        (frameItem.layout.width - textPainter.width) / 2.0,
-        (frameItem.layout.height - textPainter.height) / 2.0,
+        (frameRect.width - textPainter.width) / 2.0,
+        (frameRect.height - textPainter.height) / 2.0,
       ),
     );
-    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    if (this.clear == true) {
+  bool shouldRepaint(_SVGAPainter oldDelegate) {
+    if (controller._canvasNeedsClear == true) {
       return true;
-    } else if (oldDelegate is _SVGAPainter) {
-      return !(oldDelegate.videoItem == this.videoItem &&
-          oldDelegate.currentFrame == this.currentFrame);
     }
-    return true;
+
+    return !(oldDelegate.controller == controller &&
+        oldDelegate.controller.videoItem == controller.videoItem &&
+        oldDelegate.fit == fit &&
+        oldDelegate.filterQuality == filterQuality &&
+        oldDelegate.clipRect == clipRect);
   }
 }

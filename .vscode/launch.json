@@ -9,6 +9,13 @@
             "request": "launch",
             "type": "dart",
             "program": "example/lib/main.dart"
+        },
+        {
+            "name": "Flutter profile",
+            "request": "launch",
+            "type": "dart",
+            "program": "example/lib/main.dart",
+            "args": ["--profile"]
         }
     ]
 }
