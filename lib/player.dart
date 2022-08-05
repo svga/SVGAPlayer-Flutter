@@ -18,11 +18,25 @@ class SVGAImage extends StatefulWidget {
   final BoxFit fit;
   final bool clearsAfterStop;
 
-  SVGAImage(
+  /// Used to set the filterQuality of drawing the images inside SVGA.
+  ///
+  /// The default is [FilterQuality.low]
+  final FilterQuality filterQuality;
+
+  /// If `true`, the SVGA painter may draw beyond the expected canvas bounds
+  /// and cause additional memory overhead.
+  ///
+  /// For backwards compatibility, the default is `null`,
+  /// which means allow drawing to overflow canvas bounds.
+  final bool? allowDrawingOverflow;
+  const SVGAImage(
     this._controller, {
+    Key? key,
     this.fit = BoxFit.contain,
+    this.filterQuality = FilterQuality.low,
+    this.allowDrawingOverflow,
     this.clearsAfterStop = true,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SVGAImageState();
@@ -43,33 +57,61 @@ class SVGAAnimationController extends AnimationController {
   }) : super(vsync: vsync, duration: Duration.zero);
 
   set videoItem(MovieEntity? value) {
+    assert(!_isDisposed, '$this has been disposed!');
+    if (_isDisposed) return;
     if (isAnimating) {
       stop();
     }
     if (value == null) {
       clear();
     }
-    if (this._videoItem != null && this._videoItem!.autorelease) {
-      this._videoItem!.dispose();
+    if (_videoItem != null && _videoItem!.autorelease) {
+      _videoItem!.dispose();
     }
-    this._videoItem = value;
+    _videoItem = value;
     if (value != null) {
       final movieParams = value.params;
-      assert(movieParams.viewBoxWidth >= 0 || movieParams.viewBoxHeight >= 0,
+      assert(
+          movieParams.viewBoxWidth >= 0 &&
+              movieParams.viewBoxHeight >= 0 &&
+              movieParams.frames >= 1,
           "Invalid SVGA file!");
-      this.duration = Duration(
-          milliseconds: (movieParams.frames / movieParams.fps * 1000).toInt());
+      int fps = movieParams.fps;
+      // avoid dividing by 0, use 20 by default
+      // see https://github.com/svga/SVGAPlayer-Web/blob/1c5711db068a25006316f9890b11d6666d531c39/src/videoEntity.js#L51
+      if (fps == 0) fps = 20;
+      duration =
+          Duration(milliseconds: (movieParams.frames / fps * 1000).toInt());
     } else {
-      this.duration = Duration.zero;
+      duration = Duration.zero;
     }
+    // reset progress after videoitem changed
+    reset();
   }
 
-  MovieEntity? get videoItem => this._videoItem;
+  MovieEntity? get videoItem => _videoItem;
+
+  /// Current drawing frame index of [videoItem], returns 0 if [videoItem] is null.
+  int get currentFrame {
+    final videoItem = _videoItem;
+    if (videoItem == null) return 0;
+    return min(
+      videoItem.params.frames - 1,
+      max(0, (videoItem.params.frames.toDouble() * value).toInt()),
+    );
+  }
+
+  /// Total frames of [videoItem], returns 0 if [videoItem] is null.
+  int get frames {
+    final videoItem = _videoItem;
+    if (videoItem == null) return 0;
+    return videoItem.params.frames;
+  }
 
   /// mark [_SVGAPainter] needs clear
   void clear() {
-    this._canvasNeedsClear = true;
-    this.notifyListeners();
+    _canvasNeedsClear = true;
+    if (!_isDisposed) notifyListeners();
   }
 
   @override
@@ -79,34 +121,16 @@ class SVGAAnimationController extends AnimationController {
     return super.forward(from: from);
   }
 
+  bool _isDisposed = false;
   @override
   void dispose() {
-    for (var item in _listeners) {
-      removeListener(item);
-    }
-    for (var item in _statusListeners) {
-      removeStatusListener(item);
-    }
+    _isDisposed = true;
+
     if (videoItem != null && videoItem!.autorelease) {
       videoItem!.dispose();
     }
     videoItem = null;
     super.dispose();
-  }
-
-  List<Function()> _listeners = [];
-  List<AnimationStatusListener> _statusListeners = [];
-
-  @override
-  void addListener(listener) {
-    super.addListener(listener);
-    _listeners.add(listener);
-  }
-
-  @override
-  void addStatusListener(listener) {
-    super.addStatusListener(listener);
-    _statusListeners.add(listener);
   }
 }
 
@@ -114,7 +138,6 @@ class _SVGAImageState extends State<SVGAImage> {
   @override
   void initState() {
     super.initState();
-    widget._controller.addListener(_handleChange);
     widget._controller.addStatusListener(_handleStatusChange);
   }
 
@@ -122,18 +145,8 @@ class _SVGAImageState extends State<SVGAImage> {
   void didUpdateWidget(SVGAImage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget._controller != widget._controller) {
-      oldWidget._controller.removeListener(_handleChange);
       oldWidget._controller.removeStatusListener(_handleStatusChange);
-      widget._controller.addListener(_handleChange);
       widget._controller.addStatusListener(_handleStatusChange);
-    }
-  }
-
-  void _handleChange() {
-    if (mounted) {
-      setState(() {
-        // rebuild
-      });
     }
   }
 
@@ -145,7 +158,6 @@ class _SVGAImageState extends State<SVGAImage> {
 
   @override
   void dispose() {
-    widget._controller.removeListener(_handleChange);
     widget._controller.removeStatusListener(_handleStatusChange);
     super.dispose();
   }
@@ -154,23 +166,25 @@ class _SVGAImageState extends State<SVGAImage> {
   Widget build(BuildContext context) {
     final controller = widget._controller;
     final video = controller.videoItem;
-    if (video == null || widget._controller.videoItem == null) {
-      return Container();
+    final Size viewBoxSize;
+    if (video == null || !video.isInitialized()) {
+      viewBoxSize = Size.zero;
+    } else {
+      viewBoxSize = Size(video.params.viewBoxWidth, video.params.viewBoxHeight);
     }
-    final needsClear = controller._canvasNeedsClear;
-    controller._canvasNeedsClear = false;
+    if (viewBoxSize.isEmpty) {
+      return const SizedBox.shrink();
+    }
     return IgnorePointer(
       child: CustomPaint(
         painter: _SVGAPainter(
-          video,
-          _SVGAPainter.calculateCurrentFrame(video, controller.value),
+          controller,
           fit: widget.fit,
-          clear: needsClear,
+          filterQuality: widget.filterQuality,
+          // default is allowing overflow for backward compatibility
+          clipRect: widget.allowDrawingOverflow == false,
         ),
-        size: Size(
-          video.params.viewBoxWidth,
-          video.params.viewBoxHeight,
-        ),
+        size: viewBoxSize,
       ),
     );
   }
