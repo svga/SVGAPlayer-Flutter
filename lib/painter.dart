@@ -52,7 +52,7 @@ class _SVGAPainter extends CustomPainter {
       halfCanvasSize.width - scaledHalfViewBoxSize.width,
       halfCanvasSize.height - scaledHalfViewBoxSize.height,
     );
-    canvas.translate(shift.dx, shift.dy);
+    if (shift != Offset.zero) canvas.translate(shift.dx, shift.dy);
     if (sx != 1.0 && sy != 1.0) canvas.scale(sx, sy);
   }
 
