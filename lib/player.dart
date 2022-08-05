@@ -20,15 +20,20 @@ class SVGAImage extends StatefulWidget {
 
   /// Used to set the filterQuality of drawing the images inside SVGA.
   ///
-  /// The default is [FilterQuality.low]
+  /// Defaults to [FilterQuality.low]
   final FilterQuality filterQuality;
 
   /// If `true`, the SVGA painter may draw beyond the expected canvas bounds
   /// and cause additional memory overhead.
   ///
-  /// For backwards compatibility, the default is `null`,
+  /// For backwards compatibility, defaults to `null`,
   /// which means allow drawing to overflow canvas bounds.
   final bool? allowDrawingOverflow;
+
+  /// If `null`, the viewbox size of [MovieEntity] will be use.
+  /// 
+  /// Defaults to null.
+  final Size? preferredSize;
   const SVGAImage(
     this._controller, {
     Key? key,
@@ -36,6 +41,7 @@ class SVGAImage extends StatefulWidget {
     this.filterQuality = FilterQuality.low,
     this.allowDrawingOverflow,
     this.clearsAfterStop = true,
+    this.preferredSize,
   }) : super(key: key);
 
   @override
@@ -190,16 +196,23 @@ class _SVGAImageState extends State<SVGAImage> {
     if (viewBoxSize.isEmpty) {
       return const SizedBox.shrink();
     }
+    // sugguest the size of CustomPaint
+    Size preferredSize = viewBoxSize;
+    if (widget.preferredSize != null) {
+      preferredSize =
+          BoxConstraints.tight(widget.preferredSize!).constrain(viewBoxSize);
+    }
     return IgnorePointer(
       child: CustomPaint(
         painter: _SVGAPainter(
+          // _SVGAPainter will auto repaint on _controller animating
           widget._controller,
           fit: widget.fit,
           filterQuality: widget.filterQuality,
           // default is allowing overflow for backward compatibility
           clipRect: widget.allowDrawingOverflow == false,
         ),
-        size: viewBoxSize,
+        size: preferredSize,
       ),
     );
   }

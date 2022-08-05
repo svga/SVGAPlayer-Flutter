@@ -28,6 +28,7 @@ class _SVGAPainter extends CustomPainter {
     if (size.isEmpty || controller.videoItem == null) return;
     final params = videoItem.params;
     final Size viewBoxSize = Size(params.viewBoxWidth, params.viewBoxHeight);
+    if (viewBoxSize.isEmpty) return;
     canvas.save();
     try {
       final canvasRect = Offset.zero & size;

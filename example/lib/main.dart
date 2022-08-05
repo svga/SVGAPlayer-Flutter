@@ -158,9 +158,7 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
                   style: Theme.of(context).textTheme.subtitle2)),
           if (isLoading) LinearProgressIndicator(),
           Center(
-            child: Container(
-              width: containerWidth,
-              height: containerHeight,
+            child: ColoredBox(
               color: backgroundColor,
               child: SVGAImage(
                 this.animationController!,
@@ -168,6 +166,7 @@ class _SVGASampleScreenState extends State<SVGASampleScreen>
                 clearsAfterStop: false,
                 allowDrawingOverflow: allowOverflow,
                 filterQuality: filterQuality,
+                preferredSize: Size(containerWidth, containerHeight),
               ),
             ),
           ),
