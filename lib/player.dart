@@ -124,12 +124,9 @@ class SVGAAnimationController extends AnimationController {
   bool _isDisposed = false;
   @override
   void dispose() {
-    _isDisposed = true;
-
-    if (videoItem != null && videoItem!.autorelease) {
-      videoItem!.dispose();
-    }
+    // auto dispose _videoItem when set null
     videoItem = null;
+     _isDisposed = true;
     super.dispose();
   }
 }
