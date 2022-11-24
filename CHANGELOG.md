@@ -1,3 +1,7 @@
+#### 2.2.0 (2022-11-24)
+
+* Update path-drawing version.
+
 #### 2.1.2 (2021-06-26)
 
 * Fix KEEP path parser issue.
